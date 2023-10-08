@@ -18,6 +18,9 @@ struct OnBoardingView: View {
                 Spacer().frame(height: 40)
                 Text("Scan the room by pointing the camera at all surfaces. Model export supports usdz and obj format.")
                 Spacer().frame(height: 40)
+//                Button("Test model amount") {
+//                    print("There are \(store.models.count) model(s)")
+//                }
                 NavigationLink(destination: ScanningView(), label: {Text("Start Scan")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
             }
         }

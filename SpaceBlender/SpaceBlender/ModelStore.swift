@@ -11,5 +11,8 @@ import RoomPlan
 final class ModelStore: ObservableObject {
     static let shared = ModelStore() // create one instance of the class to be shared
     private init() {}
-    var models = [CapturedRoom]()
+    @Published var models = [CapturedRoom]()
+    func addNewModel(_ model: CapturedRoom) {
+        self.models.append(model)
+    }
 }

@@ -58,9 +58,7 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
     }
     
     func done() {
-        print("there are \(store.models.count) models")
-        store.models.append(finalResult!)
-        print("there are \(store.models.count) models")
+        store.addNewModel(finalResult!)
     }
     
     required init?(coder: NSCoder) {

@@ -33,6 +33,7 @@ struct ActivityViewControllerRep: UIViewControllerRepresentable {
 struct ScanningView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var captureController = RoomCaptureController.instance
+    @ObservedObject var store = ModelStore.shared
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -58,8 +59,11 @@ struct ScanningView: View {
 //                ActivityViewControllerRep(items: [captureController.exportUrl!])
 //            })
             Button(action: {
+                print("Before call done: there are \(store.models.count) models")
                 captureController.done()
+                print("After call done: there are \(store.models.count) models")
                 dismiss()
+                print("After dismiss: there are \(store.models.count) models")
             }, label: {
                 Text("Done").font(.title2)
             }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding()

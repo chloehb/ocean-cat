@@ -9,14 +9,12 @@ import Foundation
 import SwiftUI
 
 struct OnBoardingView: View {
-    @Binding var isPresented: Bool
+    @ObservedObject var store = ModelStore.shared
     var body: some View {
         NavigationStack {
             VStack {
-                Image(systemName: "camera.metering.matrix")
-                    .imageScale(.large)
-                    .foregroundColor(.accentColor)
-                Text("Roomscanner").font(.title)
+                Text("Space Blender").font(.title)
+                Text("There are \(store.models.count) model(s)")
                 Spacer().frame(height: 40)
                 Text("Scan the room by pointing the camera at all surfaces. Model export supports usdz and obj format.")
                 Spacer().frame(height: 40)

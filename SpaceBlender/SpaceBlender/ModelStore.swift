@@ -11,5 +11,5 @@ import RoomPlan
 final class ModelStore: ObservableObject {
     static let shared = ModelStore() // create one instance of the class to be shared
     private init() {}
-    private(set) var models = [CapturedRoom]()
+    var models = [CapturedRoom]()
 }

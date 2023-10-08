@@ -7,6 +7,7 @@
 
 import Foundation
 import RoomPlan
+import SwiftUI
 
 class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCaptureSessionDelegate
 {
@@ -16,6 +17,8 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
     @Published var showExportButton = false
     @Published var showShareSheet = false
     @Published var exportUrl: URL?
+    
+    @ObservedObject var store = ModelStore.shared
     
     var sessionConfig: RoomCaptureSession.Configuration
     var finalResult: CapturedRoom?
@@ -55,7 +58,9 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
     }
     
     func done() {
-        print("todo: add finalResult to ModelStore")
+        print("there are \(store.models.count) models")
+        store.models.append(finalResult!)
+        print("there are \(store.models.count) models")
     }
     
     required init?(coder: NSCoder) {

@@ -33,7 +33,7 @@ struct ActivityViewControllerRep: UIViewControllerRepresentable {
 struct ScanningView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var captureController = RoomCaptureController.instance
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
             RoomCaptureViewRep()
@@ -49,20 +49,20 @@ struct ScanningView: View {
                     captureController.showExportButton = false
                     captureController.startSession()
                 }
+//            Button(action: {
+//                captureController.export()
+//                dismiss()
+//            }, label: {
+//                Text("Export").font(.title2)
+//            }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
+//                ActivityViewControllerRep(items: [captureController.exportUrl!])
+//            })
             Button(action: {
                 captureController.done()
                 dismiss()
             }, label: {
                 Text("Done").font(.title2)
             }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding()
-            Button(action: {
-                captureController.export()
-                dismiss()
-            }, label: {
-                Text("Export").font(.title2)
-            }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
-                ActivityViewControllerRep(items: [captureController.exportUrl!])
-            })
         }
     }
 }

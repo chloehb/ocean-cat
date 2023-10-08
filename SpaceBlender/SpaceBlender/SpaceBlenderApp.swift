@@ -14,7 +14,7 @@ struct SpaceBlenderApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                MainView()
+                OnBoardingView()
             }
         }
     }

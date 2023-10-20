@@ -59,10 +59,10 @@ struct ScanningView: View {
             //            }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
             //                ActivityViewControllerRep(items: [captureController.exportUrl!])
             //            })
-            NavigationLink(destination: ModelView(), label: {Text("Go to test view")} ).simultaneousGesture(TapGesture().onEnded{
+            NavigationLink(destination: ModelView(), label: {Text("Go to model view")} ).simultaneousGesture(TapGesture().onEnded{
                 captureController.done()
                 print("After call done: there are \(store.models.count) models")
-            }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
+            }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).opacity(captureController.showExportButton ? 1 : 0).padding()
             
         }
     }

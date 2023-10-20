@@ -34,7 +34,7 @@ struct ScanningView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var captureController = RoomCaptureController.instance
     @ObservedObject var store = ModelStore.shared
-
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             RoomCaptureViewRep()
@@ -50,23 +50,20 @@ struct ScanningView: View {
                     captureController.showExportButton = false
                     captureController.startSession()
                 }
-//            Button(action: {
-//                captureController.export()
-//                dismiss()
-//            }, label: {
-//                Text("Export").font(.title2)
-//            }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
-//                ActivityViewControllerRep(items: [captureController.exportUrl!])
-//            })
-            Button(action: {
-                print("Before call done: there are \(store.models.count) models")
+            // export button
+            //            Button(action: {
+            //                captureController.export()
+            //                dismiss()
+            //            }, label: {
+            //                Text("Export").font(.title2)
+            //            }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
+            //                ActivityViewControllerRep(items: [captureController.exportUrl!])
+            //            })
+            NavigationLink(destination: TestView(), label: {Text("Go to test view")} ).simultaneousGesture(TapGesture().onEnded{
                 captureController.done()
                 print("After call done: there are \(store.models.count) models")
-                dismiss()
-                print("After dismiss: there are \(store.models.count) models")
-            }, label: {
-                Text("Done").font(.title2)
-            }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding()
+            }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
+            
         }
     }
 }

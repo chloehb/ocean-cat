@@ -1,15 +1,14 @@
 //
-//  OnBoarding.swift
+//  TestView.swift
 //  SpaceBlender
 //
-//  Created by akai on 10/7/23.
+//  Created by akai on 10/20/23.
 //
 
 import Foundation
 import SwiftUI
 
-struct OnBoardingView: View {
-    @Binding var isPresented: Bool
+struct TestView: View {
     @ObservedObject var store = ModelStore.shared
     var body: some View {
         NavigationStack {
@@ -17,10 +16,11 @@ struct OnBoardingView: View {
                 Text("Space Blender-onboarding").font(.title)
                 Text("There are \(store.models.count) model(s)")
                 Spacer().frame(height: 40)
-                Text("Scan the room by pointing the camera at all surfaces. Model export supports usdz and obj format.")
+                Text("I don't know why I create such test view but currently we use it as a test.")
                 Spacer().frame(height: 40)
-                NavigationLink(destination: ScanningView(), label: {Text("Start Scan")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
+                NavigationLink(destination: MainView(), label: {Text("Back to MainView")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
             }
         }
     }
 }
+

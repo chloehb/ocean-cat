@@ -18,7 +18,8 @@ struct RoomGalleryView: View {
                 Text("There are \(store.models.count) model(s)")
                 List(store.models, id: \.identifier) {
                     model in
-                        Text("1")
+                    Text(model.date!)
+                    Text(model.name!)
                 }
             }
         }

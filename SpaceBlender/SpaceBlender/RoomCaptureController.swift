@@ -58,7 +58,7 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
     }
     
     func done() {
-        store.addNewModel(finalResult!)
+        store.addNewModel(RoomModel(identifier: finalResult?.identifier, name: "todo: diy", model: finalResult, date: Date().formatted()))
     }
     
     required init?(coder: NSCoder) {

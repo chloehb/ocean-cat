@@ -20,6 +20,7 @@
 		4575C9D42AD1FAEB00131520 /* RoomCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */; };
 		4592B5B02AE2D7FA000227B3 /* ModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592B5AF2AE2D7FA000227B3 /* ModelView.swift */; };
 		4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */; };
+		8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCaptureController.swift; sourceTree = "<group>"; };
 		4592B5AF2AE2D7FA000227B3 /* ModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelView.swift; sourceTree = "<group>"; };
 		4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomGalleryView.swift; sourceTree = "<group>"; };
+		8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurnitureGalleryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				4592B5AF2AE2D7FA000227B3 /* ModelView.swift */,
 				4575C9A42AD1E5E500131520 /* Assets.xcassets */,
 				4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */,
+				8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */,
 				4575C9A62AD1E5E500131520 /* Preview Content */,
 				4575C9CA2AD1E94500131520 /* MainView.swift */,
 				4575C9CC2AD1ED9E00131520 /* OnBoardingView.swift */,
@@ -276,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */,
+				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
 				4592B5B02AE2D7FA000227B3 /* ModelView.swift in Sources */,
 				4575C9D12AD1FA9700131520 /* ScanningView.swift in Sources */,
 				4575C9D42AD1FAEB00131520 /* RoomCaptureController.swift in Sources */,

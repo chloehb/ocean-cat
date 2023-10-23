@@ -1,20 +1,20 @@
 //
-//  RoomGalleryView.swift
+//  FurnitureGalleryView.swift
 //  SpaceBlender
 //
-//  Created by akai on 10/20/23.
+//  Created by Chloe Bentley on 10/23/23.
 //
 
 import Foundation
 import SwiftUI
 
-struct RoomGalleryView: View {
+struct FurnitureGalleryView: View {
     @Binding var isPresented: Bool
     @ObservedObject var store = ModelStore.shared
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Room Gallery").font(.title)
+                Text("Furniture Gallery").font(.title)
                 Text("There are \(store.models.count) model(s)")
                 List(store.models, id: \.identifier) {
                     model in
@@ -25,4 +25,3 @@ struct RoomGalleryView: View {
         }
     }
 }
-

@@ -13,6 +13,7 @@ struct RoomModel {
     var name: String?
     var model: CapturedRoom?
     var date: String?
+    var image: String?
 }
 
 final class ModelStore: ObservableObject {

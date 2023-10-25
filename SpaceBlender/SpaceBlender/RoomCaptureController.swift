@@ -57,8 +57,8 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
         showShareSheet = true
     }
     
-    func done() {
-        store.addNewModel(RoomModel(identifier: finalResult?.identifier, name: "todo: diy", model: finalResult, date: Date().formatted()))
+    func done(message: String) {
+        store.addNewModel(RoomModel(identifier: finalResult?.identifier, name: message, model: finalResult, date: Date().formatted()))
     }
     
     required init?(coder: NSCoder) {

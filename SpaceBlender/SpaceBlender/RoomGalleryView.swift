@@ -17,31 +17,33 @@ struct RoomGalleryView: View {
             VStack {
                 Text("Room Gallery").font(.title)
                 Text("There are \(store.models.count) model(s)")
-                List(store.models, id: \.identifier) {
+                List(store.models, id: \.name) { //identifer was not unique
                     model in
-                    Text(model.date!)
-                    Text(model.name!)
-                    Text(model.image!)
+                    //Text(model.date!)
+                    //Text(model.name!)
+                    //Text(model.image!)
+                    
+                    var image = "ex_room"
+                    var date = model.date!
+                    var name = model.name!
+                    VStack(alignment: .leading, spacing: 20.0) {
+                        
+                        Image(image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(15)
+                        HStack {
+                            Spacer()
+                            Text(date + " " + name).font(.title).multilineTextAlignment(.center)
+                            Spacer()
+                        }
+                    }
+                    .padding()
+                    .background(Rectangle().foregroundColor(.white).cornerRadius(15).shadow(radius: 15))
+                    .padding()
                 }
                 // ONE room card:
-                var image = "ex_room"
-                var date = "1/1/23"
-                var name = "Dorm1"
-                VStack(alignment: .leading, spacing: 20.0) {
-                    
-                    Image(image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(15)
-                    HStack {
-                        Spacer()
-                        Text(date + " " + name).font(.title).multilineTextAlignment(.center)
-                        Spacer()
-                    }
-                }
-                .padding()
-                .background(Rectangle().foregroundColor(.white).cornerRadius(15).shadow(radius: 15))
-                .padding()
+                
             }
         }
     }

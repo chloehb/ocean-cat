@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		452C29852AEC76B600434784 /* MinimalDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C29842AEC76B600434784 /* MinimalDemo.swift */; };
+		452C298B2AEC85BB00434784 /* AllData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 452C29892AEC85BB00434784 /* AllData.xcdatamodeld */; };
+		452C298D2AEC87CB00434784 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C298C2AEC87CB00434784 /* PersistenceController.swift */; };
 		4575C9A12AD1E5E300131520 /* SpaceBlenderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C9A02AD1E5E300131520 /* SpaceBlenderApp.swift */; };
 		4575C9A52AD1E5E500131520 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4575C9A42AD1E5E500131520 /* Assets.xcassets */; };
 		4575C9A82AD1E5E500131520 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4575C9A72AD1E5E500131520 /* Preview Assets.xcassets */; };
@@ -42,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		452C29842AEC76B600434784 /* MinimalDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalDemo.swift; sourceTree = "<group>"; };
+		452C298A2AEC85BB00434784 /* AllData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AllData.xcdatamodel; sourceTree = "<group>"; };
+		452C298C2AEC87CB00434784 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		4575C99D2AD1E5E300131520 /* SpaceBlender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceBlender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4575C9A02AD1E5E300131520 /* SpaceBlenderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceBlenderApp.swift; sourceTree = "<group>"; };
 		4575C9A42AD1E5E500131520 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,6 +118,8 @@
 			children = (
 				4575C9A02AD1E5E300131520 /* SpaceBlenderApp.swift */,
 				4592B5AF2AE2D7FA000227B3 /* ModelView.swift */,
+				452C29892AEC85BB00434784 /* AllData.xcdatamodeld */,
+				452C29842AEC76B600434784 /* MinimalDemo.swift */,
 				4575C9A42AD1E5E500131520 /* Assets.xcassets */,
 				4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */,
 				8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */,
@@ -119,6 +127,7 @@
 				4575C9CA2AD1E94500131520 /* MainView.swift */,
 				4575C9CC2AD1ED9E00131520 /* OnBoardingView.swift */,
 				4575C9CE2AD1F50900131520 /* ModelStore.swift */,
+				452C298C2AEC87CB00434784 /* PersistenceController.swift */,
 				4575C9D02AD1FA9700131520 /* ScanningView.swift */,
 				4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */,
 				8C724D602AE7139F00E6D0FF /* Overlay.swift */,
@@ -283,7 +292,10 @@
 			files = (
 				4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
+				452C29852AEC76B600434784 /* MinimalDemo.swift in Sources */,
+				452C298B2AEC85BB00434784 /* AllData.xcdatamodeld in Sources */,
 				8C724D612AE7139F00E6D0FF /* Overlay.swift in Sources */,
+				452C298D2AEC87CB00434784 /* PersistenceController.swift in Sources */,
 				4592B5B02AE2D7FA000227B3 /* ModelView.swift in Sources */,
 				4575C9D12AD1FA9700131520 /* ScanningView.swift in Sources */,
 				4575C9D42AD1FAEB00131520 /* RoomCaptureController.swift in Sources */,
@@ -468,7 +480,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -498,7 +510,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -618,6 +630,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		452C29892AEC85BB00434784 /* AllData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				452C298A2AEC85BB00434784 /* AllData.xcdatamodel */,
+			);
+			currentVersion = 452C298A2AEC85BB00434784 /* AllData.xcdatamodel */;
+			path = AllData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4575C9952AD1E5E300131520 /* Project object */;
 }

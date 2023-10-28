@@ -68,6 +68,7 @@ struct ScanningView: View {
             //            })
             NavigationLink(destination: ModelView(), label: {Text("Go to model view")} ).simultaneousGesture(TapGesture().onEnded{
                 captureController.done(message: message)
+                store.storeModels()
                 print("After call done: there are \(store.models.count) models")
             }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).opacity(captureController.showExportButton ? 1 : 0).padding()
         }

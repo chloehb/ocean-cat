@@ -13,18 +13,6 @@ struct MinimalDemoView: View {
     @Binding var showing: Bool
     @State var selectedName: String? = nil
     
-    let text = """
-  I want that ball
-  I want it now
-  I don’t care where
-  Or why or how
-  
-  I want to throw it
-  In the air
-  And kick the thing
-  From here to there
-  """
-    
     var body: some View {
         ZStack {
             
@@ -36,17 +24,9 @@ struct MinimalDemoView: View {
             
             // Overlay
             VStack {
-                
-                
                 // Bottom Center Panel
                 HStack(alignment: .bottom) {
                     VStack {
-                        Text(text)
-                            .font(.title3.bold())
-                        
-                        Text("“That Ball” by Jaymie Gerard")
-                            .font(.caption.italic())
-                            .padding(.top)
                         Button {
                             print(selectedName ?? "nil")
                         } label: {

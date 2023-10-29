@@ -68,7 +68,7 @@ struct SceneKitView: UIViewRepresentable {
                 chamferRadius: 0
             )
             
-            newFloor.firstMaterial?.diffuse.contents = UIColor.blue
+            newFloor.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.85, blue: 1, alpha: 1)
             newFloor.firstMaterial?.transparency = 1
             
             //Generate new SCNNode
@@ -99,7 +99,7 @@ struct SceneKitView: UIViewRepresentable {
                 chamferRadius: 0
             )
             
-            newWall.firstMaterial?.diffuse.contents = UIColor.red
+            newWall.firstMaterial?.diffuse.contents = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
             newWall.firstMaterial?.transparency = 1
             
             //Generate new SCNNode
@@ -131,7 +131,7 @@ struct SceneKitView: UIViewRepresentable {
                 chamferRadius: 0
             )
             
-            newObject.firstMaterial?.diffuse.contents = UIColor.green
+            newObject.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1)
             newObject.firstMaterial?.transparency = 1
             
             //Generate new SCNNode
@@ -150,11 +150,13 @@ struct SceneKitView: UIViewRepresentable {
         let directionalLight = SCNNode()
         directionalLight.light = SCNLight()
         directionalLight.light!.type = .directional
+        directionalLight.light!.intensity = 700
         directionalLight.eulerAngles = SCNVector3(x: 0, y: 0, z: 0)
         
+        // Create ambient light
         let myAmbientLight = SCNLight()
         myAmbientLight.type = .ambient
-        myAmbientLight.intensity = 100
+        myAmbientLight.intensity = 1000
         let myAmbientLightNode = SCNNode()
         myAmbientLightNode.light = myAmbientLight
         
@@ -251,7 +253,7 @@ struct SceneKitView: UIViewRepresentable {
                     case .Selected:
                         selectedNodeMove = nil
                         selectedNode?.state = .UnSelected
-                        selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.green
+                        selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1)
                         if let arrowNode = selectedNode?.childNode(withName: "arrow", recursively: true) {
                             arrowNode.removeFromParentNode()
                         }

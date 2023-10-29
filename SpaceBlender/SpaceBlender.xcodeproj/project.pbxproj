@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0DDF82682AEEF903002146E2 /* SurveyAlgoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF82672AEEF903002146E2 /* SurveyAlgoView.swift */; };
 		452089FB2AEEDF8C0047F521 /* UploadJsonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452089FA2AEEDF8C0047F521 /* UploadJsonView.swift */; };
 		452C29852AEC76B600434784 /* MinimalDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C29842AEC76B600434784 /* MinimalDemo.swift */; };
 		452C298B2AEC85BB00434784 /* AllData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 452C29892AEC85BB00434784 /* AllData.xcdatamodeld */; };

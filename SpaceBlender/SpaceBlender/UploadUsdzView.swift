@@ -11,6 +11,8 @@ import RoomPlan
 import UIKit
 import MobileCoreServices
 
+import UniformTypeIdentifiers
+
 struct DocumentPicker: UIViewControllerRepresentable {
     @Binding var fileURL: URL?
 
@@ -19,7 +21,8 @@ struct DocumentPicker: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<DocumentPicker>) -> UIDocumentPickerViewController {
-        let documentPicker = UIDocumentPickerViewController(documentTypes: [String(kUTTypeText)], in: .import)
+//        let documentPicker = UIDocumentPickerViewController(documentTypes: [String(kUTTypeText)], in: .import)
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.usdz], asCopy: true)
         documentPicker.allowsMultipleSelection = false
         documentPicker.delegate = context.coordinator
         return documentPicker

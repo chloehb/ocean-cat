@@ -20,6 +20,7 @@ struct OnBoardingView: View {
                 Text("Scan the room by pointing the camera at all surfaces. Model export supports usdz and obj format.")
                 Spacer().frame(height: 40)
                 NavigationLink(destination: ScanningView(), label: {Text("Start Scan")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
+                NavigationLink(destination: UploadUsdzView(), label: {Text("Upload File")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
             }
         }
     }

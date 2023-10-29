@@ -20,6 +20,19 @@ struct ModelPreview: UIViewRepresentable {
     func makeUIView(context: Context) -> SCNView {
         if let scene = try? SCNScene(url: fileURL!, options: nil) {
             view.scene = scene
+            let newFloor = SCNBox(
+                width: CGFloat(5),
+                height: CGFloat(5),
+                length: CGFloat(0.2),
+                chamferRadius: 0
+            )
+            
+            newFloor.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.85, blue: 1, alpha: 1)
+            newFloor.firstMaterial?.transparency = 1
+            
+            //Generate new SCNNode
+            let newNode = SCNNode(geometry: newFloor)
+            view.scene?.rootNode.addChildNode(newNode)
             print("load scene success")
         } else {
             print("can't load scene")

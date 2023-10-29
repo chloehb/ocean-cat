@@ -14,6 +14,7 @@ struct MainView: View {
     @State private var isPresentingOnBoarding = false
     @State private var isPresentingRoomGallery = false
     @State private var isPresentingFurnitureGallery = false
+    @State private var isPresentingSelectMethod = false
     var body: some View {
         ZStack {
             Color(.white)
@@ -24,10 +25,29 @@ struct MainView: View {
                     .resizable()
                     .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fit/*@END_MENU_TOKEN@*/)
                     .padding(.all)
-                Button {
-                    isPresentingOnBoarding.toggle()
+                Menu {
+                    Button("Cancel", role: .destructive) {
+                    }
+                    Button {
+                        isPresentingOnBoarding.toggle()
+                    } label: {
+                        Text("Create Furniture Model")
+                            .padding()
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(width: 250, height: 70)
+                    }
+                    Button {
+                        isPresentingSelectMethod.toggle()
+                    } label: {
+                        Text("Create Room Model")
+                            .padding()
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(width: 250, height: 70)
+                    }
                 } label: {
-                    Text("Create New Model")
+                    Label("Create New Model", systemImage: "")
                         .padding()
                         .font(.title2)
                         .fontWeight(.bold)
@@ -37,7 +57,6 @@ struct MainView: View {
                 .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
                 .cornerRadius(20)
                 .shadow(color: .blue, radius: 3, y: 3)
-                .padding(.top)
                 Button {
                     isPresentingRoomGallery.toggle()
                 } label: {
@@ -74,6 +93,9 @@ struct MainView: View {
             }
             .navigationDestination(isPresented: $isPresentingFurnitureGallery) {
                 FurnitureGalleryView(isPresented: $isPresentingFurnitureGallery)
+            }
+            .navigationDestination(isPresented: $isPresentingSelectMethod) {
+                SelectMethodView(isPresented: $isPresentingSelectMethod)
             }
         }
     }

@@ -34,10 +34,17 @@ struct ScanningView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var captureController = RoomCaptureController.instance
     @ObservedObject var store = ModelStore.shared
+    @State private var message = "Insert Model Name"
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            RoomCaptureViewRep()
+                
+                RoomCaptureViewRep()
+                .toolbar {
+                  ToolbarItem(placement: .principal) {
+                    TextField("Model Name", text: $message)
+                  }
+                }
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: Button("Cancel") {
                     captureController.stopSession()
@@ -60,10 +67,14 @@ struct ScanningView: View {
             //                ActivityViewControllerRep(items: [captureController.exportUrl!])
             //            })
             NavigationLink(destination: ModelView(), label: {Text("Go to model view")} ).simultaneousGesture(TapGesture().onEnded{
-                captureController.done()
+                captureController.done(message: message)
+                store.storeModels()
                 print("After call done: there are \(store.models.count) models")
             }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).opacity(captureController.showExportButton ? 1 : 0).padding()
-            
+        }
+        .onTapGesture {
+            // dismiss virtual keyboard from class lab
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }
 }

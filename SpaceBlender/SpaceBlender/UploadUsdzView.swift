@@ -13,6 +13,24 @@ import MobileCoreServices
 
 import UniformTypeIdentifiers
 
+struct ModelFromAssets: UIViewRepresentable{
+    var view = SCNView()
+    func makeUIView(context: Context) -> SCNView {
+        guard let urlPath = Bundle.main.url(forResource: "Room", withExtension: "usdz") else {
+            return view
+        }
+        let scene = try! SCNScene(url: urlPath, options: [.checkConsistency: true])
+        view.scene = scene
+        view.autoenablesDefaultLighting = true
+        view.allowsCameraControl = true
+        return view
+    }
+    func updateUIView(_ uiView: SCNView, context: Context) {
+        // Update your 3D scene here
+        print("update called")
+    }
+}
+
 struct ModelPreview: UIViewRepresentable {
     @Binding var fileURL: URL?
     
@@ -95,6 +113,7 @@ struct UploadUsdzView: View {
             } else {
                 Text("not upload yet")
             }
+            ModelFromAssets()
         }
     }
 }

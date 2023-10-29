@@ -301,17 +301,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */,
-<<<<<<< HEAD
 				8C724D782AEEEC2C00E6D0FF /* SelectMethodView.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
-=======
 				6CF29A4B2AEEBD8A00C0C11D /* 2dGeneration.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
 				452C29852AEC76B600434784 /* MinimalDemo.swift in Sources */,
 				452C298B2AEC85BB00434784 /* AllData.xcdatamodeld in Sources */,
 				8C724D612AE7139F00E6D0FF /* Overlay.swift in Sources */,
 				452C298D2AEC87CB00434784 /* PersistenceController.swift in Sources */,
->>>>>>> 77cd8af111036575b17690be7dc74bea977cab40
 				4592B5B02AE2D7FA000227B3 /* ModelView.swift in Sources */,
 				4575C9D12AD1FA9700131520 /* ScanningView.swift in Sources */,
 				4575C9D42AD1FAEB00131520 /* RoomCaptureController.swift in Sources */,

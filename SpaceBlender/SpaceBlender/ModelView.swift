@@ -11,6 +11,7 @@ import SceneKit
 
 struct MinimalDemoView: View {
     @Binding var showing: Bool
+    @State var selectedName: String? = nil
     
     let text = """
   I want that ball
@@ -28,7 +29,7 @@ struct MinimalDemoView: View {
         ZStack {
             
             // Scene itself
-            SceneKitView(options: [])
+            SceneKitView(options: [], selectedName: $selectedName)
             .allowsHitTesting(true)
             
             .ignoresSafeArea()
@@ -46,6 +47,11 @@ struct MinimalDemoView: View {
                         Text("“That Ball” by Jaymie Gerard")
                             .font(.caption.italic())
                             .padding(.top)
+                        Button {
+                            print(selectedName ?? "nil")
+                        } label: {
+                            Text("test selectedName")
+                        }
                     }
                     .foregroundColor(.primary)
                     .padding(30)

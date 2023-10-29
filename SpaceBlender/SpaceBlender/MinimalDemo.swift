@@ -15,22 +15,41 @@
 import SceneKit
 import SwiftUI
 
+private var NodeTypeKey: UInt8 = 0 // We need this to make our new property
+
+extension SCNNode {
+    enum State {
+        case UnSelected
+        case Selected
+    }
+    var state: State? {
+        get {
+            return objc_getAssociatedObject(self, &NodeTypeKey) as? State
+        }
+        set(newNodeType) {
+            objc_setAssociatedObject(self, &NodeTypeKey, newNodeType, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+}
+
 
 struct SceneKitView: UIViewRepresentable {
     @ObservedObject var store = ModelStore.shared
+    // the id of selected Node
     
     var scene = SCNScene()
     var options: [Any]
     var view = SCNView()
+    @Binding var selectedName: String?
     
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
         // Disable the default camera control
-        //        view.allowsCameraControl = true
+//        view.allowsCameraControl = true
         
         scene.background.contents = Color.black
         scene.physicsWorld.gravity = SCNVector3(0, 0, 0)
-
+        
         let roomScan = store.models[0].model!
         
         // all floors
@@ -117,12 +136,13 @@ struct SceneKitView: UIViewRepresentable {
             
             //Generate new SCNNode
             let newNode = SCNNode(geometry: newObject)
+            newNode.name = String(i) // only objects have name
             newNode.simdTransform = scannedObject.transform
             newNode.movabilityHint = .movable
             newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
             newNode.physicsBody?.categoryBitMask = i
             newNode.physicsBody?.collisionBitMask = roomScan.objects.endIndex
-            
+            newNode.state = .UnSelected
             scene.rootNode.addChildNode(newNode)
         }
         
@@ -172,10 +192,11 @@ struct SceneKitView: UIViewRepresentable {
     
     func updateUIView(_ uiView: SCNView, context: Context) {
         // Update your 3D scene here
+        print("update called")
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(view)
+        Coordinator(view, selected: self.$selectedName)
     }
     
     class Coordinator: NSObject {
@@ -184,13 +205,16 @@ struct SceneKitView: UIViewRepresentable {
             case ZAxis
         }
         private let view: SCNView
+        @Binding var selectedName: String?
+        var selectedNodeMove: SCNNode?
         var selectedNode: SCNNode? // To keep track of the selected node
         var oldNode: SCNNode?
         var lastPanLocation: CGPoint = .zero // To store the last pan location
         var lastMoveDirection: MoveDirection? = nil
         
-        init(_ view: SCNView) {
+        init(_ view: SCNView, selected: Binding<String?>) {
             self.view = view
+            self._selectedName = selected
             super.init()
         }
         
@@ -201,35 +225,50 @@ struct SceneKitView: UIViewRepresentable {
             
             // check that we clicked on at least one object
             if hitResults.count > 0 {
-                
-                // retrieved the first clicked object
+                // only take effects on objects
                 let result = hitResults[0]
-                
-                // get material for selected geometry element
-                let material = result.node.geometry!.materials[(result.geometryIndex)]
-                
-                // highlight it
-                SCNTransaction.begin()
-                SCNTransaction.animationDuration = 0.5
-                
-                // on completion - unhighlight
-                SCNTransaction.completionBlock = {
-                    SCNTransaction.begin()
-                    SCNTransaction.animationDuration = 0.5
-                    
-                    material.emission.contents = UIColor.black
-                    
-                    SCNTransaction.commit()
+                switch result.node.movabilityHint {
+                case .fixed:
+                    return
+                case .movable:
+                    let name = result.node.name! // what if failed here?
+                    let selectedNode = view.scene?.rootNode.childNode(withName: name, recursively: true)
+                    switch selectedNode!.state { // very bad
+                    case .UnSelected:
+                        if let _ = selectedNodeMove {
+                            // pass
+                        } else {
+                            selectedNodeMove = selectedNode
+                            selectedNode?.state = .Selected
+                            selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray
+                            selectedName = name
+                            let arrowNode = SCNNode(geometry: createArrowGeometry())
+                            arrowNode.transform = selectedNode?.transform ?? SCNMatrix4()
+                            arrowNode.name = "arrow"
+                            // Add the arrow as a child node to the selected object
+                            selectedNode?.addChildNode(arrowNode)
+                        }
+                    case .Selected:
+                        selectedNodeMove = nil
+                        selectedNode?.state = .UnSelected
+                        selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.green
+                        if let arrowNode = selectedNode?.childNode(withName: "arrow", recursively: true) {
+                            arrowNode.removeFromParentNode()
+                        }
+                        selectedName = nil
+                    case nil:
+                        break
+                    }
+                @unknown default:
+                    return
                 }
-                material.emission.contents = UIColor.green
-                SCNTransaction.commit()
             }
         }
         
         @objc func handlePinch(_ gesture: UIPinchGestureRecognizer) {
             // Camera pinch (zoom) logic
             // Get the view that the user pinched on
-//            print("handle pinch")
+            //            print("handle pinch")
             guard let sceneView = gesture.view as? SCNView else {
                 return
             }
@@ -246,7 +285,7 @@ struct SceneKitView: UIViewRepresentable {
         
         @objc func handleRotation(_ gesture: UIRotationGestureRecognizer) {
             // Camera rotation logic
-//            print("handle rotation")
+            //            print("handle rotation")
             guard let sceneView = gesture.view as? SCNView else {
                 return
             }
@@ -270,7 +309,7 @@ struct SceneKitView: UIViewRepresentable {
         
         @objc func handleObjectPan(_ gesture: UIPanGestureRecognizer) {
             // Object pan logic
-//            print("handle object pan")
+            //            print("handle object pan")
             guard let sceneView = gesture.view as? SCNView else { return }
             if gesture.state == .began {
                 // Handle the start of the pan gesture (e.g., select the node)
@@ -302,15 +341,15 @@ struct SceneKitView: UIViewRepresentable {
                             lastMoveDirection = .ZAxis
                         }
                     }
-//                    print(translation)
-//                    switch lastMoveDirection {
-//                    case .XAxis:
-//                        print("XAxis")
-//                    case .ZAxis:
-//                        print("ZAxis")
-//                    case nil:
-//                        print("nil")
-//                    }
+                    //                    print(translation)
+                    //                    switch lastMoveDirection {
+                    //                    case .XAxis:
+                    //                        print("XAxis")
+                    //                    case .ZAxis:
+                    //                        print("ZAxis")
+                    //                    case nil:
+                    //                        print("nil")
+                    //                    }
                     let deltaX = Float(translation.x - lastPanLocation.x)
                     let deltaZ = Float(translation.y - lastPanLocation.y)
                     selectedNode.position.x += deltaX / 100 // Adjust the scale as needed
@@ -325,3 +364,27 @@ struct SceneKitView: UIViewRepresentable {
         }
     }
 }
+
+func createArrowGeometry() -> SCNGeometry {
+    // Define arrow parameters
+    let shaftLength: CGFloat = 1.0
+    let shaftRadius: CGFloat = 0.1
+    let headLength: CGFloat = 0.2
+    let headRadius: CGFloat = 0.2
+    
+    // Create the arrow's shaft (cylinder)
+    let shaft = SCNCylinder(radius: shaftRadius, height: shaftLength)
+    shaft.firstMaterial?.diffuse.contents = UIColor.red // Set the material color
+    
+    // Create the arrow's head (cone)
+    let head = SCNCone(topRadius: 0, bottomRadius: headRadius, height: headLength)
+    head.firstMaterial?.diffuse.contents = UIColor.red // Set the material color
+    
+    // Combine the shaft and head geometries
+    let arrowGeometry = SCNGeometry(sources: [shaft.sources.first!, head.sources.first!], elements: [shaft.elements.first!, head.elements.first!])
+    
+    
+    return arrowGeometry
+}
+
+

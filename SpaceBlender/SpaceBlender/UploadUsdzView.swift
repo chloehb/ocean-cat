@@ -56,6 +56,14 @@ struct UploadUsdzView: View {
         VStack {
             Button("Open Document Picker") {
                 showDocumentPicker = true
+            }.fileImporter(isPresented: $showDocumentPicker, allowedContentTypes: [UTType.usdz], allowsMultipleSelection: false) {
+                result in
+                switch result {
+                case .success(_):
+                    print("sucess")
+                case .failure(_):
+                    print("error")
+                }
             }
         }
         .sheet(isPresented: $showDocumentPicker) {

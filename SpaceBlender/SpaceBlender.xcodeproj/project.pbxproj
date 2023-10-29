@@ -21,7 +21,9 @@
 		4592B5B02AE2D7FA000227B3 /* ModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592B5AF2AE2D7FA000227B3 /* ModelView.swift */; };
 		4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */; };
 		8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */; };
-		8C724D612AE7139F00E6D0FF /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D602AE7139F00E6D0FF /* Overlay.swift */; };
+		8C724D782AEEEC2C00E6D0FF /* SelectMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D772AEEEC2C00E6D0FF /* SelectMethodView.swift */; };
+		8C724D7A2AEEED1A00E6D0FF /* UploadFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */; };
+		8C724D7C2AEEED2700E6D0FF /* AfterUploadFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D7B2AEEED2700E6D0FF /* AfterUploadFileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +61,9 @@
 		4592B5AF2AE2D7FA000227B3 /* ModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelView.swift; sourceTree = "<group>"; };
 		4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomGalleryView.swift; sourceTree = "<group>"; };
 		8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurnitureGalleryView.swift; sourceTree = "<group>"; };
-		8C724D602AE7139F00E6D0FF /* Overlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
+		8C724D772AEEEC2C00E6D0FF /* SelectMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMethodView.swift; sourceTree = "<group>"; };
+		8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileView.swift; sourceTree = "<group>"; };
+		8C724D7B2AEEED2700E6D0FF /* AfterUploadFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterUploadFileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +125,9 @@
 				4575C9CE2AD1F50900131520 /* ModelStore.swift */,
 				4575C9D02AD1FA9700131520 /* ScanningView.swift */,
 				4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */,
-				8C724D602AE7139F00E6D0FF /* Overlay.swift */,
+				8C724D772AEEEC2C00E6D0FF /* SelectMethodView.swift */,
+				8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */,
+				8C724D7B2AEEED2700E6D0FF /* AfterUploadFileView.swift */,
 			);
 			path = SpaceBlender;
 			sourceTree = "<group>";
@@ -282,11 +288,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */,
+				8C724D782AEEEC2C00E6D0FF /* SelectMethodView.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
-				8C724D612AE7139F00E6D0FF /* Overlay.swift in Sources */,
 				4592B5B02AE2D7FA000227B3 /* ModelView.swift in Sources */,
 				4575C9D12AD1FA9700131520 /* ScanningView.swift in Sources */,
 				4575C9D42AD1FAEB00131520 /* RoomCaptureController.swift in Sources */,
+				8C724D7C2AEEED2700E6D0FF /* AfterUploadFileView.swift in Sources */,
+				8C724D7A2AEEED1A00E6D0FF /* UploadFileView.swift in Sources */,
 				4575C9CB2AD1E94500131520 /* MainView.swift in Sources */,
 				4575C9CF2AD1F50900131520 /* ModelStore.swift in Sources */,
 				4575C9CD2AD1ED9E00131520 /* OnBoardingView.swift in Sources */,

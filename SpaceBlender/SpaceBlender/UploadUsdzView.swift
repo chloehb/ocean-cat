@@ -59,10 +59,14 @@ struct UploadUsdzView: View {
             }.fileImporter(isPresented: $showDocumentPicker, allowedContentTypes: [UTType.usdz], allowsMultipleSelection: false) {
                 result in
                 switch result {
-                case .success(_):
-                    print("sucess")
-                case .failure(_):
-                    print("error")
+                case .success(let urls):
+                    if let url = urls.first {
+                        print("Selected URLs: \(url)")
+                    } else {
+                        print("Empty URLS")
+                    }
+                case .failure(let error):
+                    print("File picker error: \(error.localizedDescription)")
                 }
             }
         }

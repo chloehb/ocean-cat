@@ -136,14 +136,11 @@
 				452C298C2AEC87CB00434784 /* PersistenceController.swift */,
 				4575C9D02AD1FA9700131520 /* ScanningView.swift */,
 				4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */,
-<<<<<<< HEAD
 				8C724D772AEEEC2C00E6D0FF /* SelectMethodView.swift */,
 				8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */,
 				8C724D7B2AEEED2700E6D0FF /* AfterUploadFileView.swift */,
-=======
 				8C724D602AE7139F00E6D0FF /* Overlay.swift */,
 				6CF29A4A2AEEBD8A00C0C11D /* 2dGeneration.swift */,
->>>>>>> 77cd8af111036575b17690be7dc74bea977cab40
 			);
 			path = SpaceBlender;
 			sourceTree = "<group>";

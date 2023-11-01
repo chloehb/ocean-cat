@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		452089FB2AEEDF8C0047F521 /* UploadUsdzView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452089FA2AEEDF8C0047F521 /* UploadUsdzView.swift */; };
+		452089FB2AEEDF8C0047F521 /* UploadJsonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452089FA2AEEDF8C0047F521 /* UploadJsonView.swift */; };
 		452C29852AEC76B600434784 /* MinimalDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C29842AEC76B600434784 /* MinimalDemo.swift */; };
 		452C298B2AEC85BB00434784 /* AllData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 452C29892AEC85BB00434784 /* AllData.xcdatamodeld */; };
 		452C298D2AEC87CB00434784 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C298C2AEC87CB00434784 /* PersistenceController.swift */; };
@@ -47,7 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		452089FA2AEEDF8C0047F521 /* UploadUsdzView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadUsdzView.swift; sourceTree = "<group>"; };
+		452089FA2AEEDF8C0047F521 /* UploadJsonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadJsonView.swift; sourceTree = "<group>"; };
 		452C29842AEC76B600434784 /* MinimalDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalDemo.swift; sourceTree = "<group>"; };
 		452C298A2AEC85BB00434784 /* AllData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AllData.xcdatamodel; sourceTree = "<group>"; };
 		452C298C2AEC87CB00434784 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 				4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */,
 				8C724D602AE7139F00E6D0FF /* Overlay.swift */,
 				6CF29A4A2AEEBD8A00C0C11D /* 2dGeneration.swift */,
-				452089FA2AEEDF8C0047F521 /* UploadUsdzView.swift */,
+				452089FA2AEEDF8C0047F521 /* UploadJsonView.swift */,
 			);
 			path = SpaceBlender;
 			sourceTree = "<group>";
@@ -297,7 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */,
-				452089FB2AEEDF8C0047F521 /* UploadUsdzView.swift in Sources */,
+				452089FB2AEEDF8C0047F521 /* UploadJsonView.swift in Sources */,
 				6CF29A4B2AEEBD8A00C0C11D /* 2dGeneration.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
 				452C29852AEC76B600434784 /* MinimalDemo.swift in Sources */,
@@ -474,9 +474,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpaceBlender/Preview Content\"";
-				DEVELOPMENT_TEAM = 2967J4K9H9;
+				DEVELOPMENT_TEAM = 76326T3R9Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "RoomCaptureView Requires Camera Access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -488,7 +489,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender3;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -504,9 +505,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpaceBlender/Preview Content\"";
-				DEVELOPMENT_TEAM = 2967J4K9H9;
+				DEVELOPMENT_TEAM = 76326T3R9Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "RoomCaptureView Requires Camera Access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -518,7 +520,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender3;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

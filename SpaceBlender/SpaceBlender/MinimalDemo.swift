@@ -303,7 +303,7 @@ struct SceneKitView: UIViewRepresentable {
             // todo: make some adjustment to ensure a continuous rotation
             sceneView.pointOfView?.position.x = deltaX
             sceneView.pointOfView?.position.z = deltaZ
-            print(sceneView.pointOfView!.eulerAngles, sceneView.pointOfView!.position)
+//            print(sceneView.pointOfView!.eulerAngles, sceneView.pointOfView!.position)
             
             // Reset the gesture's rotation to avoid cumulative rotation
             gesture.rotation = 0
@@ -343,15 +343,6 @@ struct SceneKitView: UIViewRepresentable {
                             lastMoveDirection = .ZAxis
                         }
                     }
-                    //                    print(translation)
-                    //                    switch lastMoveDirection {
-                    //                    case .XAxis:
-                    //                        print("XAxis")
-                    //                    case .ZAxis:
-                    //                        print("ZAxis")
-                    //                    case nil:
-                    //                        print("nil")
-                    //                    }
                     let deltaX = Float(translation.x - lastPanLocation.x)
                     let deltaZ = Float(translation.y - lastPanLocation.y)
                     selectedNode.position.x += deltaX / 100 // Adjust the scale as needed

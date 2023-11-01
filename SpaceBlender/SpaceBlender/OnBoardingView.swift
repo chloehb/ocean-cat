@@ -33,6 +33,7 @@ struct OnBoardingView: View {
                 .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
                 .cornerRadius(20)
                 .shadow(color: .blue, radius: 3, y: 3)
+                NavigationLink(destination: UploadUsdzView(), label: {Text("Upload File")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
             }
         }
     }

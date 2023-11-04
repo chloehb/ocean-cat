@@ -41,41 +41,73 @@ func getPacketFromData(data: Data) -> CapturedRoom?{
 
 final class ModelStore: ObservableObject {
     static let shared = ModelStore() // create one instance of the class to be shared
+    
+    // if errors like "Fail to store." occurs, set it to true and rebuild the app, then set back to false and everything should be ok
+    let clearAllWhenInit = false
+    
     private init() {
         let context = PersistenceController.shared.container.viewContext
         let fetchRequest: NSFetchRequest<RoomModelData> = RoomModelData.fetchRequest()
+        
+        if clearAllWhenInit {
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+            do {
+                try context.execute(deleteRequest)
+            } catch {
+                // Handle the error
+            }
+        }
 
         do {
             let roomModels = try context.fetch(fetchRequest)
-            // todo: add all stored models
             if !roomModels.isEmpty {
-                let fetchedModel = RoomModel(identifier: roomModels[0].identifier, name: roomModels[0].name, model: getPacketFromData(data: roomModels[0].model!), date: roomModels[0].date, image: roomModels[0].image)
-                models.append(fetchedModel)
+                for eachModel in roomModels {
+                    let name = eachModel.name
+                    let fetchedModel = RoomModel(identifier: eachModel.identifier, name: eachModel.name, model: getPacketFromData(data: eachModel.model!), date: eachModel.date, image: eachModel.image)
+                    models.append(fetchedModel)
+                }
             }
             // Convert roomModels to your RoomModel struct as needed
         } catch {
-            // Handle the error
+            print("error when fetching stored models: \(error)")
         }
     }
     @Published var models = [RoomModel]()
     func addNewModel(_ model: RoomModel) {
+        // first append the newly added model
         self.models.append(model)
-    }
-    
-    func storeModels() {
         let context = PersistenceController.shared.container.viewContext
-        let modelData = RoomModelData(context: context)
-        // currently, only store the first model to AllData todo: add all
-        modelData.identifier = models[0].identifier
-        modelData.name = models[0].name
-        modelData.date = models[0].date
-        modelData.image = models[0].image
-        modelData.model = getDataFromPacket(packet: models[0].model!)
-        
+        // check the number of current models = context models + 1
+        let fetchRequest: NSFetchRequest<RoomModelData> = RoomModelData.fetchRequest()
+        var isLegalCount = false
         do {
-            try context.save()
+            let roomModels = try context.fetch(fetchRequest)
+            print(roomModels.count)
+            print(models.count)
+            if roomModels.count + 1 == models.count {
+                isLegalCount = true
+            } else {
+                
+            }
         } catch {
-            // Handle the error
+            print("error when fetching stored models: \(error)")
+        }
+        // sync with core data
+        if isLegalCount {
+            let model = models.last!
+            let newModelData = RoomModelData(context: context)
+            newModelData.identifier = model.identifier
+            newModelData.name = model.name
+            newModelData.date = model.date
+            newModelData.image = model.image
+            newModelData.model = getDataFromPacket(packet: model.model!)
+            do {
+                try context.save()
+            } catch {
+                print("error when try to store newly added model: \(error)")
+            }
+        } else {
+            print("The number of stored model mismatch. Fail to store.")
         }
     }
 }

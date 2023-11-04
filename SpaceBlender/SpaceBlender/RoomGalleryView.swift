@@ -38,7 +38,7 @@ struct RoomGalleryView: View {
                             Text(date + " " + name).font(.title).multilineTextAlignment(.center)
                             Spacer()
                         }
-                        NavigationLink(destination: MinimalDemoView(showing: $isPresentingDemo), label: {Text("Test Model View")}).simultaneousGesture(TapGesture().onEnded{
+                        NavigationLink(destination: MinimalDemoView(showing: $isPresentingDemo), label: {Text("")}).simultaneousGesture(TapGesture().onEnded{
                             isPresentingDemo.toggle()
                             // todo: need to specify which room model is shown, currently, always the first one
                         }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)

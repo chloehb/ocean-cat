@@ -44,7 +44,7 @@ struct MinimalDemoView: View {
     //    @State var shareableUrl: URL?
     @State private var text = ""
     @State private var jsonFileName = "export.json"
-    
+    @State private var isPresentingSurvey = false
     func exportJson() {
         do {
             let encoder = JSONEncoder()
@@ -115,7 +115,7 @@ struct MinimalDemoView: View {
                     
                     Spacer()
                 }
-                NavigationLink(destination: SurveyView(), label: {Text("Auto-layout")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).padding()
+                NavigationLink(destination: SurveyView(isPresented: $isPresentingSurvey), label: {Text("Auto-layout")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).padding()
             }
             .padding()
         }

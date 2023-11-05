@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SurveyView: View {
-
+    @Binding var isPresented: Bool
     @ObservedObject var store = ModelStore.shared
     @State private var isPresentingPostAlgo = false
     

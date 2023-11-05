@@ -12,7 +12,7 @@ struct SurveyView: View {
     @Binding var isPresented: Bool
     @ObservedObject var store = ModelStore.shared
     @State private var isPresentingPostAlgo = false
-    
+    @State var index: Int
     @State var hasRoommate: Bool? = nil
     @State var bedsTogether: Bool? = nil
     @State var objectByWindow: String? = nil
@@ -168,7 +168,7 @@ struct SurveyView: View {
                     // will go to next page
                     isPresentingPostAlgo.toggle()
                     print(isPresentingPostAlgo)
-                    smartAdjust(hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
+                    smartAdjust(index: index, hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
                     
                     
                 } label: {
@@ -190,7 +190,7 @@ struct SurveyView: View {
         
     }
 }
-func smartAdjust(hasRoommate: Bool?, bedsTogether: Bool?, bedFacingDoor: Bool?, objectByWindow: String?, floorSpace: Bool?){
+func smartAdjust(index: Int, hasRoommate: Bool?, bedsTogether: Bool?, bedFacingDoor: Bool?, objectByWindow: String?, floorSpace: Bool?){
     // A matrix that defines the surface’s position and orientation in the scene.
     // var transform: simd_float4x4 { get }
     

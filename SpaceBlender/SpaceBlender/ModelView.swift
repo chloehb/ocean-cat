@@ -115,7 +115,7 @@ struct MinimalDemoView: View {
                     
                     Spacer()
                 }
-                NavigationLink(destination: SurveyView(isPresented: $isPresentingSurvey), label: {Text("Auto-layout")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).padding()
+                NavigationLink(destination: SurveyView(isPresented: $isPresentingSurvey, index: index), label: {Text("Auto-layout")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).padding()
             }
             .padding()
         }

@@ -29,6 +29,7 @@
 		8C724D782AEEEC2C00E6D0FF /* SelectMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D772AEEEC2C00E6D0FF /* SelectMethodView.swift */; };
 		8C724D7A2AEEED1A00E6D0FF /* UploadFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */; };
 		8C724D7C2AEEED2700E6D0FF /* AfterUploadFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D7B2AEEED2700E6D0FF /* AfterUploadFileView.swift */; };
+		8CC7420E2AF839C900824939 /* FurnitureScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC7420D2AF839C900824939 /* FurnitureScanView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		8C724D772AEEEC2C00E6D0FF /* SelectMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMethodView.swift; sourceTree = "<group>"; };
 		8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileView.swift; sourceTree = "<group>"; };
 		8C724D7B2AEEED2700E6D0FF /* AfterUploadFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterUploadFileView.swift; sourceTree = "<group>"; };
+		8CC7420D2AF839C900824939 /* FurnitureScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurnitureScanView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */,
 				8C724D7B2AEEED2700E6D0FF /* AfterUploadFileView.swift */,
 				6CF29A4A2AEEBD8A00C0C11D /* 2dGeneration.swift */,
+				8CC7420D2AF839C900824939 /* FurnitureScanView.swift */,
 			);
 			path = SpaceBlender;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				8C724D7A2AEEED1A00E6D0FF /* UploadFileView.swift in Sources */,
 				4575C9CB2AD1E94500131520 /* MainView.swift in Sources */,
 				4575C9CF2AD1F50900131520 /* ModelStore.swift in Sources */,
+				8CC7420E2AF839C900824939 /* FurnitureScanView.swift in Sources */,
 				4575C9CD2AD1ED9E00131520 /* OnBoardingView.swift in Sources */,
 				4575C9A12AD1E5E300131520 /* SpaceBlenderApp.swift in Sources */,
 			);

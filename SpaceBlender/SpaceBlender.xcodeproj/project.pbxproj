@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D75802B2AF439CA0033D6A2 /* PostAlgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D75802A2AF439CA0033D6A2 /* PostAlgo.swift */; };
 		0DDF82682AEEF903002146E2 /* SurveyAlgoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF82672AEEF903002146E2 /* SurveyAlgoView.swift */; };
 		452C29852AEC76B600434784 /* MinimalDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C29842AEC76B600434784 /* MinimalDemo.swift */; };
 		452C298B2AEC85BB00434784 /* AllData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 452C29892AEC85BB00434784 /* AllData.xcdatamodeld */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D75802A2AF439CA0033D6A2 /* PostAlgo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAlgo.swift; sourceTree = "<group>"; };
 		0DDF82672AEEF903002146E2 /* SurveyAlgoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyAlgoView.swift; sourceTree = "<group>"; };
 		452C29842AEC76B600434784 /* MinimalDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalDemo.swift; sourceTree = "<group>"; };
 		452C298A2AEC85BB00434784 /* AllData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AllData.xcdatamodel; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				0DDF82672AEEF903002146E2 /* SurveyAlgoView.swift */,
+				0D75802A2AF439CA0033D6A2 /* PostAlgo.swift */,
 				4575C9A02AD1E5E300131520 /* SpaceBlenderApp.swift */,
 				4592B5AF2AE2D7FA000227B3 /* ModelView.swift */,
 				452C29892AEC85BB00434784 /* AllData.xcdatamodeld */,
@@ -314,6 +317,7 @@
 				4592B5B02AE2D7FA000227B3 /* ModelView.swift in Sources */,
 				4575C9D12AD1FA9700131520 /* ScanningView.swift in Sources */,
 				4575C9D42AD1FAEB00131520 /* RoomCaptureController.swift in Sources */,
+				0D75802B2AF439CA0033D6A2 /* PostAlgo.swift in Sources */,
 				8C724D7C2AEEED2700E6D0FF /* AfterUploadFileView.swift in Sources */,
 				8C724D7A2AEEED1A00E6D0FF /* UploadFileView.swift in Sources */,
 				4575C9CB2AD1E94500131520 /* MainView.swift in Sources */,
@@ -483,7 +487,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpaceBlender/Preview Content\"";
-				DEVELOPMENT_TEAM = 76326T3R9Q;
+				DEVELOPMENT_TEAM = H4GC43W274;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -498,7 +502,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.arkit-sample-app--SAMPLE-CODE-DISAMBIGUATOR-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -514,7 +518,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpaceBlender/Preview Content\"";
-				DEVELOPMENT_TEAM = 76326T3R9Q;
+				DEVELOPMENT_TEAM = H4GC43W274;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -529,7 +533,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.oceancat.SpaceBlender2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.arkit-sample-app--SAMPLE-CODE-DISAMBIGUATOR-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

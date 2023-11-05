@@ -20,9 +20,6 @@ struct RoomGalleryView: View {
                 Text("There are \(store.models.count) model(s)")
                 List(store.models, id: \.name) { //identifer was not unique
                     model in
-                    //Text(model.date!)
-                    //Text(model.name!)
-                    //Text(model.image!)
                     
                     let image = "ex_room"
                     let date = model.date!
@@ -48,8 +45,6 @@ struct RoomGalleryView: View {
                     .padding()
                     
                 }
-                // ONE room card:
-                
             }
         }
     }

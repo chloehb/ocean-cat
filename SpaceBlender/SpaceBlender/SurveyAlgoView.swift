@@ -9,8 +9,9 @@ import Foundation
 import SwiftUI
 
 struct SurveyView: View {
-    //@Binding var isPresented: Bool
+
     @ObservedObject var store = ModelStore.shared
+    @State private var isPresentingPostAlgo = false
     
     @State var hasRoommate: Bool? = nil
     @State var bedsTogether: Bool? = nil
@@ -165,6 +166,11 @@ struct SurveyView: View {
                 Spacer()
                 Button {
                     // will go to next page
+                    isPresentingPostAlgo.toggle()
+                    print(isPresentingPostAlgo)
+                    smartAdjust(hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
+                    
+                    
                 } label: {
                     Text("Submit")
                         .padding()
@@ -175,7 +181,43 @@ struct SurveyView: View {
                 .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
                 .cornerRadius(20)
                 .shadow(color: .blue, radius: 3, y: 3)
-            } .padding()
+            } 
+            .padding()
+            .navigationDestination(isPresented: $isPresentingPostAlgo) {
+                PostAlgo(isPresented: $isPresentingPostAlgo)
+            }
+        }
+        
+    }
+}
+func smartAdjust(hasRoommate: Bool?, bedsTogether: Bool?, bedFacingDoor: Bool?, objectByWindow: String?, floorSpace: Bool?){
+    // A matrix that defines the surface’s position and orientation in the scene.
+    // var transform: simd_float4x4 { get }
+    
+    if hasRoommate! && bedsTogether! {}
+        // beds close to each other
+        
+    if hasRoommate! && !bedsTogether! {}
+        // beds on opposite walls
+    
+    if bedFacingDoor! {}
+        // check orientation of bed
+    
+    if objectByWindow! == "Desk" {}
+        // find cooordinates of window
+        // enum CapturedElementCategory - > window
+        // check width of desk to ensure it can go on same wall as window
+        // center desk under window
+        
+    if objectByWindow! == "Bed" {}
+        // find coordinates of window
+        // check width of bed to ensure it can go on same wall as window
+        // place bed on the same wall (do not center, line up in a corner)
+        
+    if floorSpace! {
+        // place furniture on parameter near walls
+        if bedsTogether! {
+            // Don't moved bed, move all other furniture
         }
     }
 }

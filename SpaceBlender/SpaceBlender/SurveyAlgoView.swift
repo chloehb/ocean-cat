@@ -194,29 +194,46 @@ func smartAdjust(hasRoommate: Bool?, bedsTogether: Bool?, bedFacingDoor: Bool?, 
     // A matrix that defines the surface’s position and orientation in the scene.
     // var transform: simd_float4x4 { get }
     
-    if hasRoommate! && bedsTogether! {}
-        // beds close to each other
-        
-    if hasRoommate! && !bedsTogether! {}
-        // beds on opposite walls
+    if let hasRoommate {
+        if let bedsTogether {
+            if  bedsTogether {
+                
+            }
+            else {
+                
+            }
+        }
+    }
     
-    if bedFacingDoor! {}
-        // check orientation of bed
+    // check orientation of bed
+    if let bedFacingDoor {
+        
+    }
+        
     
-    if objectByWindow! == "Desk" {}
-        // find cooordinates of window
-        // enum CapturedElementCategory - > window
-        // check width of desk to ensure it can go on same wall as window
-        // center desk under window
+    // find cooordinates of window
+    // enum CapturedElementCategory - > window
+    // check width of desk to ensure it can go on same wall as window
+    // center desk under window
+    
+    if let objectByWindow {
+        if objectByWindow == "Desk" {
+            
+        }
+    }
+       
+    // find coordinates of window
+    // check width of bed to ensure it can go on same wall as window
+    // place bed on the same wall (do not center, line up in a corner)
+    if let objectByWindow {
+        if objectByWindow == "Bed" {
+        }
+    }
         
-    if objectByWindow! == "Bed" {}
-        // find coordinates of window
-        // check width of bed to ensure it can go on same wall as window
-        // place bed on the same wall (do not center, line up in a corner)
         
-    if floorSpace! {
+    if let floorSpace {
         // place furniture on parameter near walls
-        if bedsTogether! {
+        if let bedsTogether {
             // Don't moved bed, move all other furniture
         }
     }

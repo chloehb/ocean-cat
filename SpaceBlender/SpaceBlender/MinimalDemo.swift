@@ -35,6 +35,7 @@ extension SCNNode {
 
 struct SceneKitView: UIViewRepresentable {
     @ObservedObject var store = ModelStore.shared
+    @State var index: Int
     // the id of selected Node
     
     var scene = SCNScene()
@@ -49,101 +50,108 @@ struct SceneKitView: UIViewRepresentable {
         
         scene.background.contents = Color.black
         scene.physicsWorld.gravity = SCNVector3(0, 0, 0)
-        
-        let roomScan = store.models[0].model!
+        print(index)
+        print(store.models.count)
+        let roomScan = store.models[index].model!
         
         // all floors
-        for i in 0...(roomScan.floors.endIndex-1) {
-            
-            //Generate new wall geometry
-            let scannedFloor = roomScan.floors[i]
-            
-            let length = 0.2
-            let width = scannedFloor.dimensions.x
-            let height = scannedFloor.dimensions.y
-            let newFloor = SCNBox(
-                width: CGFloat(width),
-                height: CGFloat(height),
-                length: CGFloat(length),
-                chamferRadius: 0
-            )
-            
-            newFloor.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.85, blue: 1, alpha: 1)
-            newFloor.firstMaterial?.transparency = 1
-            
-            //Generate new SCNNode
-            let newNode = SCNNode(geometry: newFloor)
-            newNode.simdTransform = scannedFloor.transform
-            newNode.movabilityHint = .fixed
-            newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
-            newNode.physicsBody?.categoryBitMask = roomScan.objects.endIndex
-            for j in 0...(roomScan.objects.endIndex-1) {
-                newNode.physicsBody?.collisionBitMask = j
+        if roomScan.floors.endIndex-1 > 0 {
+            for i in 0...(roomScan.floors.endIndex-1) {
+                
+                //Generate new wall geometry
+                let scannedFloor = roomScan.floors[i]
+                
+                let length = 0.2
+                let width = scannedFloor.dimensions.x
+                let height = scannedFloor.dimensions.y
+                let newFloor = SCNBox(
+                    width: CGFloat(width),
+                    height: CGFloat(height),
+                    length: CGFloat(length),
+                    chamferRadius: 0
+                )
+                
+                newFloor.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.85, blue: 1, alpha: 1)
+                newFloor.firstMaterial?.transparency = 1
+                
+                //Generate new SCNNode
+                let newNode = SCNNode(geometry: newFloor)
+                newNode.simdTransform = scannedFloor.transform
+                newNode.movabilityHint = .fixed
+                newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
+                newNode.physicsBody?.categoryBitMask = roomScan.objects.endIndex
+                for j in 0...(roomScan.objects.endIndex-1) {
+                    newNode.physicsBody?.collisionBitMask = j
+                }
+                scene.rootNode.addChildNode(newNode)
             }
-            scene.rootNode.addChildNode(newNode)
         }
         
         // add all walls
-        for i in 0...(roomScan.walls.endIndex-1) {
-            
-            //Generate new wall geometry
-            let scannedWall = roomScan.walls[i]
-            
-            let length = 0.2
-            let width = scannedWall.dimensions.x
-            let height = scannedWall.dimensions.y
-            let newWall = SCNBox(
-                width: CGFloat(width),
-                height: CGFloat(height),
-                length: CGFloat(length),
-                chamferRadius: 0
-            )
-            
-            newWall.firstMaterial?.diffuse.contents = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
-            newWall.firstMaterial?.transparency = 1
-            
-            //Generate new SCNNode
-            let newNode = SCNNode(geometry: newWall)
-            newNode.simdTransform = scannedWall.transform
-            newNode.movabilityHint = .fixed
-            newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
-            newNode.physicsBody?.categoryBitMask = roomScan.objects.endIndex
-            for j in 0...(roomScan.objects.endIndex-1) {
-                newNode.physicsBody?.collisionBitMask = j
+        if roomScan.walls.endIndex-1 > 0 {
+            for i in 0...(roomScan.walls.endIndex-1) {
+                
+                //Generate new wall geometry
+                let scannedWall = roomScan.walls[i]
+                
+                let length = 0.2
+                let width = scannedWall.dimensions.x
+                let height = scannedWall.dimensions.y
+                let newWall = SCNBox(
+                    width: CGFloat(width),
+                    height: CGFloat(height),
+                    length: CGFloat(length),
+                    chamferRadius: 0
+                )
+                
+                newWall.firstMaterial?.diffuse.contents = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
+                newWall.firstMaterial?.transparency = 1
+                
+                //Generate new SCNNode
+                let newNode = SCNNode(geometry: newWall)
+                newNode.simdTransform = scannedWall.transform
+                newNode.movabilityHint = .fixed
+                newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
+                newNode.physicsBody?.categoryBitMask = roomScan.objects.endIndex
+                for j in 0...(roomScan.objects.endIndex-1) {
+                    newNode.physicsBody?.collisionBitMask = j
+                }
+                
+                scene.rootNode.addChildNode(newNode)
             }
-            
-            scene.rootNode.addChildNode(newNode)
         }
         
         // add all objects
-        for i in 0...(roomScan.objects.endIndex-1) {
-            
-            //Generate new wall geometry
-            let scannedObject = roomScan.objects[i]
-            
-            let length = scannedObject.dimensions.z
-            let width = scannedObject.dimensions.x
-            let height = scannedObject.dimensions.y
-            let newObject = SCNBox(
-                width: CGFloat(width),
-                height: CGFloat(height),
-                length: CGFloat(length),
-                chamferRadius: 0
-            )
-            
-            newObject.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1)
-            newObject.firstMaterial?.transparency = 1
-            
-            //Generate new SCNNode
-            let newNode = SCNNode(geometry: newObject)
-            newNode.name = String(i) // only objects have name
-            newNode.simdTransform = scannedObject.transform
-            newNode.movabilityHint = .movable
-            newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
-            newNode.physicsBody?.categoryBitMask = i
-            newNode.physicsBody?.collisionBitMask = roomScan.objects.endIndex
-            newNode.state = .UnSelected
-            scene.rootNode.addChildNode(newNode)
+        if roomScan.objects.endIndex-1 > 0 {
+            for i in 0...(roomScan.objects.endIndex-1) {
+                
+                //Generate new wall geometry
+                let scannedObject = roomScan.objects[i]
+                
+                let length = scannedObject.dimensions.z
+                let width = scannedObject.dimensions.x
+                let height = scannedObject.dimensions.y
+                let newObject = SCNBox(
+                    width: CGFloat(width),
+                    height: CGFloat(height),
+                    length: CGFloat(length),
+                    chamferRadius: 0
+                )
+                
+                newObject.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1)
+                newObject.firstMaterial?.transparency = 1
+                
+                //Generate new SCNNode
+                let newNode = SCNNode(geometry: newObject)
+                newNode.name = String(i) // only objects have name
+                newNode.simdTransform = scannedObject.transform
+                newNode.movabilityHint = .movable
+                newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
+                newNode.physicsBody?.categoryBitMask = i
+                newNode.physicsBody?.collisionBitMask = roomScan.objects.endIndex
+                newNode.state = .UnSelected
+                scene.rootNode.addChildNode(newNode)
+            }
         }
         
         // Create directional light

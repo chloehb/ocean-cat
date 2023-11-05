@@ -19,12 +19,13 @@ struct RoomGalleryView: View {
             VStack {
                 Text("Room Gallery").font(.title)
                 Text("There are \(store.models.count) model(s)")
-                List(store.models, id: \.name) { //identifer was not unique
-                    model in
+                List(0..<store.models.count) { //identifer was not unique
                     
+                    index in
                     let image = "ex_room"
-                    let date = model.date!
-                    let name = model.name!
+                    let date = store.models[index].date!
+                    let name = store.models[index].name!
+                    
                     VStack(alignment: .leading, spacing: 20.0) {
                         
                         Image(image)
@@ -36,10 +37,8 @@ struct RoomGalleryView: View {
                             Text(date + " " + name).font(.title).multilineTextAlignment(.center)
                             Spacer()
                         }
-                        NavigationLink(destination: MinimalDemoView(showing: $isPresentingDemo), label: {Text("")}).simultaneousGesture(TapGesture().onEnded{
-                            isPresentingDemo.toggle()
-                            // todo: need to specify which room model is shown, currently, always the first one
-                        }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
+                        NavigationLink(destination: MinimalDemoView(index: index), label: {Text("")})
+                        .buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
                     }
                     .padding()
                     .background(Rectangle().foregroundColor(.white).cornerRadius(15).shadow(radius: 15))

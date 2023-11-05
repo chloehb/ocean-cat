@@ -31,6 +31,8 @@ struct ActivityViewControllerRep: UIViewControllerRepresentable {
 }
 
 struct ScanningView: View {
+    
+    @State private var isPresentingRoomGallery = false
     @Environment(\.dismiss) private var dismiss
     @StateObject var captureController = RoomCaptureController.instance
     @ObservedObject var store = ModelStore.shared
@@ -67,12 +69,10 @@ struct ScanningView: View {
             //                ActivityViewControllerRep(items: [captureController.exportUrl!])
             //            })
             VStack {
-               NavigationLink(destination: ModelView(), label: {Text("Go to model view")} ).simultaneousGesture(TapGesture().onEnded{
+                NavigationLink(destination: RoomGalleryView(isPresented: $isPresentingRoomGallery), label: {Text("Save to Room Gallery")} ).simultaneousGesture(TapGesture().onEnded{
+                    isPresentingRoomGallery.toggle()
                    captureController.done(message: message)
                    print("After call done: there are \(store.models.count) models")
-               }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).opacity(captureController.showExportButton ? 1 : 0).padding()
-               NavigationLink(destination: SurveyView(), label: {Text("Auto-layout")} ).simultaneousGesture(TapGesture().onEnded{
-                   captureController.done(message: message)
                }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).opacity(captureController.showExportButton ? 1 : 0).padding()
            }
         }

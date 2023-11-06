@@ -190,6 +190,24 @@ struct SurveyView: View {
         
     }
 }
+
+
+// transform -> location
+
+struct Adjuster {
+    // everything needed to be initialize
+    // dimensions : ()
+    // bed : [location] 1/2 bed
+    // desk : [location]
+    // door : [location]
+    // window : [location]
+    // 1. read the boolean and the index of room model, and initialize everything needed
+    // 2. use the initalized info fill in the properties as much as we can (use the categories)
+    // 3. clear all the objects
+    // 4. add bed and desk back
+}
+
+
 func smartAdjust(index: Int, hasRoommate: Bool?, bedsTogether: Bool?, bedFacingDoor: Bool?, objectByWindow: String?, floorSpace: Bool?){
     // A matrix that defines the surface’s position and orientation in the scene.
     // var transform: simd_float4x4 { get }

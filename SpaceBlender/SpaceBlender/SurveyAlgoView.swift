@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import RoomPlan
+import SceneKit
 
 struct SurveyView: View {
     @Binding var isPresented: Bool
@@ -169,9 +170,9 @@ struct SurveyView: View {
                     // will go to next page
                     isPresentingPostAlgo.toggle()
                     print(isPresentingPostAlgo)
-                    smartAdjust(index: index, hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
-                    
-                    
+                    let adj = Adjuster(index: index, hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
+                    adj.smartAdjust()
+//                    adj.generateResult()
                 } label: {
                     Text("Submit")
                         .padding()
@@ -193,105 +194,9 @@ struct SurveyView: View {
 }
 
 
-struct Location {
-// transform -> location
-    private var
-}
 
 
-struct Adjuster {
-    // everything needed to be initialize
-    // dimensions : ()
-    // bed : [location] 1/2 bed
-    // desk : [location]
-    // door : [location]
-    // window : [location]
-    // 1. read the boolean and the index of room model, and initialize everything needed
-    // 2. use the initalized info fill in the properties as much as we can (use the categories)
-    // 3. clear all the objects
-    // 4. add bed and desk back
-    private var room: CapturedRoom? = nil
-    private var length: Float = 0
-    private var width: Float = 0
-    private var hasRoommate: Bool? = nil
-    private var bedsTogether: Bool? = nil
-    private var bedFacingDoor: Bool? = nil
-    private var objectByWindow: String? = nil
-    private var floorSpace: Bool? = nil
-    
-    @ObservedObject var store = ModelStore.shared
-    
-    init(index: Int, hasRoommate: Bool?, bedsTogether: Bool?, bedFacingDoor: Bool?,
-         objectByWindow: String?, floorSpace: Bool?){
-        self.room = store.models[index].model
-        self.length = (room?.floors[0].dimensions.x)!
-        self.width = (room?.floors[0].dimensions.z)!
-        self.hasRoommate = hasRoommate
-        self.bedsTogether = bedsTogether
-        self.bedFacingDoor = bedFacingDoor
-        self.objectByWindow = objectByWindow
-        self.floorSpace = floorSpace
-        if let room = self.room {
-            for obj in room.objects {
-                switch obj.category {
-                case .bed:
-                    <#code#>
-                case .table:
-                    <#code#>
-                default:
-                    continue
-                }
-            }
-        }
-    }
-}
 
 
-func smartAdjust(index: Int, hasRoommate: Bool?, bedsTogether: Bool?, bedFacingDoor: Bool?, objectByWindow: String?, floorSpace: Bool?){
-    // A matrix that defines the surface’s position and orientation in the scene.
-    // var transform: simd_float4x4 { get }
+// move the function into Adjuster
 
-    if let hasRoommate {
-        if let bedsTogether {
-            if  bedsTogether {
-                
-            }
-            else {
-                
-            }
-        }
-    }
-    
-    // check orientation of bed
-    if let bedFacingDoor {
-        
-    }
-        
-    
-    // find cooordinates of window
-    // enum CapturedElementCategory - > window
-    // check width of desk to ensure it can go on same wall as window
-    // center desk under window
-    
-    if let objectByWindow {
-        if objectByWindow == "Desk" {
-            
-        }
-    }
-       
-    // find coordinates of window
-    // check width of bed to ensure it can go on same wall as window
-    // place bed on the same wall (do not center, line up in a corner)
-    if let objectByWindow {
-        if objectByWindow == "Bed" {
-        }
-    }
-        
-        
-    if let floorSpace {
-        // place furniture on parameter near walls
-        if let bedsTogether {
-            // Don't moved bed, move all other furniture
-        }
-    }
-}

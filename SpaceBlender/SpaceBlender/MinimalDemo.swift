@@ -32,6 +32,11 @@ extension SCNNode {
     }
 }
 
+//func getDiffRotation(q1: SCNQuaternion, q2: SCNQuaternion) -> SCNQuaternion {
+//    let abs1 = sqrt(q1.x * q1.x + q1.y * q1.y + q1.z * q1.z + q1.w * q1.w)
+//    let inv = SCNQuaternion(q1.x / abs1, -q1.y / abs1, -q1.z / abs1, -q1.w / abs1)
+//    return q2 * inv
+//}
 
 struct SceneKitView: UIViewRepresentable {
     @ObservedObject var store = ModelStore.shared
@@ -46,16 +51,17 @@ struct SceneKitView: UIViewRepresentable {
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
         // Disable the default camera control
-//        view.allowsCameraControl = true
+        view.allowsCameraControl = true
         
         scene.background.contents = Color.black
         scene.physicsWorld.gravity = SCNVector3(0, 0, 0)
-        print(index)
-        print(store.models.count)
+        var deltaPos: SCNVector3? = nil
+//        var deltaRotate: SCNQuaternion? = nil
         let roomScan = store.models[index].model!
+    
         
         // all floors
-        if roomScan.floors.endIndex-1 > 0 {
+        if roomScan.floors.endIndex > 0 {
             for i in 0...(roomScan.floors.endIndex-1) {
                 
                 //Generate new wall geometry
@@ -72,17 +78,52 @@ struct SceneKitView: UIViewRepresentable {
                 )
                 
                 newFloor.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.85, blue: 1, alpha: 1)
-                newFloor.firstMaterial?.transparency = 1
+                newFloor.firstMaterial?.transparency = 0.5
                 
                 //Generate new SCNNode
                 let newNode = SCNNode(geometry: newFloor)
                 newNode.simdTransform = scannedFloor.transform
+                newNode.name = "floor \(i)"
                 newNode.movabilityHint = .fixed
-                newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
-                newNode.physicsBody?.categoryBitMask = roomScan.objects.endIndex
-                for j in 0...(roomScan.objects.endIndex-1) {
-                    newNode.physicsBody?.collisionBitMask = j
+                deltaPos = SCNVector3(0 - newNode.position.x, 0 - newNode.position.y, 0 - newNode.position.z)
+                newNode.position = SCNVector3(0, 0, 0)
+//                newNode.rotation = SCNVector4(x: -1, y: 0, z: 0, w: Float.pi / 2)
+                
+//                newNode.rotate(by: <#T##SCNQuaternion#>, aroundTarget: SCNVector3(0, 0, 0))
+                print(newNode.simdRotation)
+                scene.rootNode.addChildNode(newNode)
+            }
+        }
+        
+        // all doors
+        if roomScan.doors.endIndex > 0 {
+            for i in 0...(roomScan.floors.endIndex-1) {
+                
+                //Generate new wall geometry
+                let scannedDoor = roomScan.doors[i]
+                
+                let length = 0.3
+                let width = scannedDoor.dimensions.x
+                let height = scannedDoor.dimensions.y
+                let newDoor = SCNBox(
+                    width: CGFloat(width),
+                    height: CGFloat(height),
+                    length: CGFloat(length),
+                    chamferRadius: 0
+                )
+                
+                newDoor.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.85, blue: 1, alpha: 1)
+                newDoor.firstMaterial?.transparency = 0.9
+                
+                //Generate new SCNNode
+                let newNode = SCNNode(geometry: newDoor)
+                newNode.simdTransform = scannedDoor.transform
+                if let delta = deltaPos {
+                    print("change position")
+                    newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
                 }
+                newNode.name = "door \(i)"
+                newNode.movabilityHint = .fixed
                 scene.rootNode.addChildNode(newNode)
             }
         }
@@ -105,18 +146,17 @@ struct SceneKitView: UIViewRepresentable {
                 )
                 
                 newWall.firstMaterial?.diffuse.contents = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
-                newWall.firstMaterial?.transparency = 1
+                newWall.firstMaterial?.transparency = 0.5
                 
                 //Generate new SCNNode
                 let newNode = SCNNode(geometry: newWall)
                 newNode.simdTransform = scannedWall.transform
-                newNode.movabilityHint = .fixed
-                newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
-                newNode.physicsBody?.categoryBitMask = roomScan.objects.endIndex
-                for j in 0...(roomScan.objects.endIndex-1) {
-                    newNode.physicsBody?.collisionBitMask = j
+                if let delta = deltaPos {
+                    print("change position")
+                    newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
                 }
-                
+                newNode.name = "wall \(i)"
+                newNode.movabilityHint = .fixed
                 scene.rootNode.addChildNode(newNode)
             }
         }
@@ -139,64 +179,73 @@ struct SceneKitView: UIViewRepresentable {
                 )
                 
                 newObject.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1)
-                newObject.firstMaterial?.transparency = 1
+                newObject.firstMaterial?.transparency = 0.5
                 
                 //Generate new SCNNode
                 let newNode = SCNNode(geometry: newObject)
                 newNode.name = String(i) // only objects have name
                 newNode.simdTransform = scannedObject.transform
                 newNode.movabilityHint = .movable
-                newNode.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: newNode))
-                newNode.physicsBody?.categoryBitMask = i
-                newNode.physicsBody?.collisionBitMask = roomScan.objects.endIndex
                 newNode.state = .UnSelected
+                if let delta = deltaPos {
+                    print("change position")
+                    newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
+                }
                 scene.rootNode.addChildNode(newNode)
             }
         }
         
-        // Create directional light
-        let directionalLight = SCNNode()
-        directionalLight.light = SCNLight()
-        directionalLight.light!.type = .directional
-        directionalLight.light!.intensity = 700
-        directionalLight.eulerAngles = SCNVector3(x: 0, y: 0, z: 0)
+        //(0, 0, 0)
+        let newObject = SCNSphere(radius: 0.1)
+        let newNode = SCNNode(geometry: newObject)
+        newObject.firstMaterial?.diffuse.contents = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+        newObject.firstMaterial?.transparency = 1
+        //        newNode.name = String(roomScan.objects.count) // only objects have name
+        //        newNode.simdTransform = simd_float4x4([[0.5, 0.0, -0.26714072, 0.0], [0.0, 0.99999994, 0.0, 0.0], [0.26714072, 0.0, 0.96365756, 0.0], [1.5175736, -0.2107589, -0.1796678, 0.99999994]])
+        //        print("object \(roomScan.objects.count): \(newNode.simdTransform)")
+        newNode.position = SCNVector3(0, 0, 0)
+        newNode.movabilityHint = .movable
+        newNode.name = "(0, 0, 0)"
+        newNode.state = .UnSelected
+        scene.rootNode.addChildNode(newNode)
         
-        // Create ambient light
-        let myAmbientLight = SCNLight()
-        myAmbientLight.type = .ambient
-        myAmbientLight.intensity = 1000
-        let myAmbientLightNode = SCNNode()
-        myAmbientLightNode.light = myAmbientLight
+        //(1, 0, 0)
+        let newObject1 = SCNSphere(radius: 0.1)
+        let newNode1 = SCNNode(geometry: newObject1)
+        newObject1.firstMaterial?.diffuse.contents = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+        newObject1.firstMaterial?.transparency = 1
+        newNode1.movabilityHint = .movable
+        newNode1.position = SCNVector3(1, 0, 0)
+        newNode1.name = "(1, 0, 0)"
+        newNode1.state = .UnSelected
+        scene.rootNode.addChildNode(newNode1)
         
-        let targetNode = SCNNode() // question: need to initialize it probably
-        targetNode.isHidden = true // hide the node
-        scene.rootNode.addChildNode(targetNode)
-        
-        let cameraNode = SCNNode()
-        cameraNode.camera = SCNCamera()
-        cameraNode.position = SCNVector3(x: 10, y: 20, z: 10)
-        let centerConstraint = SCNLookAtConstraint(target: targetNode)
-        centerConstraint.isGimbalLockEnabled = true
-        cameraNode.constraints = [centerConstraint]
-        
-        scene.rootNode.addChildNode(cameraNode)
-        scene.rootNode.addChildNode(directionalLight)
-        scene.rootNode.addChildNode(myAmbientLightNode)
-        
-        // Add gesture recognizer
-        let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
-        let objectPanGesture = UIPanGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleObjectPan(_:)))
-        
-        view.addGestureRecognizer(tapGesture)
-        view.addGestureRecognizer(objectPanGesture)
-        
-        //        let panRecognizer = UIPanGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handlePan(_:)))
-        let pinchRecognizer = UIPinchGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handlePinch(_:)))
-        let rotationRecognizer = UIRotationGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleRotation(_:)))
-        
-        //        view.addGestureRecognizer(panRecognizer)
-        view.addGestureRecognizer(pinchRecognizer)
-        view.addGestureRecognizer(rotationRecognizer)
+        //(0, 0, 1)
+        let newObject2 = SCNSphere(radius: 0.1)
+        let newNode2 = SCNNode(geometry: newObject2)
+        newObject2.firstMaterial?.diffuse.contents = UIColor(red: 0.5, green: 0, blue: 0, alpha: 1)
+        newObject2.firstMaterial?.transparency = 1
+        newNode2.movabilityHint = .movable
+        newNode2.position = SCNVector3(0, 0, 1)
+        newNode2.name = "(0, 0, 1)"
+        newNode2.state = .UnSelected
+        scene.rootNode.addChildNode(newNode2)
+//        let angleInRadians: Float = .pi / 4  // 45 degrees in radians
+//        var rotationQuaternion: SCNQuaternion? = nil
+ 
+        for child in scene.rootNode.childNodes {
+            let position = child.position
+            let newObject2 = SCNSphere(radius: 0.1)
+            let newNode2 = SCNNode(geometry: newObject2)
+            newObject2.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0, blue: 0.5, alpha: 1)
+            newObject2.firstMaterial?.transparency = 1
+            newNode2.movabilityHint = .movable
+            newNode2.position = position
+            newNode2.name = "pos"
+            newNode2.state = .UnSelected
+            scene.rootNode.addChildNode(newNode2)
+//            print("node \(child.name ?? "no name"): \(child.position); \(child.rotation); \(child.orientation)")
+        }
         return view
     }
     
@@ -252,11 +301,11 @@ struct SceneKitView: UIViewRepresentable {
                             selectedNode?.state = .Selected
                             selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray
                             selectedName = name
-                            let arrowNode = SCNNode(geometry: createArrowGeometry())
-                            arrowNode.transform = selectedNode?.transform ?? SCNMatrix4()
-                            arrowNode.name = "arrow"
-                            // Add the arrow as a child node to the selected object
-                            selectedNode?.addChildNode(arrowNode)
+                            //                            let arrowNode = SCNNode(geometry: createArrowGeometry())
+                            //                            arrowNode.transform = selectedNode?.transform ?? SCNMatrix4()
+                            //                            arrowNode.name = "arrow"
+                            //                            // Add the arrow as a child node to the selected object
+                            //                            selectedNode?.addChildNode(arrowNode)
                         }
                     case .Selected:
                         selectedNodeMove = nil
@@ -311,7 +360,7 @@ struct SceneKitView: UIViewRepresentable {
             // todo: make some adjustment to ensure a continuous rotation
             sceneView.pointOfView?.position.x = deltaX
             sceneView.pointOfView?.position.z = deltaZ
-//            print(sceneView.pointOfView!.eulerAngles, sceneView.pointOfView!.position)
+            //            print(sceneView.pointOfView!.eulerAngles, sceneView.pointOfView!.position)
             
             // Reset the gesture's rotation to avoid cumulative rotation
             gesture.rotation = 0
@@ -364,28 +413,6 @@ struct SceneKitView: UIViewRepresentable {
             }
         }
     }
-}
-
-func createArrowGeometry() -> SCNGeometry {
-    // Define arrow parameters
-    let shaftLength: CGFloat = 1.0
-    let shaftRadius: CGFloat = 0.1
-    let headLength: CGFloat = 0.2
-    let headRadius: CGFloat = 0.2
-    
-    // Create the arrow's shaft (cylinder)
-    let shaft = SCNCylinder(radius: shaftRadius, height: shaftLength)
-    shaft.firstMaterial?.diffuse.contents = UIColor.red // Set the material color
-    
-    // Create the arrow's head (cone)
-    let head = SCNCone(topRadius: 0, bottomRadius: headRadius, height: headLength)
-    head.firstMaterial?.diffuse.contents = UIColor.red // Set the material color
-    
-    // Combine the shaft and head geometries
-    let arrowGeometry = SCNGeometry(sources: [shaft.sources.first!, head.sources.first!], elements: [shaft.elements.first!, head.elements.first!])
-    
-    
-    return arrowGeometry
 }
 
 

@@ -10,6 +10,7 @@ import SwiftUI
 import SceneKit
 import MobileCoreServices
 import UniformTypeIdentifiers
+import RoomPlan
 
 struct TextDocument: FileDocument {
     var text: String = ""
@@ -32,6 +33,7 @@ struct TextDocument: FileDocument {
     }
 }
 
+
 struct MinimalDemoView: View {
     @State var index: Int
     //@Binding var showing: Bool
@@ -51,13 +53,13 @@ struct MinimalDemoView: View {
             encoder.outputFormatting = .prettyPrinted // Optional, for pretty-printed JSON
             //if let firstModel = store.models.first { // todo: only the first model
             let jsonData = try encoder.encode(store.models[index].model)
-                if let jsonString = String(data: jsonData, encoding: .utf8) {
-//                    print(jsonString)
-//                    exportJsonUrl = FileManager.default.temporaryDirectory.appending(path: "\(firstModel.name ?? "scan").json")
-                    jsonFileName = "\(store.models[index].name ?? "export").json"
-                    text = jsonString
-//                    try firstModel.model?.export(to: exportJsonUrl!)
-                }
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                //                    print(jsonString)
+                //                    exportJsonUrl = FileManager.default.temporaryDirectory.appending(path: "\(firstModel.name ?? "scan").json")
+                jsonFileName = "\(store.models[index].name ?? "export").json"
+                text = jsonString
+                //                    try firstModel.model?.export(to: exportJsonUrl!)
+            }
             //} else {
             //    print("No model")
             //    return
@@ -68,6 +70,24 @@ struct MinimalDemoView: View {
         }
     }
     
+//    func modifyCapturedRoom() {
+//        do {
+//            let encoder = JSONEncoder()
+//            encoder.outputFormatting = .prettyPrinted // Optional, for pretty-printed JSON
+//            let jsonData = try encoder.encode(store.models[index].model)
+//            if var jsonDictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+//                // Successfully decoded the JSON - print it out
+////                print(jsonDictionary)
+//                if var objects = jsonDictionary["objects"] {
+//                    
+//                }
+//            }
+//        } catch {
+//            print("Error exporting json.")
+//            return
+//        }
+//    }
+//    
     var body: some View {
         ZStack {
             
@@ -115,7 +135,7 @@ struct MinimalDemoView: View {
                     
                     Spacer()
                 }
-                NavigationLink(destination: SurveyView(isPresented: $isPresentingSurvey, index: index), label: {Text("Auto-layout")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).padding()
+//                NavigationLink(destination: SurveyView(isPresented: $isPresentingSurvey, index: index), label: {Text("Auto-layout")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).padding()
             }
             .padding()
         }

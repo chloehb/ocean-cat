@@ -15,6 +15,7 @@ struct RoomModel: Codable {
     var model: CapturedRoom?
     var date: String?
     var image: String?
+//    var adjustment: AttachedResult? = nil
 }
 
 func getDataFromPacket(packet: CapturedRoom) -> Data?{
@@ -94,7 +95,6 @@ final class ModelStore: ObservableObject {
         }
         // sync with core data
         if isLegalCount {
-            let model = models.last!
             let newModelData = RoomModelData(context: context)
             newModelData.identifier = model.identifier
             newModelData.name = model.name

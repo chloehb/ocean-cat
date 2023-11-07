@@ -13,6 +13,7 @@ struct RequestSurveyView: View {
     @ObservedObject var store = ModelStore.shared
     @State private var isPresentingSurvey = false
     @State private var isPresentingEditModel = false
+    @State var index: Int
     
     var body: some View {
         ZStack {
@@ -54,7 +55,7 @@ struct RequestSurveyView: View {
                 .padding()
             }
             .navigationDestination(isPresented: $isPresentingSurvey) {
-                SurveyView(isPresented: $isPresentingSurvey)
+                SurveyView(isPresented: $isPresentingSurvey, index: index)
             }
             .navigationDestination(isPresented: $isPresentingEditModel) {
                 EditModelView(isPresented: $isPresentingEditModel)

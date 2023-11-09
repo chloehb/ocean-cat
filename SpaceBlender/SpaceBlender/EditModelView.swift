@@ -7,12 +7,36 @@
 
 import Foundation
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct EditModelView: View {
-    @Binding var isPresented: Bool
     @State private var isPresentingRoomGallery = false
     @State private var isPresentingRequestSurvey = false
     @State private var isPresentingSelectFurniture = false
+    @State var index: Int
+    //@Binding var showing: Bool
+    @State var selectedName: String? = nil
+    @State var showJsonShareSheet = false
+    @State var exportJsonUrl: URL?
+    @State private var text = ""
+    @State private var jsonFileName = "export.json"
+    @ObservedObject var store = ModelStore.shared
+    
+    func exportJson() {
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let jsonData = try encoder.encode(store.models[index].model)
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                jsonFileName = "\(store.models[index].name ?? "export").json"
+                text = jsonString
+            }
+        } catch {
+            print("Error exporting json.")
+            return
+        }
+    }
+    
     var body: some View {
 //        HStack {
 //            Button {
@@ -38,11 +62,11 @@ struct EditModelView: View {
             VStack(spacing: 20) {
                 // rgb: 168, 182, 234
                 Spacer()
-                let image_name = "ex_roommodel"
-                Image(image_name)
-                    .resizable()
-                    .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fit/*@END_MENU_TOKEN@*/)
-                    .padding(.all)
+                SceneKitView(index: index, options: [], selectedName: $selectedName)
+                    .allowsHitTesting(true)
+                
+                    .ignoresSafeArea()
+                
                 Spacer()
                 VStack() {
                     Button {
@@ -90,6 +114,26 @@ struct EditModelView: View {
                     .shadow(color: .blue, radius: 3, y: 3)
                     .padding()
                     Spacer()
+                    Button {
+                        exportJson()
+                        DispatchQueue.global().async {
+                            // After the work is done, switch back to the main thread
+                            DispatchQueue.main.async {
+                                showJsonShareSheet = true
+                            }
+                        }
+                    } label: {
+                        Text("Export Json File")
+                            .padding()
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(width: 250, height: 70)
+                    }
+                    .foregroundColor(.white)
+                    .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                    .cornerRadius(20)
+                    .shadow(color: .blue, radius: 3, y: 3)
+                    .padding()
                 }
                 Spacer()
             }
@@ -104,5 +148,26 @@ struct EditModelView: View {
             }
         }
 
+    }
+}
+
+struct TextDocument: FileDocument {
+    var text: String = ""
+    
+    init(_ text: String = "") {
+        self.text = text
+    }
+    
+    static public var readableContentTypes: [UTType] =
+    [.json]
+    init(configuration: ReadConfiguration) throws {
+        if let data = configuration.file.regularFileContents {
+            text = String(decoding: data, as: UTF8.self)
+        }
+    }
+    func fileWrapper(configuration: WriteConfiguration)
+    throws -> FileWrapper {
+        let data = Data(text.utf8)
+        return FileWrapper(regularFileWithContents: data)
     }
 }

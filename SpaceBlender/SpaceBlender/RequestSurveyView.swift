@@ -58,7 +58,7 @@ struct RequestSurveyView: View {
                 SurveyView(isPresented: $isPresentingSurvey, index: index)
             }
             .navigationDestination(isPresented: $isPresentingEditModel) {
-                EditModelView(isPresented: $isPresentingEditModel)
+                EditModelView(index: index)
             }
         }
 

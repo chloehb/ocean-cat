@@ -37,7 +37,7 @@ struct RoomGalleryView: View {
                             Text(date + " " + name).font(.title).multilineTextAlignment(.center)
                             Spacer()
                         }
-                        NavigationLink(destination: MinimalDemoView(index: index), label: {Text("")})
+                        NavigationLink(destination: EditModelView(index: index), label: {Text("")})
                         .buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
                     }
                     .padding()

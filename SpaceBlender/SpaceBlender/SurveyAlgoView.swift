@@ -170,7 +170,7 @@ struct SurveyView: View {
                     // will go to next page
                     isPresentingPostAlgo.toggle()
                     print(isPresentingPostAlgo)
-                    let adj = Adjuster(index: index, hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
+                    var adj = Adjuster(index: index, hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
                     adj.smartAdjust()
                     store.models[index].adjustment = adj.generateResult()
                 } label: {

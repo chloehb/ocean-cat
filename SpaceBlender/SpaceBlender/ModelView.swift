@@ -12,26 +12,7 @@ import MobileCoreServices
 import UniformTypeIdentifiers
 import RoomPlan
 
-struct TextDocument: FileDocument {
-    var text: String = ""
-    
-    init(_ text: String = "") {
-        self.text = text
-    }
-    
-    static public var readableContentTypes: [UTType] =
-    [.json]
-    init(configuration: ReadConfiguration) throws {
-        if let data = configuration.file.regularFileContents {
-            text = String(decoding: data, as: UTF8.self)
-        }
-    }
-    func fileWrapper(configuration: WriteConfiguration)
-    throws -> FileWrapper {
-        let data = Data(text.utf8)
-        return FileWrapper(regularFileWithContents: data)
-    }
-}
+// This file is not used now.
 
 
 struct MinimalDemoView: View {
@@ -50,20 +31,12 @@ struct MinimalDemoView: View {
     func exportJson() {
         do {
             let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted // Optional, for pretty-printed JSON
-            //if let firstModel = store.models.first { // todo: only the first model
+            encoder.outputFormatting = .prettyPrinted
             let jsonData = try encoder.encode(store.models[index].model)
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-                //                    print(jsonString)
-                //                    exportJsonUrl = FileManager.default.temporaryDirectory.appending(path: "\(firstModel.name ?? "scan").json")
                 jsonFileName = "\(store.models[index].name ?? "export").json"
                 text = jsonString
-                //                    try firstModel.model?.export(to: exportJsonUrl!)
             }
-            //} else {
-            //    print("No model")
-            //    return
-            //}
         } catch {
             print("Error exporting json.")
             return
@@ -142,22 +115,3 @@ struct MinimalDemoView: View {
     }
 }
 
-//struct ModelView: View {
-//    @ObservedObject var store = ModelStore.shared
-//    @State private var isPresentingDemo = false
-//    var body: some View {
-//        NavigationStack {
-//            VStack {
-//                Text("Space Blender-model view").font(.title)
-//                Text("There are \(store.models.count) model(s)")
-//                Spacer().frame(height: 40)
-//                Spacer().frame(height: 40)
-//                NavigationLink(destination: MainView(), label: {Text("Back to MainView")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
-//                NavigationLink(destination: MinimalDemoView(index: 0, showing: $isPresentingDemo), label: {Text("Test Model View")}).simultaneousGesture(TapGesture().onEnded{
-//                    isPresentingDemo.toggle()
-//                    // todo: need to specify which room model is shown, currently, always the first one
-//                }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
-//            }
-//        }
-//    }
-//}

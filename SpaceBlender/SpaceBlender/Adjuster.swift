@@ -154,7 +154,7 @@ struct Adjuster {
     }
     
     // todo: smartAdjust
-    func smartAdjust(){
+    mutating func smartAdjust(){
         // it may be incorrect to assume the length is greater than the width?
         // does it still align to the correct x and y planes - I am assuming width has to do with the x axis and length the y otherwise difficult to ensure furniture fits in a wall
         
@@ -317,19 +317,14 @@ struct Adjuster {
             }
         }
         
-        /*
-        beds[0] = beds1
-        tables[0] = tables1
-        if let hasRoommate {
-            if hasRoommate {
-                beds[1] = beds2
-                tables[2] = tables2
-            }
-        }
-         */
-        
-        // todo: generate an attached record which will be rendered in SceneKit instead of the original capturedroom
-        //    func generateResult() ->
+//        beds[0] = beds1
+//        tables[0] = tables1
+//        if let hasRoommate {
+//            if hasRoommate {
+//                beds[1] = beds2
+//                tables[2] = tables2
+//            }
+//        }
     }
     
     // todo: generate an attached record which will be rendered in SceneKit instead of the original capturedroom

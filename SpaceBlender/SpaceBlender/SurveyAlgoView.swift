@@ -172,7 +172,7 @@ struct SurveyView: View {
                     print(isPresentingPostAlgo)
                     let adj = Adjuster(index: index, hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
                     adj.smartAdjust()
-//                    adj.generateResult()
+                    store.models[index].adjustment = adj.generateResult()
                 } label: {
                     Text("Submit")
                         .padding()

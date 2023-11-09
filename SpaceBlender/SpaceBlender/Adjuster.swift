@@ -43,7 +43,21 @@ struct Furniture {
 }
 
 struct AttachedResult {
+    private var length: Float = 0 // for convenience, length >= width in any case
+    private var width: Float = 0
+    private var doors: [Furniture]
+    private var windows: [Furniture]
+    private var beds: [Furniture]
+    private var desks: [Furniture]
     
+    init(length: Float, width: Float, doors: [Furniture], windows: [Furniture], beds: [Furniture], desks:[Furniture]) {
+        self.length = length
+        self.width = width
+        self.doors = doors
+        self.windows = windows
+        self.beds = beds
+        self.desks = desks
+    }
 }
 
 struct Adjuster {
@@ -193,5 +207,7 @@ struct Adjuster {
     }
     
     // todo: generate an attached record which will be rendered in SceneKit instead of the original capturedroom
-//    func generateResult() ->
+    func generateResult() -> AttachedResult {
+        return AttachedResult(length: length, width: width, doors: doors, windows: windows, beds: beds, desks: tables)
+    }
 }

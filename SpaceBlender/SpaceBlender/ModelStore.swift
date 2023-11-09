@@ -9,13 +9,13 @@ import Foundation
 import RoomPlan
 import CoreData
 
-struct RoomModel: Codable {
+struct RoomModel {
     var identifier: UUID?
     var name: String?
     var model: CapturedRoom?
     var date: String?
     var image: String?
-//    var adjustment: AttachedResult? = nil
+    var adjustment: AttachedResult? = nil
 }
 
 func getDataFromPacket(packet: CapturedRoom) -> Data?{

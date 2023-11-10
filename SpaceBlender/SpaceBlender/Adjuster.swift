@@ -9,46 +9,59 @@ import RoomPlan
 import SceneKit
 import SwiftUI
 
-enum FurnitureType {
+enum FurnitureType: Codable {
     case Bed
     case Table
     case Door // we need the position of Door and Window
     case Window
 }
 
-enum Direction {
+enum Direction: Codable {
     case North
     case East
     case South
     case West
 }
 
-struct Furniture {
+struct Position: Codable {
+    var x: Float?
+    var y: Float?
+    var z: Float?
+}
+
+struct Furniture: Codable {
     var type: FurnitureType
     // the final result of adjuster, geometric center of a box, (x, y, z)
-    var position: (Float, Float, Float)?
+    var position: Position
     // the final result of adjuster
     var facing: Direction?
     
     var width: Float
     var length: Float // for window/door, 0
     var height: Float // for floor, 0
-    init(type: FurnitureType, position: (Float, Float, Float)? = nil, facing: Direction? = nil, width: Float, length: Float = 0, height: Float = 0) {
+    init(type: FurnitureType, position: (Float?, Float?, Float?) = (nil, nil, nil), facing: Direction? = nil, width: Float, length: Float = 0, height: Float = 0) {
         self.type = type
-        self.position = position
+        self.position = Position(x: position.0, y: position.1, z: position.2)
         self.width = width
         self.length = length
         self.height = height
     }
 }
 
-struct AttachedResult {
-    private var length: Float = 0 // for convenience, length >= width in any case
-    private var width: Float = 0
-    private var doors: [Furniture]
-    private var windows: [Furniture]
-    private var beds: [Furniture]
-    private var desks: [Furniture]
+struct AttachedResult: Codable {
+    var length: Float = 0 // for convenience, length >= width in any case
+    var width: Float = 0
+    var doors: [Furniture]
+    var windows: [Furniture]
+    var beds: [Furniture]
+    var desks: [Furniture]
+    
+    init() {
+        self.doors = []
+        self.windows = []
+        self.beds = []
+        self.desks = []
+    }
     
     init(length: Float, width: Float, doors: [Furniture], windows: [Furniture], beds: [Furniture], desks:[Furniture]) {
         self.length = length
@@ -145,15 +158,16 @@ struct Adjuster {
             }
         }
         while tables.count < requiredNum {
-            tables.append(Furniture(type: FurnitureType.Table, width: 0.5, length: 1)) // default size of a table
+            tables.append(Furniture(type: FurnitureType.Table, width: 0.5, length: 1, height: 1)) // default size of a table
         }
         while beds.count < requiredNum {
-            beds.append(Furniture(type: FurnitureType.Table, width: 1.5, length: 2)) // default size of a bed
+            beds.append(Furniture(type: FurnitureType.Table, width: 1.5, length: 2, height: 0.6)) // default size of a bed
         }
         
     }
     
-    // todo: smartAdjust
+    // todo: before smartAdjust, we need to check whether the survey is completed, if not, we need to set some default value/let users select again
+    
     mutating func smartAdjust(){
         // it may be incorrect to assume the length is greater than the width?
         // does it still align to the correct x and y planes - I am assuming width has to do with the x axis and length the y otherwise difficult to ensure furniture fits in a wall
@@ -162,10 +176,10 @@ struct Adjuster {
         // If you have a roommate we place your beds as specified together/apart and automatically put all furniture we can on the outside walls
         // If you do not have a roommate, we attempt to place object under window, orientate bed, and then place remaining furniture on the outside of the room
         
-        var beds1: Furniture
-        var beds2 : Furniture
-        var tables1: Furniture
-        var tables2: Furniture
+        var beds1: Furniture = Furniture(type: FurnitureType.Bed, width: 1.5)
+        var beds2 : Furniture = Furniture(type: FurnitureType.Bed, width: 1.5)
+        var tables1: Furniture = Furniture(type: FurnitureType.Table, width: 1)
+        var tables2: Furniture = Furniture(type: FurnitureType.Table, width: 1)
         var windowindex: Int = -1
         
         if let hasRoommate {
@@ -207,7 +221,7 @@ struct Adjuster {
                 if windows.count > 0 {
                     if let objectByWindow {
                         if objectByWindow == "Desk" {
-                            tables1 = (Furniture(type: FurnitureType.Table, position: (windows[0].position!.0, windows[0].position!.1, 0), width: tables[0].width, length: tables[0].length))
+                            tables1 = (Furniture(type: FurnitureType.Table, position: (windows[0].position.x, windows[0].position.y, 0), width: tables[0].width, length: tables[0].length))
                         }
                     }
                     if let objectByWindow {
@@ -216,10 +230,10 @@ struct Adjuster {
                             var count = 0
                             for window in windows {
                                 if width >= beds[0].length {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (window.position!.0, window.position!.1, 0), width: beds[0].width, length: beds[0].length))
+                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (window.position.x, window.position.y, 0), width: beds[0].width, length: beds[0].length))
                                     
                                     // place desk here!!! if on left wall palce on right * -1 would be inverse
-                                    tables1 = (Furniture(type: FurnitureType.Table, position: (-1 * window.position!.0, -1 * window.position!.1, 0), width: beds[0].width, length: beds[0].length))
+                                    tables1 = (Furniture(type: FurnitureType.Table, position: (-1 * window.position.x!, -1 * window.position.y!, 0), width: beds[0].width, length: beds[0].length))
                                     
                                     windowindex = count
                                     break
@@ -236,19 +250,19 @@ struct Adjuster {
                             if objectByWindow == "Desk" {
                                 // bed has not been placed anywhere yet
                                 // door is on the left wall
-                                if (doors[0].position!.0 == -length/2) {
+                                if (doors[0].position.x == -length/2) {
                                     beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2, 0, 0), facing: Direction.West, width: beds[0].width, length: beds[0].length))
                                 }
                                 // door is on right wall
-                                else if (doors[0].position!.0 == length/2) {
+                                else if (doors[0].position.x == length/2) {
                                     beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2, 0, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
                                 }
                                 // door is on bottom wall -> in last two cases bed could be unplaced
-                                else if (doors[0].position!.1 == -width/2 && width >= beds[0].length) {
+                                else if (doors[0].position.y == -width/2 && width >= beds[0].length) {
                                     beds1 = (Furniture(type: FurnitureType.Bed, position: (0, width/2, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
                                 }
                                 // door is on top wall
-                                else if (doors[0].position!.1 == width/2 && width >= beds[0].length) {
+                                else if (doors[0].position.z == width/2 && width >= beds[0].length) {
                                     beds1 = (Furniture(type: FurnitureType.Bed, position: (0, -width/2, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
                                 }
                             }
@@ -256,24 +270,24 @@ struct Adjuster {
                                 // object by window is bed, rotate bed if possible
                                 // what would happen if bed hadnt been placed?
                                 
-                                beds1 = (Furniture(type: FurnitureType.Bed, position: (windows[windowindex].position!.0, windows[windowindex].position!.1, 0), width: beds[0].width, length: beds[0].length))
-                                var x = beds1.position!.0
-                                var y = beds1.position!.1
+                                beds1 = (Furniture(type: FurnitureType.Bed, position: (windows[windowindex].position.x, windows[windowindex].position.y, 0), width: beds[0].width, length: beds[0].length))
+                                var x = beds1.position.x
+                                var y = beds1.position.y
                                 
-                                if (doors[0].position!.0 == -length/2) {
+                                if (doors[0].position.x == -length/2) {
                                     beds1 = (Furniture(type: FurnitureType.Bed, position: (x, y, 0), facing: Direction.West, width: beds[0].width, length: beds[0].length))
                                 }
                                 // door is on right wall
-                                else if (doors[0].position!.0 == length/2) {
+                                else if (doors[0].position.x == length/2) {
                                     beds1 = (Furniture(type: FurnitureType.Bed, position: (x, y, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
                                 }
                                 // door is on bottom wall -> in last two cases bed could be unplaced
-                                else if (doors[0].position!.1 == -width/2) {
+                                else if (doors[0].position.y == -width/2) {
                                     beds1 = (Furniture(type: FurnitureType.Bed, position: (x, y, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
                                     
                                 }
                                 // door is on top wall
-                                else if (doors[0].position!.1 == width/2) {
+                                else if (doors[0].position.y == width/2) {
                                     beds1 = (Furniture(type: FurnitureType.Bed, position: (x, y, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
                                 }
                             }
@@ -282,33 +296,33 @@ struct Adjuster {
                     if !bedFacingDoor {
                         if objectByWindow == "Desk" { // bed has not been placed anywhere yet
                             // door is on the left or right wall, place bed on bottom wall
-                            if (doors[0].position!.0 == -length/2 || doors[0].position!.0 == length/2) {
+                            if (doors[0].position.x == -length/2 || doors[0].position.x == length/2) {
                                 beds1 = (Furniture(type: FurnitureType.Bed, position: (0, -width/2, 0), facing: Direction.North, width: beds[0].width, length: beds[0].length))
                             }
                             // door is on bottom or top wall, place bed on left wall
-                            else if (doors[0].position!.1 == -width/2 && doors[0].position!.1 == width/2) {
+                            else if (doors[0].position.y == -width/2 && doors[0].position.y == width/2) {
                                 beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2, 0, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
                             }
                         }
                         else if objectByWindow == "Bed" && windowindex != -1 {
                             // object by window is bed, rotate bed if possible away from door, // what would happen if bed hadnt been placed?
-                            beds1 = (Furniture(type: FurnitureType.Bed, position: (windows[windowindex].position!.0, windows[windowindex].position!.1, 0), width: beds[0].width, length: beds[0].length))
-                            var x = beds1.position!.0
-                            var y = beds1.position!.1
+                            beds1 = (Furniture(type: FurnitureType.Bed, position: (windows[windowindex].position.x, windows[windowindex].position.y, 0), width: beds[0].width, length: beds[0].length))
+                            var x = beds1.position.x
+                            var y = beds1.position.y
                             // door is on left wall
-                            if (doors[0].position!.0 == -length/2) {
+                            if (doors[0].position.x == -length/2) {
                                 beds1 = (Furniture(type: FurnitureType.Bed, position: (x, y, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
                             }
                             // door is on right wall
-                            else if (doors[0].position!.0 == length/2) {
+                            else if (doors[0].position.x == length/2) {
                                 beds1 = (Furniture(type: FurnitureType.Bed, position: (x, y, 0), facing: Direction.West, width: beds[0].width, length: beds[0].length))
                             }
                             // door is on bottom wall
-                            else if (doors[0].position!.1 == -width/2) {
+                            else if (doors[0].position.y == -width/2) {
                                 beds1 = (Furniture(type: FurnitureType.Bed, position: (x, y, 0), facing: Direction.West, width: beds[0].width, length: beds[0].length))
                             }
                             // door is on top wall
-                            else if (doors[0].position!.1 == width/2) {
+                            else if (doors[0].position.y == width/2) {
                                 beds1 = (Furniture(type: FurnitureType.Bed, position: (x, y, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
                             }
                         }
@@ -316,18 +330,20 @@ struct Adjuster {
                 }
             }
         }
+        print(beds1)
+        print(tables1)
         
-//        beds[0] = beds1
-//        tables[0] = tables1
-//        if let hasRoommate {
-//            if hasRoommate {
-//                beds[1] = beds2
-//                tables[2] = tables2
-//            }
-//        }
+        beds[0] = beds1
+        tables[0] = tables1
+        if let hasRoommate {
+            if hasRoommate {
+                beds[1] = beds2
+                tables[1] = tables2
+            }
+        }
+    
     }
     
-    // todo: generate an attached record which will be rendered in SceneKit instead of the original capturedroom
     func generateResult() -> AttachedResult {
         return AttachedResult(length: length, width: width, doors: doors, windows: windows, beds: beds, desks: tables)
     }

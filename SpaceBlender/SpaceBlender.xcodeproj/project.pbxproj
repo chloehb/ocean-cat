@@ -12,6 +12,7 @@
 		452C29852AEC76B600434784 /* MinimalDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C29842AEC76B600434784 /* MinimalDemo.swift */; };
 		452C298B2AEC85BB00434784 /* AllData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 452C29892AEC85BB00434784 /* AllData.xcdatamodeld */; };
 		452C298D2AEC87CB00434784 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C298C2AEC87CB00434784 /* PersistenceController.swift */; };
+		456574F32AFD88220011867F /* AdjustmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456574F22AFD88220011867F /* AdjustmentView.swift */; };
 		4575C9A12AD1E5E300131520 /* SpaceBlenderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C9A02AD1E5E300131520 /* SpaceBlenderApp.swift */; };
 		4575C9A52AD1E5E500131520 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4575C9A42AD1E5E500131520 /* Assets.xcassets */; };
 		4575C9A82AD1E5E500131520 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4575C9A72AD1E5E500131520 /* Preview Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		452C29842AEC76B600434784 /* MinimalDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalDemo.swift; sourceTree = "<group>"; };
 		452C298A2AEC85BB00434784 /* AllData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AllData.xcdatamodel; sourceTree = "<group>"; };
 		452C298C2AEC87CB00434784 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		456574F22AFD88220011867F /* AdjustmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustmentView.swift; sourceTree = "<group>"; };
 		4575C99D2AD1E5E300131520 /* SpaceBlender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceBlender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4575C9A02AD1E5E300131520 /* SpaceBlenderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceBlenderApp.swift; sourceTree = "<group>"; };
 		4575C9A42AD1E5E500131520 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				0DDF82672AEEF903002146E2 /* SurveyAlgoView.swift */,
+				456574F22AFD88220011867F /* AdjustmentView.swift */,
 				0D75802A2AF439CA0033D6A2 /* PostAlgo.swift */,
 				4575C9A02AD1E5E300131520 /* SpaceBlenderApp.swift */,
 				4592B5AF2AE2D7FA000227B3 /* ModelView.swift */,
@@ -325,6 +328,7 @@
 				8C724D782AEEEC2C00E6D0FF /* SelectMethodView.swift in Sources */,
 				45917DD12AFA8FAA00AA8E1C /* Adjuster.swift in Sources */,
 				8CC742122AF8430800824939 /* SelectFurnitureView.swift in Sources */,
+				456574F32AFD88220011867F /* AdjustmentView.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
 				6CF29A4B2AEEBD8A00C0C11D /* 2dGeneration.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,

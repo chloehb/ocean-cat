@@ -10,12 +10,17 @@ import SwiftUI
 
 struct PostAlgo: View {
     @Binding var isPresented: Bool
+    var adjustment: AttachedResult
+    var index: Int
     @State private var isPresentingRoomGallery = false
     @State private var isPresentingFurnitureGallery = false
+    @State var selectingName: String? = nil
+    @ObservedObject var store = ModelStore.shared
     
     var body: some View {
         NavigationStack {
             VStack {
+                AdjustmentView(index: index, adjustment: adjustment, options: [], selectedName: $selectingName)
                 Spacer()
                 Text("Adjustment Suceeded!")
                 Button {
@@ -32,6 +37,8 @@ struct PostAlgo: View {
                 .cornerRadius(20)
                 .shadow(color: .blue, radius: 3, y: 3)
                 Button {
+                    store.models[index].adjustment = adjustment
+                    store.storeAdjustment(index)
                     isPresentingRoomGallery.toggle()
                 } label: {
                     Text("Save to Gallery")

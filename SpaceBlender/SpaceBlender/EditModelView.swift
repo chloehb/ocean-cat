@@ -62,11 +62,14 @@ struct EditModelView: View {
             VStack(spacing: 20) {
                 // rgb: 168, 182, 234
                 Spacer()
-                SceneKitView(index: index, options: [], selectedName: $selectedName)
-                    .allowsHitTesting(true)
-                
-                    .ignoresSafeArea()
-                
+                // if adjustment already exists, load adjustment view
+                if let adj = store.models[index].adjustment {
+                    AdjustmentView(index: index, adjustment: adj, options: [], selectedName: $selectedName)
+                } else {
+                    SceneKitView(index: index, options: [], selectedName: $selectedName)
+                        .allowsHitTesting(true)
+                        .ignoresSafeArea()
+                }
                 Spacer()
                 VStack() {
                     Button {

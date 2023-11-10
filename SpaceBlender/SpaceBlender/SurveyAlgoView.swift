@@ -20,6 +20,7 @@ struct SurveyView: View {
     @State var objectByWindow: String? = nil
     @State var bedFacingDoor: Bool? = nil
     @State var floorSpace: Bool? = nil
+    @State var adjustment: AttachedResult = AttachedResult()
     
     var body: some View {
         NavigationStack {
@@ -172,7 +173,7 @@ struct SurveyView: View {
                     print(isPresentingPostAlgo)
                     var adj = Adjuster(index: index, hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
                     adj.smartAdjust()
-                    store.models[index].adjustment = adj.generateResult()
+                    adjustment = adj.generateResult()
                 } label: {
                     Text("Submit")
                         .padding()
@@ -186,17 +187,11 @@ struct SurveyView: View {
             } 
             .padding()
             .navigationDestination(isPresented: $isPresentingPostAlgo) {
-                PostAlgo(isPresented: $isPresentingPostAlgo)
+                PostAlgo(isPresented: $isPresentingPostAlgo ,adjustment: adjustment, index: index)
             }
         }
         
     }
 }
 
-
-
-
-
-
-// move the function into Adjuster
 

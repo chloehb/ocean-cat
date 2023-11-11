@@ -118,6 +118,22 @@ struct AdjustmentView: UIViewRepresentable {
             scene.rootNode.addChildNode(newNodeDesk)
         }
         
+        for i in 0..<adjustment.windows.count {
+            let window = adjustment.windows[i]
+            let newWindow = SCNBox(width: CGFloat(window.width), height: CGFloat(window.height), length: CGFloat(window.length), chamferRadius: 2)
+            newWindow.firstMaterial?.diffuse.contents = UIColor(red: 0.85, green: 1, blue: 0, alpha: 1)
+            newWindow.firstMaterial?.transparency = 0.5
+            let newNodeWindow = SCNNode(geometry: newWindow)
+            newNodeWindow.name = "bed\(i)"
+            if let x = window.position.x, let y = window.position.y, let z = window.position.z {
+                newNodeWindow.position = SCNVector3(x, y, z)
+            } else {
+                print("x or y or z is not specified")
+                newNodeWindow.position = SCNVector3(5, 0.5, 5)
+            }
+            scene.rootNode.addChildNode(newNodeWindow)
+        }
+        
         //(0, 0, 0)
         let newObject = SCNSphere(radius: 0.1)
         let newNode = SCNNode(geometry: newObject)

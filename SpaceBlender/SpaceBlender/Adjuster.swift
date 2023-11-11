@@ -122,25 +122,53 @@ struct Adjuster {
         self.bedFacingDoor = bedFacingDoor
         self.objectByWindow = objectByWindow
         self.floorSpace = floorSpace
+        
+        var rotate: Float = 0
+        for i in 0..<(room?.walls.count ?? 0) {
+            let wall = room!.walls[i]
+            if wall.dimensions.x > length - 0.1 { // the longest wall
+                let newNode = SCNNode(geometry: SCNSphere(radius: 0.1))
+                newNode.simdTransform = wall.transform
+                newNode.position = SCNVector3(newNode.position.x + delta.0, newNode.position.y + delta.1, newNode.position.z + delta.2)
+                print("find the longest wall: \(newNode.position)")
+                let a = newNode.position.x
+                let b = newNode.position.z
+                if (a > 0 && b > 0) || (a < 0 && b < 0) {
+                    rotate = atanf(a / b)
+                } else if (a > 0 && b < 0) || (a < 0 && b > 0) {
+                    rotate = Float.pi + atanf(a / b)
+                } else if b == 0 {
+                    rotate = Float.pi / 2
+                }
+                break
+            }
+        }
         if let room = self.room {
             // question: whether it should be better if we suppose to have only one door
             for door in room.doors {
                 let tempDoor = SCNNode()
                 tempDoor.simdTransform = door.transform
-                let tp = tempDoor.position
-                // try to get the orientation according to the rotation
+                let td = tempDoor.position
+                tempDoor.position = SCNVector3(td.x + delta.0, td.y + delta.1, td.z + delta.2)
+//                print("postion before: \(tempDoor.position)")
+                tempDoor.simdRotate(by: simd_quatf(generateYawRotationMatrix(rotate)), aroundTarget: simd_float3(0, 0, 0))
+//                print("rotate!: \(rotate), postion now: \(tempDoor.position)")
                 
-                doors.append(Furniture(type: FurnitureType.Door, position: (tp.x + delta.0, tp.y + delta.1, tp.z + delta.2), width: door.dimensions.x, height: door.dimensions.y))
+                doors.append(Furniture(type: FurnitureType.Door, position: (tempDoor.position.x, tempDoor.position.y, tempDoor.position.z), width: door.dimensions.x, height: door.dimensions.y))
             }
             for window in room.windows {
                 let tempWindow = SCNNode()
                 tempWindow.simdTransform = window.transform
                 let tw = tempWindow.position
-                windows.append(Furniture(type: FurnitureType.Window, position: (tw.x + delta.0, tw.y + delta.1, tw.z + delta.2), width: window.dimensions.x, height: window.dimensions.y))
+                tempWindow.position = SCNVector3(tw.x + delta.0, tw.y + delta.1, tw.z + delta.2)
+//                print("postion before: \(tempWindow.position)")
+                tempWindow.simdRotate(by: simd_quatf(generateYawRotationMatrix(rotate)), aroundTarget: simd_float3(0, 0, 0))
+//                print("rotate!: \(rotate), postion now: \(tempWindow.position)")
+                windows.append(Furniture(type: FurnitureType.Window, position: (tempWindow.position.x, tempWindow.position.y, tempWindow.position.z), width: window.dimensions.x, height: window.dimensions.y))
             }
             for obj in room.objects {
-                var wid = obj.dimensions.x
-                var len = obj.dimensions.z
+                let wid = obj.dimensions.x
+                let len = obj.dimensions.z
                 let height = obj.dimensions.y
                 switch obj.category {
                 case .bed:
@@ -322,8 +350,8 @@ struct Adjuster {
                                 // object by window is bed, rotate bed if possible
                                 // what would happen if bed hadnt been placed?
                                 beds1 = (Furniture(type: FurnitureType.Bed, position: (windows[windowindex].position.x, 0, windows[windowindex].position.z), width: beds[0].width, length: beds[0].length))
-                                var x = beds1.position.x
-                                var z = beds1.position.z
+                                let x = beds1.position.x
+                                let z = beds1.position.z
                                 
                                 if (doors[0].position.x == -length/2) {
                                     beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.West, width: beds[0].width, length: beds[0].length))
@@ -358,8 +386,8 @@ struct Adjuster {
                         else if objectByWindow == "Bed" && windowindex != -1 {
                             // object by window is bed, rotate bed if possible away from door, // what would happen if bed hadnt been placed?
                             beds1 = (Furniture(type: FurnitureType.Bed, position: (windows[windowindex].position.x, 0, windows[windowindex].position.z), width: beds[0].width, length: beds[0].length))
-                            var x = beds1.position.x
-                            var z = beds1.position.z
+                            let x = beds1.position.x
+                            let z = beds1.position.z
                             // door is on left wall
                             if (doors[0].position.x == -length/2) {
                                 beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.East, width: beds[0].width, length: beds[0].length))
@@ -381,8 +409,8 @@ struct Adjuster {
                 }
             }
         }
-        print(beds1)
-        print(tables1)
+//        print(beds1)
+//        print(tables1)
         
         beds[0] = beds1
         tables[0] = tables1

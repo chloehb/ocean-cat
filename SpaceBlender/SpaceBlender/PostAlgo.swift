@@ -37,6 +37,7 @@ struct PostAlgo: View {
                 .cornerRadius(20)
                 .shadow(color: .blue, radius: 3, y: 3)
                 Button {
+                    print("store adjustment for model: \(index)")
                     store.models[index].adjustment = adjustment
                     store.storeAdjustment(index)
                     isPresentingRoomGallery.toggle()

@@ -50,7 +50,7 @@ struct AdjustmentView: UIViewRepresentable {
         scene.rootNode.addChildNode(newNodeFloor)
         
         // add four walls according to the size of floor
-        let newWallEast = SCNBox(width: 2 * CGFloat(b), height: 2, length: 0.2, chamferRadius: 0) // todo: store the original height of wall
+        let newWallEast = SCNBox(width: 2 * CGFloat(b), height: 3, length: 0.2, chamferRadius: 0) // todo: store the original height of wall
         newWallEast.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 1, blue: 0.85, alpha: 1)
         newWallEast.firstMaterial?.transparency = 0.5
         let newNodeWallEast = SCNNode(geometry: newWallEast)
@@ -59,7 +59,7 @@ struct AdjustmentView: UIViewRepresentable {
         newNodeWallEast.rotation = SCNVector4(0, 1, 0, Float.pi / 2)
         scene.rootNode.addChildNode(newNodeWallEast)
         
-        let newWallWest = SCNBox(width: 2 * CGFloat(b), height: 2, length: 0.2, chamferRadius: 0) // todo: store the original height of wall
+        let newWallWest = SCNBox(width: 2 * CGFloat(b), height: 3, length: 0.2, chamferRadius: 0) // todo: store the original height of wall
         newWallWest.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 1, blue: 0.85, alpha: 1)
         newWallWest.firstMaterial?.transparency = 0.5
         let newNodeWallWest = SCNNode(geometry: newWallWest)
@@ -68,7 +68,7 @@ struct AdjustmentView: UIViewRepresentable {
         newNodeWallWest.rotation = SCNVector4(0, 1, 0, Float.pi / 2)
         scene.rootNode.addChildNode(newNodeWallWest)
         
-        let newWallNorth = SCNBox(width: 2 * CGFloat(a), height: 2, length: 0.2, chamferRadius: 0)
+        let newWallNorth = SCNBox(width: 2 * CGFloat(a), height: 3, length: 0.2, chamferRadius: 0)
         newWallNorth.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 1, blue: 0.85, alpha: 1)
         newWallNorth.firstMaterial?.transparency = 0.5
         let newNodeWallNorth = SCNNode(geometry: newWallNorth)
@@ -76,7 +76,7 @@ struct AdjustmentView: UIViewRepresentable {
         newNodeWallNorth.position = SCNVector3(0, 1, -b)
         scene.rootNode.addChildNode(newNodeWallNorth)
         
-        let newWallSouth = SCNBox(width: 2 * CGFloat(a), height: 2, length: 0.2, chamferRadius: 0)
+        let newWallSouth = SCNBox(width: 2 * CGFloat(a), height: 3, length: 0.2, chamferRadius: 0)
         newWallSouth.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 1, blue: 0.85, alpha: 1)
         newWallSouth.firstMaterial?.transparency = 0.5
         let newNodeWallSouth = SCNNode(geometry: newWallSouth)
@@ -86,7 +86,7 @@ struct AdjustmentView: UIViewRepresentable {
         
         for i in 0..<adjustment.beds.count {
             let bed = adjustment.beds[i]
-            print("\(i): ", bed)
+//            print("\(i): ", bed)
             let newBed = SCNBox(width: CGFloat(bed.width), height: CGFloat(bed.height), length: CGFloat(bed.length), chamferRadius: 2)
             newBed.firstMaterial?.diffuse.contents = UIColor(red: 1, green: 0.85, blue: 0, alpha: 1)
             newBed.firstMaterial?.transparency = 0.5
@@ -103,7 +103,7 @@ struct AdjustmentView: UIViewRepresentable {
         
         for i in 0..<adjustment.desks.count {
             let desk = adjustment.desks[i]
-            print("\(i): ", desk)
+//            print("\(i): ", desk)
             let newDesk = SCNBox(width: CGFloat(desk.width), height: CGFloat(desk.height), length: CGFloat(desk.length), chamferRadius: 2)
             newDesk.firstMaterial?.diffuse.contents = UIColor(red: 0.85, green: 1, blue: 0, alpha: 1)
             newDesk.firstMaterial?.transparency = 0.5
@@ -120,18 +120,42 @@ struct AdjustmentView: UIViewRepresentable {
         
         for i in 0..<adjustment.windows.count {
             let window = adjustment.windows[i]
-            let newWindow = SCNBox(width: CGFloat(window.width), height: CGFloat(window.height), length: CGFloat(window.length), chamferRadius: 2)
-            newWindow.firstMaterial?.diffuse.contents = UIColor(red: 0.85, green: 1, blue: 0, alpha: 1)
+            let newWindow = SCNBox(width: CGFloat(window.width), height: CGFloat(window.height), length: CGFloat(0.3), chamferRadius: 0.5)
+            newWindow.firstMaterial?.diffuse.contents = UIColor(red: 0.85, green: 0, blue: 0, alpha: 1)
             newWindow.firstMaterial?.transparency = 0.5
             let newNodeWindow = SCNNode(geometry: newWindow)
-            newNodeWindow.name = "bed\(i)"
+            newNodeWindow.name = "window\(i)"
             if let x = window.position.x, let y = window.position.y, let z = window.position.z {
                 newNodeWindow.position = SCNVector3(x, y, z)
+                if abs(x) < a + 0.1 && abs(x) > a - 0.1 { // attached on the wallWest or wallEast, rotate 90
+                    newNodeWindow.rotation = SCNQuaternion(0, 1, 0, Float.pi / 2)
+                }
             } else {
                 print("x or y or z is not specified")
                 newNodeWindow.position = SCNVector3(5, 0.5, 5)
             }
             scene.rootNode.addChildNode(newNodeWindow)
+        }
+        
+        for i in 0..<adjustment.doors.count {
+            let door = adjustment.doors[i]
+            let newDoor = SCNBox(width: CGFloat(door.width), height: CGFloat(door.height), length: CGFloat(0.3), chamferRadius: 0.5)
+            newDoor.firstMaterial?.diffuse.contents = UIColor(red: 0.85, green: 0, blue: 0, alpha: 1)
+            newDoor.firstMaterial?.transparency = 0.5
+            let newDoorNode = SCNNode(geometry: newDoor)
+            newDoorNode.name = "door\(i)"
+//            print("b: \(b)")
+            if let x = door.position.x, let y = door.position.y, let z = door.position.z {
+                newDoorNode.position = SCNVector3(x, y, z)
+//                print("x: \(x), y: \(y), z: \(z)")
+                if abs(x) < a + 0.1 && abs(x) > a - 0.1 { // attached on the wallWest or wallEast, rotate 90
+                    newDoorNode.rotation = SCNQuaternion(0, 1, 0, Float.pi / 2)
+                }
+            } else {
+                print("x or y or z is not specified")
+                newDoorNode.position = SCNVector3(5, 0.5, 5)
+            }
+            scene.rootNode.addChildNode(newDoorNode)
         }
         
         //(0, 0, 0)

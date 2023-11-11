@@ -144,7 +144,7 @@ struct EditModelView: View {
                 RoomGalleryView(isPresented: $isPresentingRoomGallery)
             }
             .navigationDestination(isPresented: $isPresentingRequestSurvey) {
-                RequestSurveyView(isPresented: $isPresentingRequestSurvey, index: 0)
+                RequestSurveyView(isPresented: $isPresentingRequestSurvey, index: index)
             }
             .navigationDestination(isPresented: $isPresentingSelectFurniture) {
                 SelectFurnitureView(isPresented: $isPresentingSelectFurniture)

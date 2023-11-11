@@ -134,7 +134,11 @@ final class ModelStore: ObservableObject {
             newModelData.date = model.date
             newModelData.image = model.image
             newModelData.model = getDataFromCapturedRoom(packet: model.model!)
-            newModelData.adjustment = getDataFromAttachedResult(packet: model.adjustment!)
+            if let adj = model.adjustment {
+                newModelData.adjustment = getDataFromAttachedResult(packet: adj)
+            } else {
+                newModelData.adjustment = nil
+            }
             do {
                 try context.save()
             } catch {

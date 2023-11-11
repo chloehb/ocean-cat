@@ -38,6 +38,17 @@ extension SCNNode {
 //    return q2 * inv
 //}
 
+// the yaw rotation only
+func generateYawRotationMatrix(_ theta: Float) -> simd_float4x4 {
+    let costheta = cosf(theta)
+    let sintheta = sinf(theta)
+    return simd_float4x4(
+        SIMD4(costheta, 0 ,sintheta, 0),
+        SIMD4(0, 1, 0, 0),
+        SIMD4(-sintheta, 0, costheta, 0),
+        SIMD4(0, 0, 0, 1))
+}
+
 struct SceneKitView: UIViewRepresentable {
     @ObservedObject var store = ModelStore.shared
     @State var index: Int
@@ -58,7 +69,9 @@ struct SceneKitView: UIViewRepresentable {
         var deltaPos: SCNVector3? = nil
 //        var deltaRotate: SCNQuaternion? = nil
         let roomScan = store.models[index].model!
-    
+//        var width: Float = 0
+//        var length: Float = 0
+//        var rotate: Float = 0
         
         // all floors
         if roomScan.floors.endIndex > 0 {
@@ -67,15 +80,21 @@ struct SceneKitView: UIViewRepresentable {
                 //Generate new wall geometry
                 let scannedFloor = roomScan.floors[i]
                 
-                let length = 0.2
-                let width = scannedFloor.dimensions.x
-                let height = scannedFloor.dimensions.y
                 let newFloor = SCNBox(
-                    width: CGFloat(width),
-                    height: CGFloat(height),
-                    length: CGFloat(length),
+                    width: CGFloat(scannedFloor.dimensions.x),
+                    height: CGFloat(scannedFloor.dimensions.y),
+                    length: CGFloat(0.2),
                     chamferRadius: 0
                 )
+                
+//                if scannedFloor.dimensions.x > scannedFloor.dimensions.y {
+//                    length = scannedFloor.dimensions.x
+//                    width = scannedFloor.dimensions.y
+//                } else {
+//                    length = scannedFloor.dimensions.y
+//                    width = scannedFloor.dimensions.x
+//                }
+                
                 
                 newFloor.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.85, blue: 1, alpha: 1)
                 newFloor.firstMaterial?.transparency = 0.5
@@ -90,10 +109,34 @@ struct SceneKitView: UIViewRepresentable {
 //                newNode.rotation = SCNVector4(x: -1, y: 0, z: 0, w: Float.pi / 2)
                 
 //                newNode.rotate(by: <#T##SCNQuaternion#>, aroundTarget: SCNVector3(0, 0, 0))
-                print(newNode.simdRotation)
                 scene.rootNode.addChildNode(newNode)
             }
         }
+        
+        // find the rotation angle
+//        if roomScan.walls.endIndex > 0 {
+//            for i in 0...(roomScan.walls.endIndex-1) {
+//                let wall = roomScan.walls[i]
+//                if wall.dimensions.x > length - 0.1 { // the longest wall
+//                    let newNode = SCNNode(geometry: SCNSphere(radius: 0.1))
+//                    newNode.simdTransform = wall.transform
+//                    if let delta = deltaPos {
+//    //                    print("change position")
+//                        newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
+//                    }
+//                    print("find the longest wall: \(newNode.position)")
+//                    let a = newNode.position.x
+//                    let b = newNode.position.z
+//                    if (a > 0 && b > 0) || (a < 0 && b < 0) {
+//                        rotate = atanf(a / b)
+//                    } else if (a > 0 && b < 0) || (a < 0 && b > 0) {
+//                        rotate = Float.pi + atanf(a / b)
+//                    } else if b == 0 {
+//                        rotate = Float.pi / 2
+//                    }
+//                }
+//            }
+//        }
         
         // all doors
         if roomScan.doors.endIndex > 0 {
@@ -119,7 +162,52 @@ struct SceneKitView: UIViewRepresentable {
                 let newNode = SCNNode(geometry: newDoor)
                 newNode.simdTransform = scannedDoor.transform
                 if let delta = deltaPos {
-                    print("change position")
+//                    print("change position")
+                    newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
+                }
+//                newNode.simdRotate(by: simd_quatf(generateYawRotationMatrix(rotate)), aroundTarget: simd_float3(0, 0, 0))
+                newNode.name = "door \(i)"
+                newNode.movabilityHint = .fixed
+                scene.rootNode.addChildNode(newNode)
+            }
+            // try to get the correct position of the door here
+//            let scannedDoor = roomScan.doors[0]
+//            let newObject = SCNSphere(radius: 0.1)
+//            newObject.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0, blue: 0, alpha: 1) // black point
+//            newObject.firstMaterial?.transparency = 1
+//            let newNode = SCNNode(geometry: newObject)
+//            newNode.simdTransform = scannedDoor.transform
+//            if let delta = deltaPos {
+//                newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
+//            }
+//            newNode.simdRotate(by: simd_quatf(generateYawRotationMatrix(rotate)), aroundTarget: simd_float3(0, 0, 0))
+//            scene.rootNode.addChildNode(newNode)
+        }
+        
+        // add all windows
+        if roomScan.windows.endIndex > 0 {
+            for i in 0...(roomScan.windows.endIndex-1) {
+                
+                //Generate new wall geometry
+                let scannedWindow = roomScan.windows[i]
+                
+                let length = 0.3
+                let width = scannedWindow.dimensions.x
+                let height = scannedWindow.dimensions.y
+                let newWindow = SCNBox(
+                    width: CGFloat(width),
+                    height: CGFloat(height),
+                    length: CGFloat(length),
+                    chamferRadius: 0
+                )
+                
+                newWindow.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.85, blue: 1, alpha: 1)
+                newWindow.firstMaterial?.transparency = 0.9
+                
+                //Generate new SCNNode
+                let newNode = SCNNode(geometry: newWindow)
+                newNode.simdTransform = scannedWindow.transform
+                if let delta = deltaPos {
                     newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
                 }
                 newNode.name = "door \(i)"
@@ -152,7 +240,7 @@ struct SceneKitView: UIViewRepresentable {
                 let newNode = SCNNode(geometry: newWall)
                 newNode.simdTransform = scannedWall.transform
                 if let delta = deltaPos {
-                    print("change position")
+//                    print("change position")
                     newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
                 }
                 newNode.name = "wall \(i)"
@@ -188,7 +276,7 @@ struct SceneKitView: UIViewRepresentable {
                 newNode.movabilityHint = .movable
                 newNode.state = .UnSelected
                 if let delta = deltaPos {
-                    print("change position")
+//                    print("change position")
                     newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
                 }
                 scene.rootNode.addChildNode(newNode)
@@ -233,19 +321,19 @@ struct SceneKitView: UIViewRepresentable {
 //        let angleInRadians: Float = .pi / 4  // 45 degrees in radians
 //        var rotationQuaternion: SCNQuaternion? = nil
  
-        for child in scene.rootNode.childNodes {
-            let position = child.position
-            let newObject2 = SCNSphere(radius: 0.1)
-            let newNode2 = SCNNode(geometry: newObject2)
-            newObject2.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0, blue: 0.5, alpha: 1)
-            newObject2.firstMaterial?.transparency = 1
-            newNode2.movabilityHint = .movable
-            newNode2.position = position
-            newNode2.name = "pos"
-            newNode2.state = .UnSelected
-            scene.rootNode.addChildNode(newNode2)
-//            print("node \(child.name ?? "no name"): \(child.position); \(child.rotation); \(child.orientation)")
-        }
+//        for child in scene.rootNode.childNodes {
+//            let position = child.position
+//            let newObject2 = SCNSphere(radius: 0.1)
+//            let newNode2 = SCNNode(geometry: newObject2)
+//            newObject2.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0, blue: 0.5, alpha: 1)
+//            newObject2.firstMaterial?.transparency = 1
+//            newNode2.movabilityHint = .movable
+//            newNode2.position = position
+//            newNode2.name = "pos"
+//            newNode2.state = .UnSelected
+//            scene.rootNode.addChildNode(newNode2)
+////            print("node \(child.name ?? "no name"): \(child.position); \(child.rotation); \(child.orientation)")
+//        }
         return view
     }
     

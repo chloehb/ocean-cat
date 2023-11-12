@@ -225,7 +225,7 @@ struct Adjuster {
                                 tables1 = (Furniture(type: FurnitureType.Table, position: (length/2 - tables[0].width/2, tables[0].height/2, -width/2 + tables[0].length/2), facing: Direction.West, width: tables[0].width, length: tables[0].length, height: tables[0].height))
                                 if tables[0].length + tables[1].length <= width {
                                     print("position desk 2 on east wall")
-                                    tables2 = (Furniture(type: FurnitureType.Bed, position: (length/2 - tables[1].width/2, tables[1].height/2, width/2 - tables[1].width/2), facing: Direction.West, width: tables[1].width, length: tables[1].length, height: tables[1].height))
+                                    tables2 = (Furniture(type: FurnitureType.Bed, position: (length/2 - tables[1].width/2, tables[1].height/2, width/2 - tables[1].length/2), facing: Direction.West, width: tables[1].width, length: tables[1].length, height: tables[1].height))
                                 }
                                 else if (beds[0].width + beds[1].width + tables[2].width <= width){
                                     print("try to place 2nd desk on top wall")

@@ -45,6 +45,7 @@ struct Furniture: Codable {
         self.width = width
         self.length = length
         self.height = height
+        self.facing = facing
     }
 }
 

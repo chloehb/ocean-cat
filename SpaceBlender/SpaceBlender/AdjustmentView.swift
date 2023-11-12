@@ -98,6 +98,19 @@ struct AdjustmentView: UIViewRepresentable {
                 print("x or y or z is not specified")
                 newNodeBed.position = SCNVector3(5, 0.5, 5)
             }
+            if let rot = bed.facing {
+//                print(rot)
+                switch rot {
+                case .North:
+                    break
+                case .East:
+                    newNodeBed.rotation = SCNVector4(0, 1, 0, Float.pi / 2)
+                case .South:
+                    newNodeBed.rotation = SCNVector4(0, 1, 0, Float.pi)
+                case .West:
+                    newNodeBed.rotation = SCNVector4(0, 1, 0, Float.pi * 3 / 2)
+                }
+            }
             scene.rootNode.addChildNode(newNodeBed)
         }
         
@@ -114,6 +127,19 @@ struct AdjustmentView: UIViewRepresentable {
             } else {
                 print("x or y or z is not specified")
                 newNodeDesk.position = SCNVector3(5, 0.5, 5)
+            }
+            if let rot = desk.facing {
+//                print(rot)
+                switch rot {
+                case .North:
+                    break
+                case .East:
+                    newNodeDesk.rotation = SCNVector4(0, 1, 0, Float.pi / 2)
+                case .South:
+                    newNodeDesk.rotation = SCNVector4(0, 1, 0, Float.pi)
+                case .West:
+                    newNodeDesk.rotation = SCNVector4(0, 1, 0, Float.pi * 3 / 2)
+                }
             }
             scene.rootNode.addChildNode(newNodeDesk)
         }

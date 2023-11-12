@@ -6,6 +6,7 @@
         <attribute name="url" optional="YES" attributeType="URI"/>
     </entity>
     <entity name="RoomModelData" representedClassName="RoomModelData" syncable="YES" codeGenerationType="class">
+        <attribute name="adjustment" optional="YES" attributeType="Binary"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="identifier" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="String"/>

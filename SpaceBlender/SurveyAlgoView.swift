@@ -7,16 +7,20 @@
 
 import Foundation
 import SwiftUI
+import RoomPlan
+import SceneKit
 
 struct SurveyView: View {
-    //@Binding var isPresented: Bool
+    @Binding var isPresented: Bool
     @ObservedObject var store = ModelStore.shared
-    
+    @State private var isPresentingPostAlgo = false
+    @State var index: Int
     @State var hasRoommate: Bool? = nil
     @State var bedsTogether: Bool? = nil
     @State var objectByWindow: String? = nil
     @State var bedFacingDoor: Bool? = nil
     @State var floorSpace: Bool? = nil
+    @State var adjustment: AttachedResult = AttachedResult()
     
     var body: some View {
         NavigationStack {
@@ -50,7 +54,7 @@ struct SurveyView: View {
                     .cornerRadius(20)
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
-                Spacer()
+                //Spacer()
                 Text("If you have a roommate, do you want your beds next to each other?").multilineTextAlignment(.center)
                 HStack {
                     Button {
@@ -78,6 +82,7 @@ struct SurveyView: View {
                     .cornerRadius(20)
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
+                /*
                 Spacer()
                 Text("Do you prefer your bed or desk to be by your window?").multilineTextAlignment(.center)
                 HStack {
@@ -135,6 +140,7 @@ struct SurveyView: View {
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
                 Spacer()
+                */
                 Text("Do you want to maximize the open floor space in your room?").multilineTextAlignment(.center)
                 HStack {
                     Button {
@@ -162,9 +168,14 @@ struct SurveyView: View {
                     .cornerRadius(20)
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
-                Spacer()
+                //Spacer()
                 Button {
                     // will go to next page
+                    isPresentingPostAlgo.toggle()
+                    print(isPresentingPostAlgo)
+                    var adj = Adjuster(index: index, hasRoommate: hasRoommate, bedsTogether: bedsTogether, bedFacingDoor: bedFacingDoor, objectByWindow: objectByWindow, floorSpace: floorSpace)
+                    adj.smartAdjust()
+                    adjustment = adj.generateResult()
                 } label: {
                     Text("Submit")
                         .padding()
@@ -175,7 +186,14 @@ struct SurveyView: View {
                 .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
                 .cornerRadius(20)
                 .shadow(color: .blue, radius: 3, y: 3)
-            } .padding()
+            } 
+            .padding()
+            .navigationDestination(isPresented: $isPresentingPostAlgo) {
+                PostAlgo(isPresented: $isPresentingPostAlgo ,adjustment: adjustment, index: index)
+            }
         }
+        
     }
 }
+
+

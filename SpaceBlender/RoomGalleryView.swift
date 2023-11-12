@@ -12,21 +12,20 @@ struct RoomGalleryView: View {
     @Binding var isPresented: Bool
     @ObservedObject var store = ModelStore.shared
     @State var isPresentingDemo: Bool = false
+    @State private var isPresentingSelectMethod = false
     
     var body: some View {
         NavigationStack {
             VStack {
                 Text("Room Gallery").font(.title)
                 Text("There are \(store.models.count) model(s)")
-                List(store.models, id: \.name) { //identifer was not unique
-                    model in
-                    //Text(model.date!)
-                    //Text(model.name!)
-                    //Text(model.image!)
+                List(0..<store.models.count) { //identifer was not unique
                     
+                    index in
                     let image = "ex_room"
-                    let date = model.date!
-                    let name = model.name!
+                    let date = store.models[index].date!
+                    let name = store.models[index].name!
+                    
                     VStack(alignment: .leading, spacing: 20.0) {
                         
                         Image(image)
@@ -38,18 +37,32 @@ struct RoomGalleryView: View {
                             Text(date + " " + name).font(.title).multilineTextAlignment(.center)
                             Spacer()
                         }
-                        NavigationLink(destination: MinimalDemoView(showing: $isPresentingDemo), label: {Text("Test Model View")}).simultaneousGesture(TapGesture().onEnded{
-                            isPresentingDemo.toggle()
-                            // todo: need to specify which room model is shown, currently, always the first one
-                        }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
+                        NavigationLink(destination: EditModelView(index: index), label: {Text("")})
+                        .buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
                     }
                     .padding()
                     .background(Rectangle().foregroundColor(.white).cornerRadius(15).shadow(radius: 15))
                     .padding()
                     
                 }
-                // ONE room card:
-                
+                Spacer()
+                Button {
+                    isPresentingSelectMethod.toggle()
+                } label: {
+                    Text("New Room Model")
+                        .padding()
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .frame(width: 250, height: 70)
+                }
+                .foregroundColor(.white)
+                .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                .cornerRadius(20)
+                .shadow(color: .blue, radius: 3, y: 3)
+                .padding()
+            }
+            .navigationDestination(isPresented: $isPresentingSelectMethod) {
+                SelectMethodView(isPresented: $isPresentingSelectMethod)
             }
         }
     }

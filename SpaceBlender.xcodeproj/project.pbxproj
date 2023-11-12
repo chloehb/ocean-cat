@@ -65,6 +65,15 @@
 		6C7C390D2AFDCDDE004A3A3F /* furnitureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7C390C2AFDCDDE004A3A3F /* furnitureStore.swift */; };
 		6C7C390F2B005064004A3A3F /* furnitureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7C390E2B005064004A3A3F /* furnitureInputView.swift */; };
 		6C7C39132B0070D2004A3A3F /* sample_furniture.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6C7C39122B0070D2004A3A3F /* sample_furniture.usdz */; };
+		6CE1FDC02B017C1C00BB63C3 /* AdjustmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1FDB12B017C1C00BB63C3 /* AdjustmentView.swift */; };
+		6CE1FDC12B017C1C00BB63C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CE1FDB22B017C1C00BB63C3 /* Assets.xcassets */; };
+		6CE1FDC22B017C1C00BB63C3 /* SelectFurnitureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1FDB32B017C1C00BB63C3 /* SelectFurnitureView.swift */; };
+		6CE1FDC32B017C1C00BB63C3 /* RequestSurveyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1FDB42B017C1C00BB63C3 /* RequestSurveyView.swift */; };
+		6CE1FDC42B017C1C00BB63C3 /* PostAlgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1FDB52B017C1C00BB63C3 /* PostAlgo.swift */; };
+		6CE1FDC52B017C1C00BB63C3 /* Adjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1FDB62B017C1C00BB63C3 /* Adjuster.swift */; };
+		6CE1FDC62B017C1C00BB63C3 /* 2dGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1FDB72B017C1C00BB63C3 /* 2dGeneration.swift */; };
+		6CE1FDC82B017C1C00BB63C3 /* FurnitureScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1FDB92B017C1C00BB63C3 /* FurnitureScanView.swift */; };
+		6CE1FDCA2B017C1C00BB63C3 /* EditModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1FDBB2B017C1C00BB63C3 /* EditModelView.swift */; };
 		8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */; };
 		8C724D782AEEEC2C00E6D0FF /* SelectMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D772AEEEC2C00E6D0FF /* SelectMethodView.swift */; };
 		8C724D7A2AEEED1A00E6D0FF /* UploadFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */; };
@@ -151,6 +160,15 @@
 		6C7C390C2AFDCDDE004A3A3F /* furnitureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = furnitureStore.swift; sourceTree = "<group>"; };
 		6C7C390E2B005064004A3A3F /* furnitureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = furnitureInputView.swift; sourceTree = "<group>"; };
 		6C7C39122B0070D2004A3A3F /* sample_furniture.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = sample_furniture.usdz; sourceTree = "<group>"; };
+		6CE1FDB12B017C1C00BB63C3 /* AdjustmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdjustmentView.swift; sourceTree = "<group>"; };
+		6CE1FDB22B017C1C00BB63C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6CE1FDB32B017C1C00BB63C3 /* SelectFurnitureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectFurnitureView.swift; sourceTree = "<group>"; };
+		6CE1FDB42B017C1C00BB63C3 /* RequestSurveyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestSurveyView.swift; sourceTree = "<group>"; };
+		6CE1FDB52B017C1C00BB63C3 /* PostAlgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostAlgo.swift; sourceTree = "<group>"; };
+		6CE1FDB62B017C1C00BB63C3 /* Adjuster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Adjuster.swift; sourceTree = "<group>"; };
+		6CE1FDB72B017C1C00BB63C3 /* 2dGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 2dGeneration.swift; sourceTree = "<group>"; };
+		6CE1FDB92B017C1C00BB63C3 /* FurnitureScanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FurnitureScanView.swift; sourceTree = "<group>"; };
+		6CE1FDBB2B017C1C00BB63C3 /* EditModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditModelView.swift; sourceTree = "<group>"; };
 		8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurnitureGalleryView.swift; sourceTree = "<group>"; };
 		8C724D772AEEEC2C00E6D0FF /* SelectMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMethodView.swift; sourceTree = "<group>"; };
 		8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileView.swift; sourceTree = "<group>"; };
@@ -206,6 +224,15 @@
 		4575C99F2AD1E5E300131520 /* SpaceBlender */ = {
 			isa = PBXGroup;
 			children = (
+				6CE1FDB72B017C1C00BB63C3 /* 2dGeneration.swift */,
+				6CE1FDB62B017C1C00BB63C3 /* Adjuster.swift */,
+				6CE1FDB12B017C1C00BB63C3 /* AdjustmentView.swift */,
+				6CE1FDB22B017C1C00BB63C3 /* Assets.xcassets */,
+				6CE1FDBB2B017C1C00BB63C3 /* EditModelView.swift */,
+				6CE1FDB92B017C1C00BB63C3 /* FurnitureScanView.swift */,
+				6CE1FDB52B017C1C00BB63C3 /* PostAlgo.swift */,
+				6CE1FDB42B017C1C00BB63C3 /* RequestSurveyView.swift */,
+				6CE1FDB32B017C1C00BB63C3 /* SelectFurnitureView.swift */,
 				5065A0242AF848D1005898D2 /* Info.plist */,
 				50659F8E2AF84005005898D2 /* Capture */,
 				6C6D17482AEEFB9F003F9930 /* Configuration */,
@@ -420,6 +447,7 @@
 				6C6D17492AEEFB9F003F9930 /* LICENSE in Resources */,
 				50659F9E2AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-1.mp4 in Resources */,
 				50659FA32AF843E2005898D2 /* ScanPasses-iPad-FixedHeight-2.mp4 in Resources */,
+				6CE1FDC12B017C1C00BB63C3 /* Assets.xcassets in Resources */,
 				5065A01F2AF84594005898D2 /* Preview Content in Resources */,
 				6C6D174A2AEEFB9F003F9930 /* Configuration in Resources */,
 				4575C9A82AD1E5E500131520 /* Preview Assets.xcassets in Resources */,
@@ -459,6 +487,7 @@
 				4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */,
 				0DDF82682AEEF903002146E2 /* SurveyAlgoView.swift in Sources */,
 				8C724D782AEEEC2C00E6D0FF /* SelectMethodView.swift in Sources */,
+				6CE1FDC02B017C1C00BB63C3 /* AdjustmentView.swift in Sources */,
 				6C0D5B362B0146AD00CE6B25 /* furnitureUpload.swift in Sources */,
 				50659FFF2AF8454A005898D2 /* AppDataModel+State.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
@@ -472,21 +501,28 @@
 				452C298B2AEC85BB00434784 /* AllData.xcdatamodeld in Sources */,
 				6C7C390D2AFDCDDE004A3A3F /* furnitureStore.swift in Sources */,
 				5065A0212AF84594005898D2 /* GuidedCaptureSampleApp.swift in Sources */,
+				6CE1FDC22B017C1C00BB63C3 /* SelectFurnitureView.swift in Sources */,
+				6CE1FDCA2B017C1C00BB63C3 /* EditModelView.swift in Sources */,
 				452C298D2AEC87CB00434784 /* PersistenceController.swift in Sources */,
 				4592B5B02AE2D7FA000227B3 /* ModelView.swift in Sources */,
 				5065A0022AF8454A005898D2 /* CaptureOverlayView+LocalizedString.swift in Sources */,
 				50659FFC2AF8454A005898D2 /* OnboardingTutorialView.swift in Sources */,
 				5065A0072AF8454A005898D2 /* HelpPageView.swift in Sources */,
+				6CE1FDC62B017C1C00BB63C3 /* 2dGeneration.swift in Sources */,
 				50659FFB2AF8454A005898D2 /* ProgressBarView.swift in Sources */,
 				4575C9D12AD1FA9700131520 /* ScanningView.swift in Sources */,
 				5065A0012AF8454A005898D2 /* TutorialVideoView.swift in Sources */,
+				6CE1FDC52B017C1C00BB63C3 /* Adjuster.swift in Sources */,
 				50659FFD2AF8454A005898D2 /* CaptureOverlayView.swift in Sources */,
 				4575C9D42AD1FAEB00131520 /* RoomCaptureController.swift in Sources */,
 				8C724D7C2AEEED2700E6D0FF /* AfterUploadFileView.swift in Sources */,
 				8C724D7A2AEEED1A00E6D0FF /* UploadFileView.swift in Sources */,
 				50659FFA2AF8454A005898D2 /* UntilProcessingCompleteFilter.swift in Sources */,
 				4575C9CB2AD1E94500131520 /* MainView.swift in Sources */,
+				6CE1FDC42B017C1C00BB63C3 /* PostAlgo.swift in Sources */,
+				6CE1FDC32B017C1C00BB63C3 /* RequestSurveyView.swift in Sources */,
 				5065A01B2AF84594005898D2 /* FeedbackView.swift in Sources */,
+				6CE1FDC82B017C1C00BB63C3 /* FurnitureScanView.swift in Sources */,
 				4575C9CF2AD1F50900131520 /* ModelStore.swift in Sources */,
 				50659FE52AF8453A005898D2 /* AppDataModel.swift in Sources */,
 				5065A00B2AF8454A005898D2 /* PlayerView.swift in Sources */,

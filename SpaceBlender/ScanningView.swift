@@ -82,4 +82,3 @@ struct ScanningView: View {
         }
     }
 }
-

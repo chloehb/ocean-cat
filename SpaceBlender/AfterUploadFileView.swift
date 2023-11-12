@@ -40,7 +40,8 @@ struct AfterUploadFileView: View {
                 .ignoresSafeArea()
             VStack(spacing: 20) {
                 // rgb: 168, 182, 234
-                Image("ex_roommodel")
+                let image_name = "ex_roommodel"
+                Image(image_name)
                     .resizable()
                     .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fit/*@END_MENU_TOKEN@*/)
                     .padding(.all)

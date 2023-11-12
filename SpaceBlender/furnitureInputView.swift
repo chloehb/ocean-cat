@@ -8,13 +8,13 @@
 import Foundation
 import SwiftUI
 
-import SwiftUI
 
 
 struct FurnitureInputView: View {
     @State var name: String = ""
     @State  var selectFurniture = "Bed"
     @State private var isNavigating = false
+    @State private var isUploading = false
     
     var furnitureType = ["Bed", "Desk", "Others", "waitingForImplement"]
     
@@ -41,6 +41,8 @@ struct FurnitureInputView: View {
                            }
                            Text("You selected: \(selectFurniture)")
             }
+            
+            Spacer()
             Spacer()
             
             Button(action: {
@@ -60,7 +62,25 @@ struct FurnitureInputView: View {
                 ContentView(name: $name, selectFurniture: $selectFurniture)
             }
             
+            Button(action: {
+                isUploading = true
+            }) {
+                Text("continue to upload")
+                    .fontWeight(.semibold)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(40)
+                    .shadow(radius: 5)
+            }
+            .padding(.horizontal)
+            .navigationDestination(isPresented: $isUploading) {
+                furnitureUpload(name: $name, selectFurniture: $selectFurniture)
+            }
+            
             Spacer()
+            
             
         }
         .padding(.top, 100)

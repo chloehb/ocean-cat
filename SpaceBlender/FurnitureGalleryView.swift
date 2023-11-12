@@ -43,12 +43,12 @@ struct FurnitureGalleryView: View {
                         
                         HStack {
                             Spacer()
-                            let path = NSString(string: url.absoluteString).expandingTildeInPath
-                            let fileDoesExist = FileManager.default.fileExists(atPath: path)
-                            Text(fileDoesExist.description)
+//                            let path = NSString(string: url.absoluteString).expandingTildeInPath
+//                            let fileDoesExist = FileManager.default.fileExists(atPath: path)
+//                            Text(fileDoesExist.description)
                             
                             Text(type + " " + name).font(.title).multilineTextAlignment(.center)
-                            Text(url.absoluteString)
+//                            Text(url.absoluteString)
                             
 //                            Text(url_string)
                             Spacer()
@@ -79,9 +79,9 @@ struct FurnitureGalleryView: View {
                 Button {
                     isPresentingCaptured.toggle()
                 } label: {
-                    Text("Scan Object")
+                    Text("Add a new furniture object")
                         .padding()
-                        .font(.title2)
+                        .font(.title3)
                         .fontWeight(.bold)
                         .frame(width: 300, height: 70)
                 }

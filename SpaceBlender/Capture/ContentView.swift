@@ -14,6 +14,9 @@ import os
 struct ContentView: View {
 //    static let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem,
 //                                category: "ContentView")
+    
+    @Binding var name: String
+    @Binding var selectFurniture: String
 
     @StateObject var appModel: AppDataModel = AppDataModel.instance
     
@@ -33,6 +36,13 @@ struct ContentView: View {
                 CircularProgressView()
             }
         }
+        // test only
+        .onAppear {
+                    print("Name: \(name)")
+                    print("Selected Furniture: \(selectFurniture)")
+                }
+        //test only
+        
         .onChange(of: appModel.state) { _, newState in
             if newState == .failed {
                 showErrorAlert = true
@@ -44,7 +54,7 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showReconstructionView) {
             if let folderManager = appModel.scanFolderManager {
-                ReconstructionPrimaryView(outputFile: folderManager.modelsFolder.appendingPathComponent("model-mobile.usdz"))
+                ReconstructionPrimaryView(outputFile: folderManager.modelsFolder.appendingPathComponent("model-mobile.usdz"),name: $name, selectFurniture: $selectFurniture)
             }
         }
         .alert(
@@ -80,10 +90,10 @@ private struct CircularProgressView: View {
 }
 
 #if DEBUG
-@available(iOS 17.0, *)
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//@available(iOS 17.0, *)
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
 #endif

@@ -10,6 +10,9 @@ import SwiftUI
 @main
 struct SpaceBlenderApp: App {
     let persistenceController = PersistenceController.shared
+//    let dataController = DataController.shared
+//    @StateObject private var dataController = DataController()
+    
     init() {
     }
     var body: some Scene {
@@ -17,6 +20,7 @@ struct SpaceBlenderApp: App {
             NavigationStack {
                 MainView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//                    .environment(\.managedObjectContext, dataController.container.viewContext)
             }
         }
     }

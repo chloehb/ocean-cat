@@ -21,8 +21,6 @@ struct ModelCaptureView: View {
         
         ARQuickLookController(modelFile: modelFile, endCaptureCallback: endCaptureCallback)
         
-        
-        
     }
 }
 

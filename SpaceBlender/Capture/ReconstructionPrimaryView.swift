@@ -17,12 +17,15 @@ struct ReconstructionPrimaryView: View {
 
     @State private var completed: Bool = false
     @State private var cancelled: Bool = false
+    
+    @Binding var name: String
+    @Binding var selectFurniture: String
 
     var body: some View {
         if completed && !cancelled {
             CaptureModelView(modelFile: outputFile, endCaptureCallback: { [weak appModel] in
                 appModel?.endCapture()
-            })
+            }, name: $name, selectFurniture: $selectFurniture)
         } else {
             ReconstructionProgressView(outputFile: outputFile,
                                        completed: $completed,

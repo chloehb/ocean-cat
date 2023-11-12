@@ -90,7 +90,8 @@ struct MainView: View {
 //                OnBoardingView(isPresented: $isPresentingOnBoarding)
 //            }
             .navigationDestination(isPresented: $isPresentingCapture) {
-                ContentView()
+//                ContentView()
+                FurnitureInputView()
             }
             .navigationDestination(isPresented: $isPresentingRoomGallery) {
                 RoomGalleryView(isPresented: $isPresentingRoomGallery)

@@ -31,6 +31,8 @@ struct ActivityViewControllerRep: UIViewControllerRepresentable {
 }
 
 struct ScanningView: View {
+    
+    @State private var isPresentingRoomGallery = false
     @Environment(\.dismiss) private var dismiss
     @StateObject var captureController = RoomCaptureController.instance
     @ObservedObject var store = ModelStore.shared
@@ -66,11 +68,13 @@ struct ScanningView: View {
             //            }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
             //                ActivityViewControllerRep(items: [captureController.exportUrl!])
             //            })
-            NavigationLink(destination: ModelView(), label: {Text("Go to model view")} ).simultaneousGesture(TapGesture().onEnded{
-                captureController.done(message: message)
-                store.storeModels()
-                print("After call done: there are \(store.models.count) models")
-            }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).opacity(captureController.showExportButton ? 1 : 0).padding()
+            VStack {
+                NavigationLink(destination: RoomGalleryView(isPresented: $isPresentingRoomGallery), label: {Text("Save to Room Gallery")} ).simultaneousGesture(TapGesture().onEnded{
+                    isPresentingRoomGallery.toggle()
+                   captureController.done(message: message)
+                   print("After call done: there are \(store.models.count) models")
+               }).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2).opacity(captureController.showExportButton ? 1 : 0).padding()
+           }
         }
         .onTapGesture {
             // dismiss virtual keyboard from class lab
@@ -78,3 +82,4 @@ struct ScanningView: View {
         }
     }
 }
+

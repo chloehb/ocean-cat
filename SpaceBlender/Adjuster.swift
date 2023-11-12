@@ -223,7 +223,7 @@ struct Adjuster {
                         if beds[0].width + beds[1].width <= width {
                             beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].length/2, beds[0].height/2, -width/2 + beds[0].width/2), facing: Direction.East, width: beds[0].width, length: beds[0].length, height: beds[0].height))
                             beds2 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[1].length/2, beds[1].height/2, -width/2 + beds[0].width + beds[1].width/2), facing: Direction.East, width: beds[1].width, length: beds[1].length, height: beds[1].height))
-                            if (beds[0].length + tables[0].width <= length) {
+                            if (max(beds[0].length, beds[1].length) + max(tables[0].width, tables[1].width) <= length) {
                                 print("position desk 1 on East Wall")
                                 tables1 = (Furniture(type: FurnitureType.Table, position: (length/2 - tables[0].width/2, tables[0].height/2, -width/2 + tables[0].length/2), facing: Direction.West, width: tables[0].width, length: tables[0].length, height: tables[0].height))
                                 if tables[0].length + tables[1].length <= width {
@@ -256,14 +256,14 @@ struct Adjuster {
                     }
                     else  { // 2 beds apart on left wall and on right wall, place desks on top wall and bottom wall !!!!
                         print("beds - apart")
-                        if (beds[0].length <= width && beds[0].width + beds[1].width <= length) {
+                        if (max(beds[0].length, beds[1].length) <= width && beds[0].width + beds[1].width <= length) {
                             print("beds on left and right wall, on south wall")
                             beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].width/2, beds[0].height/2, width/2 - beds[0].length/2), facing: Direction.North, width: beds[0].width, length: beds[0].length, height: beds[0].height))
                             beds2 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[1].width/2, beds[1].height/2, width/2 - beds[1].length/2), facing: Direction.North, width: beds[1].width, length: beds[1].length, height: beds[1].height))
                             // ensure tables fit
                             if (beds[0].width + beds[1].width + max(tables[0].length, tables[1].length) <= length) {
                                 tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + beds[0].width + tables[0].length/2, tables[0].height/2, -width/2 + tables[0].width/2), facing: Direction.South, width: tables[0].width, length: tables[0].length, height: tables[0].height))
-                                tables2 = (Furniture(type: FurnitureType.Table, position: (-length/2 + beds[0].width + tables[1].width/2, tables[1].height/2, width/2 - tables[1].width/2), facing: Direction.North, width: tables[1].width, length: tables[1].length, height: tables[1].height))
+                                tables2 = (Furniture(type: FurnitureType.Table, position: (-length/2 + beds[0].width + tables[1].length/2, tables[1].height/2, width/2 - tables[1].width/2), facing: Direction.North, width: tables[1].width, length: tables[1].length, height: tables[1].height))
                             }
                             else if (beds[0].length + tables[0].width <= width && beds[1].length + tables[1].width <= width) {
                                     tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].length/2, tables[0].height/2, width/2 - tables[0].width/2), facing: Direction.North, width: tables[0].width, length: tables[0].length, height: tables[0].height))
@@ -271,7 +271,7 @@ struct Adjuster {
                             }
                         }
                         // 2 beds apart of top and bottom wall facing East Wall
-                        else if (beds[0].length < length && beds[0].width + beds[1].width <= width) {
+                        else if (max(beds[0].length, beds[1].length) <= length && beds[0].width + beds[1].width <= width) {
                             print("beds on top and bottom wall")
                             beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].length/2, beds[0].height/2, -width/2 + beds[0].width/2), facing: Direction.East, width: beds[0].width, length: beds[0].length, height: beds[0].height))
                             beds2 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[1].length/2, beds[1].height/2, width/2 - beds[1].width/2), facing: Direction.East, width: beds[1].width, length: beds[1].length, height: beds[1].height))

@@ -1,10 +1,3 @@
-//
-//  ModelStore.swift
-//  SpaceBlender
-//
-//  Created by akai on 10/7/23.
-//
-
 import Foundation
 import RoomPlan
 import CoreData
@@ -17,6 +10,84 @@ struct RoomModel {
     var image: String?
     var adjustment: AttachedResult? = nil
 }
+
+struct furnitureModel: Codable {
+    var name: String?
+    var type: String?
+    var url: URL?
+}
+
+final class furnitureStore: ObservableObject{
+    static let shared = furnitureStore()
+    
+    let clearAllWhenInit = false
+    private init(){
+        let context = PersistenceController.shared.container.viewContext
+        let fetchRequest: NSFetchRequest<FurObject> = FurObject.fetchRequest()
+        if clearAllWhenInit {
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+            do {
+                try context.execute(deleteRequest)
+            } catch {
+                // Handle the error
+            }
+        }
+        
+        //---
+        
+        do {
+            let furnitureModels = try context.fetch(fetchRequest)
+            if !furnitureModels.isEmpty {
+                for eachModel in furnitureModels {
+                    let name = eachModel.name
+                    let fetchedModel = furnitureModel(name: eachModel.name, type:eachModel.type, url: eachModel.url)
+                    models.append(fetchedModel)
+                }
+            }
+        } catch {
+            print("error when fetching stored models: \(error)")
+        }
+        
+        //---
+    }
+    @Published var models = [furnitureModel]()
+    func addNewModel(_ model: furnitureModel){
+        self.models.append(model)
+        let context = PersistenceController.shared.container.viewContext
+        // check the number of current models = context models + 1
+        let fetchRequest: NSFetchRequest<FurObject> = FurObject.fetchRequest()
+        var isLegalCount = false
+        do {
+            let furnitureModels = try context.fetch(fetchRequest)
+            print(furnitureModels.count)
+            print(models.count)
+            if furnitureModels.count + 1 == models.count {
+                isLegalCount = true
+            } else {
+                
+            }
+        } catch {
+            print("error when fetching stored models: \(error)")
+        }
+        
+        if isLegalCount {
+            let model = models.last!
+            let newModelData = FurObject(context: context)
+            newModelData.name = model.name
+            newModelData.type = model.type
+            newModelData.url = model.url
+            do {
+                try context.save()
+            } catch {
+                print("error when try to store newly added model: \(error)")
+            }
+        } else {
+            print("The number of stored model mismatch. Fail to store.")
+        }
+    }
+    
+}
+
 
 func getDataFromAttachedResult(packet: AttachedResult) -> Data? {
     do{

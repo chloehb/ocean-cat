@@ -15,6 +15,7 @@ struct MainView: View {
     @State private var isPresentingRoomGallery = false
     @State private var isPresentingFurnitureGallery = false
     @State private var isPresentingSelectMethod = false
+    @State private var isPresentingCapture = false
     var body: some View {
         ZStack {
             Color(.white)
@@ -29,7 +30,7 @@ struct MainView: View {
                     Button("Cancel", role: .destructive) {
                     }
                     Button {
-                        isPresentingOnBoarding.toggle()
+                        isPresentingCapture.toggle()
                     } label: {
                         Text("Create Furniture Model")
                             .padding()
@@ -85,8 +86,12 @@ struct MainView: View {
                 .shadow(color: .blue, radius: 3, y: 3)
             }
             .padding()
-            .navigationDestination(isPresented: $isPresentingOnBoarding) {
-                OnBoardingView(isPresented: $isPresentingOnBoarding)
+//            .navigationDestination(isPresented: $isPresentingOnBoarding) {
+//                OnBoardingView(isPresented: $isPresentingOnBoarding)
+//            }
+            .navigationDestination(isPresented: $isPresentingCapture) {
+//                ContentView()
+                FurnitureInputView()
             }
             .navigationDestination(isPresented: $isPresentingRoomGallery) {
                 RoomGalleryView(isPresented: $isPresentingRoomGallery)
@@ -97,6 +102,7 @@ struct MainView: View {
             .navigationDestination(isPresented: $isPresentingSelectMethod) {
                 SelectMethodView(isPresented: $isPresentingSelectMethod)
             }
+            
         }
     }
 }

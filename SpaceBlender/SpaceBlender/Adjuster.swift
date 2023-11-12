@@ -283,6 +283,7 @@ struct Adjuster {
         var for_skeletal: Bool = true
         if let hasRoommate {
             if !hasRoommate && for_skeletal {
+                print("skelatal")
                 if (beds[0].width + tables[0].width) <= length {
                     print ("Bed on East Wall and table on West Wall")
                     beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: Direction.South, width: beds[0].width, length: beds[0].length, height: beds[0].height))
@@ -294,7 +295,8 @@ struct Adjuster {
                     tables1 = (Furniture(type: FurnitureType.Table, position: (length/2 - tables[0].width/2, tables[0].height/2, 0), facing: Direction.West, width: tables[0].width, length: tables[0].length, height: tables[0].height))
                 }
             }
-            else { // 1 people in room for MVP
+            else if (!for_skeletal) { // 1 people in room for MVP
+                print("bad")
                 // For more complicated Algo for MVP
                 // table1 is the users desk
                 if windows.count > 0 {

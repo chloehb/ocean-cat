@@ -69,3 +69,5 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
         fatalError("Not needed.")
     }
 }
+
+// https://github.com/deurell/roomscanner/blob/main/Roomscanner/RoomCaptureController.swift

@@ -137,7 +137,7 @@ struct Adjuster {
                 if (a > 0 && b > 0) || (a < 0 && b < 0) {
                     rotate = atanf(a / b)
                 } else if (a > 0 && b < 0) || (a < 0 && b > 0) {
-                    rotate = Float.pi + atanf(a / b)
+                    rotate = Float.pi * 2 + atanf(a / b)
                 } else if b == 0 {
                     rotate = Float.pi / 2
                 }
@@ -168,8 +168,11 @@ struct Adjuster {
                 windows.append(Furniture(type: FurnitureType.Window, position: (tempWindow.position.x, tempWindow.position.y, tempWindow.position.z), width: window.dimensions.x, height: window.dimensions.y))
             }
             for obj in room.objects {
-                let wid = obj.dimensions.x
-                let len = obj.dimensions.z
+                var wid = obj.dimensions.x
+                var len = obj.dimensions.z
+                if wid > len {
+                    swap(&wid, &len)
+                }
                 let height = obj.dimensions.y
                 switch obj.category {
                 case .bed:
@@ -224,6 +227,7 @@ struct Adjuster {
                                 print("position desk 1 on East Wall")
                                 tables1 = (Furniture(type: FurnitureType.Table, position: (length/2 - tables[0].width/2, tables[0].height/2, -width/2 + tables[0].length/2), facing: Direction.West, width: tables[0].width, length: tables[0].length, height: tables[0].height))
                                 if tables[0].length + tables[1].length <= width {
+                                    print(tables[1].length, tables[1].width)
                                     print("position desk 2 on east wall")
                                     tables2 = (Furniture(type: FurnitureType.Bed, position: (length/2 - tables[1].width/2, tables[1].height/2, width/2 - tables[1].length/2), facing: Direction.West, width: tables[1].width, length: tables[1].length, height: tables[1].height))
                                 }

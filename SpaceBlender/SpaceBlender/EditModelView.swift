@@ -138,6 +138,14 @@ struct EditModelView: View {
                     .shadow(color: .blue, radius: 3, y: 3)
                     .padding()
                 }
+                .fileExporter(isPresented: $showJsonShareSheet,
+                              document: TextDocument(text),
+                              contentType: .json,
+                              defaultFilename: jsonFileName) { result in
+                    if case .failure(let error) = result {
+                        print(error)
+                    }
+                }
                 Spacer()
             }
             .navigationDestination(isPresented: $isPresentingRoomGallery) {

@@ -25,7 +25,7 @@ struct AdjustmentView: UIViewRepresentable {
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
         // Disable the default camera control
-        view.allowsCameraControl = true
+//        view.allowsCameraControl = true
         
         scene.background.contents = Color.black
         scene.physicsWorld.gravity = SCNVector3(0, 0, 0)
@@ -113,10 +113,11 @@ struct AdjustmentView: UIViewRepresentable {
             }
             scene.rootNode.addChildNode(newNodeBed)
         }
-        
+        print(a)
+        print(b)
         for i in 0..<adjustment.desks.count {
             let desk = adjustment.desks[i]
-//            print("\(i): ", desk)
+            print("\(i): ", desk)
             let newDesk = SCNBox(width: CGFloat(desk.width), height: CGFloat(desk.height), length: CGFloat(desk.length), chamferRadius: 2)
             newDesk.firstMaterial?.diffuse.contents = UIColor(red: 0.85, green: 1, blue: 0, alpha: 1)
             newDesk.firstMaterial?.transparency = 0.5
@@ -129,16 +130,16 @@ struct AdjustmentView: UIViewRepresentable {
                 newNodeDesk.position = SCNVector3(5, 0.5, 5)
             }
             if let rot = desk.facing {
-//                print(rot)
+                print(rot)
                 switch rot {
                 case .North:
-                    break
-                case .East:
                     newNodeDesk.rotation = SCNVector4(0, 1, 0, Float.pi / 2)
-                case .South:
+                case .East:
                     newNodeDesk.rotation = SCNVector4(0, 1, 0, Float.pi)
-                case .West:
+                case .South:
                     newNodeDesk.rotation = SCNVector4(0, 1, 0, Float.pi * 3 / 2)
+                case .West:
+                    newNodeDesk.rotation = SCNVector4(0, 1, 0, Float.pi * 2)
                 }
             }
             scene.rootNode.addChildNode(newNodeDesk)
@@ -163,13 +164,13 @@ struct AdjustmentView: UIViewRepresentable {
             scene.rootNode.addChildNode(newNodeWindow)
         }
         
-        for i in 0..<adjustment.doors.count {
-            let door = adjustment.doors[i]
+        // currently, only take care of the first door
+        if let door = adjustment.doors.first {
             let newDoor = SCNBox(width: CGFloat(door.width), height: CGFloat(door.height), length: CGFloat(0.3), chamferRadius: 0.5)
             newDoor.firstMaterial?.diffuse.contents = UIColor(red: 0.85, green: 0, blue: 0, alpha: 1)
             newDoor.firstMaterial?.transparency = 0.5
             let newDoorNode = SCNNode(geometry: newDoor)
-            newDoorNode.name = "door\(i)"
+            newDoorNode.name = "door0"
 //            print("b: \(b)")
             if let x = door.position.x, let y = door.position.y, let z = door.position.z {
                 newDoorNode.position = SCNVector3(x, y, z)
@@ -183,6 +184,10 @@ struct AdjustmentView: UIViewRepresentable {
             }
             scene.rootNode.addChildNode(newDoorNode)
         }
+//        for i in 0..<adjustment.doors.count {
+//            let door = adjustment.doors[i]
+//
+//        }
         
         //(0, 0, 0)
         let newObject = SCNSphere(radius: 0.1)
@@ -235,6 +240,18 @@ struct AdjustmentView: UIViewRepresentable {
         //            scene.rootNode.addChildNode(newNode2)
         ////            print("node \(child.name ?? "no name"): \(child.position); \(child.rotation); \(child.orientation)")
         //        }
+        let camera = SCNCamera()
+        camera.usesOrthographicProjection = true
+        camera.orthographicScale = 2.5
+        camera.zNear = 0
+        camera.zFar = 100
+        let cameraNode = SCNNode()
+        cameraNode.camera = camera
+        cameraNode.position = SCNVector3(x: 0, y: 10, z: 0)
+        let centerConstraint = SCNLookAtConstraint(target: scene.rootNode.childNodes[0])
+        cameraNode.constraints = [centerConstraint]
+        scene.rootNode.addChildNode(cameraNode)
+        
         return view
     }
     

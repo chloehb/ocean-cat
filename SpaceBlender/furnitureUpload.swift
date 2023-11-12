@@ -5,16 +5,19 @@ struct furnitureUpload: View {
     @Binding var name: String
     @Binding var selectFurniture: String
     @State private var showingARQuickLook = false
+    @State private var istroing  = false
+    
     
     @ObservedObject var store = furnitureStore.shared
     
      @State var fileName = "no file chosen"
      @State var openFile = false
-     @State var fileURL : URL?
+     @State var fileURL = URL(string: "https://www.example.com")
  
     var body: some View {
         VStack(spacing: 25){
-        
+            Spacer()
+            
             Text(self.fileName)
             
             Button {
@@ -38,8 +41,27 @@ struct furnitureUpload: View {
             }
             .padding(.horizontal)
             .sheet(isPresented: $showingARQuickLook) {
-                ARQuickLookController(modelFile: fileURL ?? nil, showingARQuickLook: $showingARQuickLook)
+                ARQuickLookController(modelFile: fileURL!, showingARQuickLook: $showingARQuickLook)
             }
+            
+            Button(action: {
+                self.istroing.toggle()
+                store.addNewModel(furnitureModel(name: name, type: selectFurniture, url: fileURL))
+            }) {
+                Text("Saved to funiture gallery")
+                    .fontWeight(.semibold)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(40)
+                    .shadow(radius: 5)
+            }
+            .padding(.horizontal)
+            .alert("furniture saved!",isPresented: $istroing){
+                
+            }
+            Spacer()
             
         }
         
@@ -49,10 +71,10 @@ struct furnitureUpload: View {
             do{
                 let fileURLs = try Result.get()
                 fileURL = fileURLs[0]
-                print(fileURL)
-                self.fileName = fileURL.first?.lastPathComponent ?? "file not available"
-                store.addNewModel(furnitureModel(name: name, type: selectFurniture, url: fileURL))
+                print(fileURLs)
+                self.fileName = fileURLs.first?.lastPathComponent ?? "file not available"
 //                Text("successfully saved")
+                print(fileURL?.absoluteString)
                 
             }
             catch{

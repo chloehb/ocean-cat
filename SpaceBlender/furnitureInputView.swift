@@ -13,6 +13,7 @@ import SwiftUI
 struct FurnitureInputView: View {
     @State var name: String = ""
     @State  var selectFurniture = "Bed"
+//    @State  var  = "Bed"
     @State private var isNavigating = false
     @State private var isUploading = false
     

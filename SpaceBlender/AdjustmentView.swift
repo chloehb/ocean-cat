@@ -242,7 +242,7 @@ struct AdjustmentView: UIViewRepresentable {
         //        }
         let camera = SCNCamera()
         camera.usesOrthographicProjection = true
-        camera.orthographicScale = 2.5
+        camera.orthographicScale = 3
         camera.zNear = 0
         camera.zFar = 100
         let cameraNode = SCNNode()

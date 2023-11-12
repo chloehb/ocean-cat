@@ -5,6 +5,9 @@ Abstract:
 The guidance view that shows the video tutorial or the point cloud on the review screen.
 */
 
+
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Foundation
 import RealityKit
 import SwiftUI

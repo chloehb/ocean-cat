@@ -5,6 +5,8 @@ Abstract:
 A class that supports the creation, listing, and filename support of a capture folder.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Dispatch
 import Foundation
 import os

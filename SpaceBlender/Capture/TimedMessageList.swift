@@ -5,6 +5,8 @@ Abstract:
 A timed queue of messages that modifies published properties.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Combine
 import Dispatch
 import Foundation

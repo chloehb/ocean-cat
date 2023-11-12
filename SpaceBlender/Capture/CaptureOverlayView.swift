@@ -5,6 +5,8 @@ Abstract:
 A full-screen overlay UI with buttons that control the capture.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Foundation
 import RealityKit
 import SwiftUI

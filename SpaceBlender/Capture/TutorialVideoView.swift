@@ -5,6 +5,8 @@ Abstract:
 The view that plays the tutorial.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import SwiftUI
 
 struct TutorialVideoView: View {

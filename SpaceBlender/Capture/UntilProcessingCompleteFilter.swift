@@ -5,6 +5,8 @@ Abstract:
 An asynchronous sequence filter this sample applies to the photogrammetry session.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Foundation
 import RealityKit
 

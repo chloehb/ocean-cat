@@ -4,6 +4,8 @@
 //
 //  Created by 周晓玮 on 11/11/23.
 //
+//reference: log in page implementation: https://medium.com/mop-developers/build-your-first-swiftui-app-part-3-create-the-login-screen-334d90ef1763
+// reference: imgae from sf database
 
 import Foundation
 import SwiftUI

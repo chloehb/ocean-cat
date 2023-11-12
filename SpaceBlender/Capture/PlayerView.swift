@@ -5,6 +5,8 @@ Abstract:
 The view that plays the input video.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import AVKit
 import SwiftUI
 

@@ -5,6 +5,8 @@ Abstract:
 Top-level app structure of the view hierarchy.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 //import SwiftUI
 //
 //@main

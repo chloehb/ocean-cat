@@ -5,6 +5,8 @@ Abstract:
 Top-level view for the object capture session that shows the info panel and other items during the session.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Foundation
 import RealityKit
 import SwiftUI

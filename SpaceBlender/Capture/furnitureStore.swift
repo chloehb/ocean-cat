@@ -4,6 +4,8 @@
 ////
 ////  Created by 周晓玮 on 11/9/23.
 ////
+///
+///// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
 //
 //import Foundation
 //import CoreData

@@ -5,6 +5,8 @@ Abstract:
 Encapsulated view support for the scanning progress meter.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Foundation
 import SwiftUI
 import RealityKit

@@ -6,6 +6,8 @@ A wrapper for AR QuickLook viewer that shows the reconstructed USDZ model
  file directly.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import ARKit
 import QuickLook
 import SwiftUI

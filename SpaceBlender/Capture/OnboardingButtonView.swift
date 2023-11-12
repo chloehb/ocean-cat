@@ -5,6 +5,9 @@ Abstract:
 The buttons on the review screen.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
+
 import RealityKit
 import SwiftUI
 import os

@@ -5,6 +5,8 @@ Abstract:
 The app's internal localized string type.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Foundation
 
 extension CaptureOverlayView {

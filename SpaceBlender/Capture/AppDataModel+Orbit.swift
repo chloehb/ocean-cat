@@ -5,6 +5,8 @@ Abstract:
 Device orbit component of a data model that maintains the state of the app.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import UIKit
 
 extension AppDataModel {

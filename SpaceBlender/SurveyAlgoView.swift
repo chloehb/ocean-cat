@@ -5,6 +5,8 @@
 //  Created by Ellen Paradis on 10/29/23.
 //
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Foundation
 import SwiftUI
 import RoomPlan

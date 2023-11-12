@@ -5,6 +5,8 @@ Abstract:
 View to show during the reconstruction phase until the session receives a model output.
 */
 
+// reference: third-party object capture tool: https://developer.apple.com/augmented-reality/object-capture/
+
 import Foundation
 import RealityKit
 import SwiftUI

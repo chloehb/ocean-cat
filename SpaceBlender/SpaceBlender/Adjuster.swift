@@ -256,8 +256,8 @@ struct Adjuster {
                             beds2 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[1].width/2, beds[1].height/2, width/2 - beds[1].length/2), facing: Direction.North, width: beds[1].width, length: beds[1].length, height: beds[1].height))
                             // ensure tables fit
                             if (beds[0].width + beds[1].width + max(tables[0].length, tables[1].length) <= length) {
-                                tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + beds[0].width + tables[0].width/2, tables[0].height/2, -width/2), facing: Direction.South, width: tables[0].width, length: tables[0].length, height: tables[0].height))
-                                tables2 = (Furniture(type: FurnitureType.Table, position: (-length/2 + beds[0].width + tables[1].width/2, tables[1].height/2, width/2), facing: Direction.North, width: tables[1].width, length: tables[1].length, height: tables[1].height))
+                                tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + beds[0].width + tables[0].length/2, tables[0].height/2, -width/2 + tables[0].width/2), facing: Direction.South, width: tables[0].width, length: tables[0].length, height: tables[0].height))
+                                tables2 = (Furniture(type: FurnitureType.Table, position: (-length/2 + beds[0].width + tables[1].width/2, tables[1].height/2, width/2 - tables[1].width/2), facing: Direction.North, width: tables[1].width, length: tables[1].length, height: tables[1].height))
                             }
                         }
                         // 2 beds apart of top and bottom wall facing East Wall
@@ -275,14 +275,19 @@ struct Adjuster {
                 } // if let bedsTogether
             } // if has roommate
         } // if let has roomamate
-        
         // for skeletal just simply place bed
         var for_skeletal: Bool = true
         if let hasRoommate {
             if !hasRoommate && for_skeletal {
-                if beds[0].width + tables[0].width <= length {
+                if (beds[0].width + tables[0].width) <= length {
+                    print ("Bed on East Wall and table on West Wall")
                     beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: Direction.South, width: beds[0].width, length: beds[0].length, height: beds[0].height))
                     tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].width/2, tables[0].height/2, 0), facing: Direction.East, width: tables[0].width, length: tables[0].length, height: tables[0].height))
+                }
+                // place bed on west wall and desk on east wall
+                else if (beds[0].length + tables[0].width <= length) {
+                    beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].length/2, beds[0].height/2, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                    tables1 = (Furniture(type: FurnitureType.Table, position: (length/2 - tables[0].width/2, tables[0].height/2, 0), facing: Direction.West, width: tables[0].width, length: tables[0].length, height: tables[0].height))
                 }
             }
             else { // 1 people in room for MVP
@@ -315,7 +320,6 @@ struct Adjuster {
                                     windowindex = count
                                     tables1 = (Furniture(type: FurnitureType.Table, position: (-1 * window.position.x!, 0, -1 * window.position.z!), facing: temp, width: tables[0].width, length: tables[0].length, height: tables[0].height))
                                     break
-                                    
                                 }
                                 count = count + 1
                             } // for

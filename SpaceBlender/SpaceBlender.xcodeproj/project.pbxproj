@@ -67,6 +67,8 @@
 		8CC742102AF840EA00824939 /* EditModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC7420F2AF840EA00824939 /* EditModelView.swift */; };
 		8CC742122AF8430800824939 /* SelectFurnitureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC742112AF8430800824939 /* SelectFurnitureView.swift */; };
 		8CC742142AF8431800824939 /* RequestSurveyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC742132AF8431800824939 /* RequestSurveyView.swift */; };
+		8CE290072B0D09BF00711D27 /* MoveFurnitureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE290062B0D09BF00711D27 /* MoveFurnitureView.swift */; };
+		8CE2900B2B0D18F000711D27 /* TestScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 8CE2900A2B0D18F000711D27 /* TestScene.scn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +153,8 @@
 		8CC7420F2AF840EA00824939 /* EditModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModelView.swift; sourceTree = "<group>"; };
 		8CC742112AF8430800824939 /* SelectFurnitureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFurnitureView.swift; sourceTree = "<group>"; };
 		8CC742132AF8431800824939 /* RequestSurveyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSurveyView.swift; sourceTree = "<group>"; };
+		8CE290062B0D09BF00711D27 /* MoveFurnitureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveFurnitureView.swift; sourceTree = "<group>"; };
+		8CE2900A2B0D18F000711D27 /* TestScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = TestScene.scn; path = ../../../RotationTutorial/RotationTutorial/TestScene.scn; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +232,8 @@
 				6CF29A4A2AEEBD8A00C0C11D /* 2dGeneration.swift */,
 				8CC7420D2AF839C900824939 /* FurnitureScanView.swift */,
 				8CC7420F2AF840EA00824939 /* EditModelView.swift */,
+				8CE290062B0D09BF00711D27 /* MoveFurnitureView.swift */,
+				8CE2900A2B0D18F000711D27 /* TestScene.scn */,
 				8CC742112AF8430800824939 /* SelectFurnitureView.swift */,
 				8CC742132AF8431800824939 /* RequestSurveyView.swift */,
 				45917DD02AFA8FAA00AA8E1C /* Adjuster.swift */,
@@ -401,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5057B2762B017C68001B50A9 /* Configuration in Resources */,
+				8CE2900B2B0D18F000711D27 /* TestScene.scn in Resources */,
 				4575C9A82AD1E5E500131520 /* Preview Assets.xcassets in Resources */,
 				5057B2A62B017F4B001B50A9 /* Preview Content in Resources */,
 				4575C9A52AD1E5E500131520 /* Assets.xcassets in Resources */,
@@ -431,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5057B29D2B017F4B001B50A9 /* CaptureFolderManager.swift in Sources */,
+				8CE290072B0D09BF00711D27 /* MoveFurnitureView.swift in Sources */,
 				4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */,
 				5057B2B22B017F4B001B50A9 /* TimedMessageList.swift in Sources */,
 				0DDF82682AEEF903002146E2 /* SurveyAlgoView.swift in Sources */,

@@ -9,10 +9,18 @@ import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
 
+enum isPresentingDestination {
+    case RoomGallery
+    case RequestSurvey
+    case SelectFurniture
+    case MoveFurniture
+}
+
 struct EditModelView: View {
     @State private var isPresentingRoomGallery = false
     @State private var isPresentingRequestSurvey = false
     @State private var isPresentingSelectFurniture = false
+    @State private var isPresentingMoveFurniture = false
     @State var index: Int
     //@Binding var showing: Bool
     @State var selectedName: String? = nil
@@ -21,6 +29,9 @@ struct EditModelView: View {
     @State private var text = ""
     @State private var jsonFileName = "export.json"
     @ObservedObject var store = ModelStore.shared
+    @State private var degrees: Float = 0.0
+    @State private var x_pos: Float = 0.0
+    @State private var z_pos: Float = 0.0
     
     func exportJson() {
         do {
@@ -63,80 +74,85 @@ struct EditModelView: View {
                 // rgb: 168, 182, 234
                 Spacer()
                 // if adjustment already exists, load adjustment view
+                // todo: use a new way to perform SceneKitView
                 if let adj = store.models[index].adjustment {
                     AdjustmentView(index: index, adjustment: adj, options: [], selectedName: $selectedName)
                 } else {
-                    SceneKitView(index: index, options: [], selectedName: $selectedName)
+                    SceneKitView(index: index, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, options: [], selectedName: $selectedName)
                         .allowsHitTesting(true)
                         .ignoresSafeArea()
                 }
                 Spacer()
                 VStack() {
-                    Button {
-                        isPresentingRequestSurvey.toggle()
-                    } label: {
-                        Text("Auto-Layout")
-                            .padding()
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .frame(width: 250, height: 70)
-                    }
-                    .foregroundColor(.white)
-                    .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
-                    .cornerRadius(20)
-                    .shadow(color: .blue, radius: 3, y: 3)
-                    .padding()
-                    Spacer()
-                    Button {
-                        isPresentingSelectFurniture.toggle()
-                    } label: {
-                        Text("Select Furniture")
-                            .padding()
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .frame(width: 250, height: 70)
-                    }
-                    .foregroundColor(.white)
-                    .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
-                    .cornerRadius(20)
-                    .shadow(color: .blue, radius: 3, y: 3)
-                    .padding()
-                    Spacer()
-                    Button {
-                        isPresentingRoomGallery.toggle()
-                    } label: {
-                        Text("Save to Gallery")
-                            .padding()
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .frame(width: 250, height: 70)
-                    }
-                    .foregroundColor(.white)
-                    .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
-                    .cornerRadius(20)
-                    .shadow(color: .blue, radius: 3, y: 3)
-                    .padding()
-                    Spacer()
-                    Button {
-                        exportJson()
-                        DispatchQueue.global().async {
-                            // After the work is done, switch back to the main thread
-                            DispatchQueue.main.async {
-                                showJsonShareSheet = true
+                    if let selected = selectedName {
+                        VStack {
+                            Text(selected)
+                            HStack {
+                                Text("X-axis:")
+                                Slider(value: $x_pos, in: -5...5).padding()
+                            }
+                            HStack {
+                                Text("Z-axis:")
+                                Slider(value: $z_pos, in: -5...5).padding()
+                            }
+                            HStack {
+                                Text("Rotation:")
+                                Slider(value: $degrees, in: 0...2 * Float.pi).padding()
                             }
                         }
-                    } label: {
-                        Text("Export Json File")
-                            .padding()
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .frame(width: 250, height: 70)
+                    } else {
+                        Button {
+                            isPresentingRequestSurvey.toggle()
+                        } label: {
+                            Text("Auto-Layout")
+                                .padding()
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .frame(width: 250, height: 70)
+                        }
+                        .foregroundColor(.white)
+                        .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                        .cornerRadius(20)
+                        .shadow(color: .blue, radius: 3, y: 3)
+                        .padding()
+                        Spacer()
+                        Button {
+                            isPresentingRoomGallery.toggle()
+                        } label: {
+                            Text("Save to Gallery")
+                                .padding()
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .frame(width: 250, height: 70)
+                        }
+                        .foregroundColor(.white)
+                        .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                        .cornerRadius(20)
+                        .shadow(color: .blue, radius: 3, y: 3)
+                        .padding()
+                        Spacer()
+                        Button {
+                            exportJson()
+                            DispatchQueue.global().async {
+                                // After the work is done, switch back to the main thread
+                                DispatchQueue.main.async {
+                                    showJsonShareSheet = true
+                                }
+                            }
+                        } label: {
+                            Text("Export Json File")
+                                .padding()
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .frame(width: 250, height: 70)
+                        }
+                        .foregroundColor(.white)
+                        .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                        .cornerRadius(20)
+                        .shadow(color: .blue, radius: 3, y: 3)
+                        .padding()
                     }
-                    .foregroundColor(.white)
-                    .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
-                    .cornerRadius(20)
-                    .shadow(color: .blue, radius: 3, y: 3)
-                    .padding()
+                    
                 }
                 .fileExporter(isPresented: $showJsonShareSheet,
                               document: TextDocument(text),
@@ -154,8 +170,8 @@ struct EditModelView: View {
             .navigationDestination(isPresented: $isPresentingRequestSurvey) {
                 RequestSurveyView(isPresented: $isPresentingRequestSurvey, index: index)
             }
-            .navigationDestination(isPresented: $isPresentingSelectFurniture) {
-                SelectFurnitureView(isPresented: $isPresentingSelectFurniture)
+            .navigationDestination(isPresented: $isPresentingMoveFurniture) {
+                MoveFurnitureView()
             }
         }
 

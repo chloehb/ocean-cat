@@ -58,7 +58,6 @@ struct MoveFurnitureView: View {
                     ).padding()
                     
                 }
-                
             }
             HStack {
                 Button {
@@ -95,8 +94,4 @@ struct MoveFurnitureView: View {
         }
         .padding()
     }
-}
-
-#Preview {
-    MoveFurnitureView()
 }

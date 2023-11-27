@@ -49,61 +49,29 @@ struct EditModelView: View {
     }
     
     var body: some View {
-//        HStack {
-//            Button {
-//                //isPresentingSelectMethod.toggle()
-//            } label: {
-//                Text("Back")
-//                    .padding()
-//                    .font(.title3)
-//                    .fontWeight(.bold)
-//                    .frame(width: 80, height: 38)
-//            }
-//            .foregroundColor(.white)
-//            .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
-//            .cornerRadius(10)
-//            .shadow(color: .blue, radius: 3, y: 3)
-//            .padding()
-//            Spacer()
-//        }
+        //        HStack {
+        //            Button {
+        //                //isPresentingSelectMethod.toggle()
+        //            } label: {
+        //                Text("Back")
+        //                    .padding()
+        //                    .font(.title3)
+        //                    .fontWeight(.bold)
+        //                    .frame(width: 80, height: 38)
+        //            }
+        //            .foregroundColor(.white)
+        //            .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+        //            .cornerRadius(10)
+        //            .shadow(color: .blue, radius: 3, y: 3)
+        //            .padding()
+        //            Spacer()
+        //        }
         
         ZStack {
             Color(.white)
                 .ignoresSafeArea()
             VStack(spacing: 20) {
                 // rgb: 168, 182, 234
-                HStack{
-                    VStack {
-                        Button {
-                            withAnimation {
-                                self.degrees -= 90
-                            }
-                        } label: {
-                            Image("ccwise")
-                                .padding()
-                                .frame(width: 60.0, height: 60.0)
-                        }
-                        .foregroundColor(.white)
-                        .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
-                        .cornerRadius(20)
-                        .shadow(color: .blue, radius: 3, y: 3)
-                        Button {
-                            withAnimation {
-                                self.degrees += 90
-                            }
-                        } label: {
-                            Image("cwise")
-                                .padding()
-                                .frame(width: 60.0, height: 60.0)
-                        }
-                        .foregroundColor(.white)
-                        .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
-                        .cornerRadius(20)
-                        .shadow(color: .blue, radius: 3, y: 3)
-                    }
-                    Spacer()
-                }
-                Spacer()
                 // if adjustment already exists, load adjustment view
                 // todo: use a new way to perform SceneKitView
                 if let adj = store.models[index].adjustment {
@@ -122,25 +90,56 @@ struct EditModelView: View {
                                 Text("X-axis:")
                                 Spacer()
                                 Slider(value: $x_pos, in: -5...5
-                                      ).padding()
-                                        .tint(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.6))
-                                        .frame(width:280)
+                                ).padding()
+                                    .tint(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.6))
+                                    .frame(width:280)
                             }
                             HStack {
                                 Text("Z-axis:")
                                 Spacer()
                                 Slider(value: $z_pos, in: -5...5
-                                      ).padding()
-                                        .tint(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.6))
-                                        .frame(width:280)
+                                ).padding()
+                                    .tint(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.6))
+                                    .frame(width:280)
                             }
                             HStack {
                                 Text("Rotation:")
                                 Spacer()
                                 Slider(value: $degrees, in: 0...2 * Float.pi
-                                      ).padding()
-                                        .tint(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.6))
-                                        .frame(width:280)
+                                ).padding()
+                                    .tint(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.6))
+                                    .frame(width:280)
+                            }
+                            HStack {
+                                Spacer()
+                                Button {
+                                    withAnimation {
+                                        self.degrees -= 90
+                                    }
+                                } label: {
+                                    Image("ccwise")
+                                        .padding()
+                                        .frame(width: 60.0, height: 60.0)
+                                }
+                                .foregroundColor(.white)
+                                .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                                .cornerRadius(20)
+                                .shadow(color: .blue, radius: 3, y: 3)
+                                Spacer()
+                                Button {
+                                    withAnimation {
+                                        self.degrees += 90
+                                    }
+                                } label: {
+                                    Image("cwise")
+                                        .padding()
+                                        .frame(width: 60.0, height: 60.0)
+                                }
+                                .foregroundColor(.white)
+                                .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                                .cornerRadius(20)
+                                .shadow(color: .blue, radius: 3, y: 3)
+                                Spacer()
                             }
                         }
                     } else {
@@ -217,7 +216,7 @@ struct EditModelView: View {
                 MoveFurnitureView()
             }
         }
-
+        
     }
 }
 

@@ -62,17 +62,30 @@ final class AllLocRec: ObservableObject {
             newNode.simdTransform = scannedFloor.transform
             deltaPos = SCNVector3(0 - newNode.position.x, 0 - newNode.position.y, 0 - newNode.position.z)
         }
-        for i in 0...(roomScan.objects.endIndex-1) {
-            let scannedObject = roomScan.objects[i]
-            //Generate new SCNNode
-            let newNode = SCNNode()
-            newNode.simdTransform = scannedObject.transform
-            if let delta = deltaPos {
-                newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
+        if roomScan.objects.endIndex != 0 {
+            for i in 0...(roomScan.objects.endIndex-1) {
+                let scannedObject = roomScan.objects[i]
+                //Generate new SCNNode
+                let newNode = SCNNode()
+                newNode.simdTransform = scannedObject.transform
+                if let delta = deltaPos {
+                    newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
+                }
+                print(newNode.rotation.w)
+                res.append((newNode.position.x, newNode.position.z, newNode.rotation.w))
             }
-            print(newNode.rotation.w)
-            res.append((newNode.position.x, newNode.position.z, newNode.rotation.w))
         }
+//        for i in 0...(roomScan.objects.endIndex-1) {
+//            let scannedObject = roomScan.objects[i]
+//            //Generate new SCNNode
+//            let newNode = SCNNode()
+//            newNode.simdTransform = scannedObject.transform
+//            if let delta = deltaPos {
+//                newNode.position = SCNVector3(newNode.position.x + delta.x, newNode.position.y + delta.y, newNode.position.z + delta.z)
+//            }
+//            print(newNode.rotation.w)
+//            res.append((newNode.position.x, newNode.position.z, newNode.rotation.w))
+//        }
     }
     
     func updateLoc(ind: String, new_x: Float?, new_z: Float?, new_w: Float?) {

@@ -86,6 +86,26 @@ struct EditModelView: View {
                     if let selected = selectedName {
                         VStack {
                             Text(selected)
+                            
+                            HStack {
+                                Button {
+                                    print("Hi!!")
+//                                    withAnimation {
+//                                        self.degrees -= 90
+//                                    }
+                                } label: {
+                                        Text("exchange furniture model")
+                                        .padding()
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                }
+                                .foregroundColor(.white)
+                                .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                                .cornerRadius(20)
+                                .shadow(color: .blue, radius: 3, y: 3)
+                                .padding()
+                            }
+                            
                             HStack {
                                 Spacer()
                                 Text("X-axis:")

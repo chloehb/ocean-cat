@@ -19,6 +19,73 @@ import QuickLook
 //    let url: URL
 //}
 
+struct FurnitureRowView: View {
+//    var furniture: FurnitureModel
+    @ObservedObject var store = furnitureStore.shared
+    let index: Int
+    @Binding var selectedFurnitureName: String?
+    @Binding var showingARQuickLook: Bool
+
+    var body: some View {
+        let type = store.models[index].type!
+        let name = store.models[index].name!
+        let url = store.models[index].url!
+        
+        
+        VStack(alignment: .leading, spacing: 20.0) {
+            
+            HStack {
+                Spacer()
+//                            let path = NSString(string: url.absoluteString).expandingTildeInPath
+//                            let fileDoesExist = FileManager.default.fileExists(atPath: path)
+//                            Text(fileDoesExist.description)
+                
+                Text(type + " " + name).font(.title).multilineTextAlignment(.center)
+//                            Text(url.absoluteString)
+                
+//                            Text(url_string)
+                Spacer()
+            }
+            
+            Button(action: {
+                self.showingARQuickLook.toggle()
+            }) {
+                Text("Preview in AR")
+                    .fontWeight(.semibold)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(40)
+                    .shadow(radius: 5)
+            }
+            .padding(.horizontal)
+            .sheet(isPresented: $showingARQuickLook) {
+                ARQuickLookController(modelFile: url, showingARQuickLook: $showingARQuickLook)
+            }
+        }
+        .padding()
+        .background(selectedFurnitureName == store.models[index].name ? Color.gray.opacity(0.3) : Color.white)
+        .cornerRadius(15)
+        .shadow(radius: 15)
+        .onTapGesture {
+            self.selectedFurnitureName = store.models[index].name // Handle selection
+        }
+        .padding()
+        
+    }
+//                Button {
+//                    isPresentingCaptured.toggle()
+//                } label: {
+//                    Text("Add a new furniture object")
+//                        .padding()
+//                        .font(.title3)
+//                        .fontWeight(.bold)
+//                        .frame(width: 300, height: 70)
+//                }
+    
+}
+
 // Main view that shows the furniture types and list
 struct FurnitureSelectionView: View {
 
@@ -29,6 +96,7 @@ struct FurnitureSelectionView: View {
 //    @ObservedObject var store = ModelStore.shared
     let persistenceController = PersistenceController.shared
     @ObservedObject var store = furnitureStore.shared
+    @State private var selectedFurnitureName: String?
 //    @FetchRequest(sortDescriptors: []) var furnitures: FetchedResults<FurObject>
     
 //    let endCaptureCallback: () -> Void
@@ -40,63 +108,73 @@ struct FurnitureSelectionView: View {
                 
                 Text("Furniture Gallery").font(.title)
                 Text("There are \(store.models.count) furnitures(s)")
-                List(0..<store.models.count) {
-                    index in
-//                    let image = "ex_room"
-                    let type = store.models[index].type!
-                    let name = store.models[index].name!
-                    let url = store.models[index].url!
-                    
-                    
-                    VStack(alignment: .leading, spacing: 20.0) {
-                        
-                        HStack {
-                            Spacer()
-//                            let path = NSString(string: url.absoluteString).expandingTildeInPath
-//                            let fileDoesExist = FileManager.default.fileExists(atPath: path)
-//                            Text(fileDoesExist.description)
-                            
-                            Text(type + " " + name).font(.title).multilineTextAlignment(.center)
-//                            Text(url.absoluteString)
-                            
-//                            Text(url_string)
-                            Spacer()
-                        }
-                        
-                        Button(action: {
-                            self.showingARQuickLook.toggle()
-                        }) {
-                            Text("Preview in AR")
-                                .fontWeight(.semibold)
-                                .frame(minWidth: 0, maxWidth: .infinity)
-                                .padding()
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(40)
-                                .shadow(radius: 5)
-                        }
-                        .padding(.horizontal)
-                        .sheet(isPresented: $showingARQuickLook) {
-                            ARQuickLookController(modelFile: url, showingARQuickLook: $showingARQuickLook)
-                        }
-                    }
-                    .padding()
-                    .background(Rectangle().foregroundColor(.white).cornerRadius(15).shadow(radius: 15))
-                    .padding()
-                    
-                }
-//                Button {
-//                    isPresentingCaptured.toggle()
-//                } label: {
-//                    Text("Add a new furniture object")
-//                        .padding()
-//                        .font(.title3)
-//                        .fontWeight(.bold)
-//                        .frame(width: 300, height: 70)
-//                }
                 
-                // Confirm button
-             
+                List(0..<store.models.count) { index in
+                    FurnitureRowView(index: index, selectedFurnitureName: $selectedFurnitureName, showingARQuickLook: $showingARQuickLook)
+                                }
+                
+//                List(0..<store.models.count) {
+//                    index in
+////                    let image = "ex_room"
+//                    let type = store.models[index].type!
+//                    let name = store.models[index].name!
+//                    let url = store.models[index].url!
+//                    
+//                    
+//                    VStack(alignment: .leading, spacing: 20.0) {
+//                        
+//                        HStack {
+//                            Spacer()
+////                            let path = NSString(string: url.absoluteString).expandingTildeInPath
+////                            let fileDoesExist = FileManager.default.fileExists(atPath: path)
+////                            Text(fileDoesExist.description)
+//                            
+//                            Text(type + " " + name).font(.title).multilineTextAlignment(.center)
+////                            Text(url.absoluteString)
+//                            
+////                            Text(url_string)
+//                            Spacer()
+//                        }
+//                        
+//                        Button(action: {
+//                            self.showingARQuickLook.toggle()
+//                        }) {
+//                            Text("Preview in AR")
+//                                .fontWeight(.semibold)
+//                                .frame(minWidth: 0, maxWidth: .infinity)
+//                                .padding()
+//                                .background(Color.blue)
+//                                .foregroundColor(.white)
+//                                .cornerRadius(40)
+//                                .shadow(radius: 5)
+//                        }
+//                        .padding(.horizontal)
+//                        .sheet(isPresented: $showingARQuickLook) {
+//                            ARQuickLookController(modelFile: url, showingARQuickLook: $showingARQuickLook)
+//                        }
+//                    }
+//                    .padding()
+//                    .background(selectedFurnitureID == store.models[index].id ? Color.gray.opacity(0.3) : Color.white)
+//                    .cornerRadius(15)
+//                    .shadow(radius: 15)
+//                    .onTapGesture {
+//                        self.selectedFurnitureID = store.models[index].id // Handle selection
+//                    }
+//                    .padding()
+//                    
+//                }
+////                Button {
+////                    isPresentingCaptured.toggle()
+////                } label: {
+////                    Text("Add a new furniture object")
+////                        .padding()
+////                        .font(.title3)
+////                        .fontWeight(.bold)
+////                        .frame(width: 300, height: 70)
+////                }
+//                
+//                // Confirm button
+//             
                 Button("Confirm") {
                     // Handle confirmation action
                 }
@@ -117,6 +195,9 @@ struct FurnitureSelectionView: View {
         }
     }
 }
+
+
+
 
 //func fileExists(at url: URL) -> Bool {
 //    let fileManager = FileManager.default

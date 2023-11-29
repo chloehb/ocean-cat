@@ -21,6 +21,7 @@ struct EditModelView: View {
     @State private var isPresentingRequestSurvey = false
     @State private var isPresentingSelectFurniture = false
     @State private var isPresentingMoveFurniture = false
+    @State private var isPresentingExchange = false
     @State var index: Int
     //@Binding var showing: Bool
     @State var selectedName: String? = nil
@@ -32,7 +33,7 @@ struct EditModelView: View {
     @State private var degrees: Float = 0.0
     @State private var x_pos: Float = 0.0
     @State private var z_pos: Float = 0.0
-    @Binding private var exchanged: Bool
+//    @ObservedObject var viewModel: SceneKitViewModel
     
     func exportJson() {
         do {
@@ -90,10 +91,8 @@ struct EditModelView: View {
                             
                             HStack {
                                 Button {
-                                    exchanged.toggle()
-//                                    withAnimation {
-//                                        self.degrees -= 90
-//                                    }
+//                                    viewModel.exchanged = true
+                                    isPresentingExchange.toggle()
                                 } label: {
                                         Text("exchange furniture model")
                                         .padding()
@@ -241,6 +240,9 @@ struct EditModelView: View {
             }
             .navigationDestination(isPresented: $isPresentingMoveFurniture) {
                 MoveFurnitureView()
+            }
+            .navigationDestination(isPresented: $isPresentingExchange) {
+                FurnitureSelectionView(isPresented: $isPresentingExchange)
             }
         }
         

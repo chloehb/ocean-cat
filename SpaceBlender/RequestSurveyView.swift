@@ -14,6 +14,7 @@ struct RequestSurveyView: View {
     @State private var isPresentingSurvey = false
     @State private var isPresentingEditModel = false
     @State var index: Int
+//    @ObservedObject var viewModel: SceneKitViewModel
     
     var body: some View {
         ZStack {

@@ -14,6 +14,8 @@
 
 import SceneKit
 import SwiftUI
+import ARKit
+import SceneKit.ModelIO
 
 private var NodeTypeKey: UInt8 = 0 // We need this to make our new property
 
@@ -102,6 +104,8 @@ struct SceneKitView: UIViewRepresentable {
     @ObservedObject var store = ModelStore.shared
     @ObservedObject var locRec = AllLocRec.shared
     @State var index: Int
+    @State var exchanged = false
+    @State var exchange_url: URL?
     @Binding var x_pos: Float
     @Binding var z_pos: Float
     @Binding var degrees: Float
@@ -327,6 +331,15 @@ struct SceneKitView: UIViewRepresentable {
     
     func updateUIView(_ uiView: SCNView, context: Context) {
         // Update your 3D scene here
+        if exchanged {
+            let mdlAsset = MDLAsset(url: exchange_url)
+            // you can load the textures on an MDAsset so it's not white
+            mdlAsset.loadTextures()
+            let asset = mdlAsset.object(at: 0) // extract first object
+            let assetNode = SCNNode(mdlObject: asset)
+        }
+        
+        
         if let select = selectedName {
             let selectIndex = Int(select)!
             if let target = uiView.scene?.rootNode.childNode(withName: select, recursively: true) {

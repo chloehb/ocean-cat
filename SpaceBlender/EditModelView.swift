@@ -32,6 +32,7 @@ struct EditModelView: View {
     @State private var degrees: Float = 0.0
     @State private var x_pos: Float = 0.0
     @State private var z_pos: Float = 0.0
+    @Binding private var exchanged: Bool
     
     func exportJson() {
         do {
@@ -89,7 +90,7 @@ struct EditModelView: View {
                             
                             HStack {
                                 Button {
-                                    print("Hi!!")
+                                    exchanged.toggle()
 //                                    withAnimation {
 //                                        self.degrees -= 90
 //                                    }

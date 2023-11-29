@@ -24,6 +24,7 @@
 		4575C9D12AD1FA9700131520 /* ScanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C9D02AD1FA9700131520 /* ScanningView.swift */; };
 		4575C9D42AD1FAEB00131520 /* RoomCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */; };
 		4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */; };
+		5014FE552B16B86100CA3E53 /* ExchangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014FE542B16B86100CA3E53 /* ExchangeView.swift */; };
 		50659F9C2AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50659F922AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-3.mp4 */; };
 		50659F9D2AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-unflippable-low.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50659F932AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-unflippable-low.mp4 */; };
 		50659F9E2AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50659F942AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-1.mp4 */; };
@@ -117,6 +118,7 @@
 		4575C9D02AD1FA9700131520 /* ScanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningView.swift; sourceTree = "<group>"; };
 		4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCaptureController.swift; sourceTree = "<group>"; };
 		4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomGalleryView.swift; sourceTree = "<group>"; };
+		5014FE542B16B86100CA3E53 /* ExchangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeView.swift; sourceTree = "<group>"; };
 		50659F922AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ScanPasses-iPhone-FixedHeight-3.mp4"; sourceTree = "<group>"; };
 		50659F932AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-unflippable-low.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ScanPasses-iPhone-FixedHeight-unflippable-low.mp4"; sourceTree = "<group>"; };
 		50659F942AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ScanPasses-iPhone-FixedHeight-1.mp4"; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				8C724D772AEEEC2C00E6D0FF /* SelectMethodView.swift */,
 				8C724D792AEEED1A00E6D0FF /* UploadFileView.swift */,
 				8C724D7B2AEEED2700E6D0FF /* AfterUploadFileView.swift */,
+				5014FE542B16B86100CA3E53 /* ExchangeView.swift */,
 			);
 			path = SpaceBlender;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
 				5065A0062AF8454A005898D2 /* CapturePrimaryView.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
+				5014FE552B16B86100CA3E53 /* ExchangeView.swift in Sources */,
 				452C29852AEC76B600434784 /* SceneKitView.swift in Sources */,
 				5065A00C2AF8454A005898D2 /* OnboardingButtonView.swift in Sources */,
 				5065A0002AF8454A005898D2 /* AppDataModel+Orbit.swift in Sources */,

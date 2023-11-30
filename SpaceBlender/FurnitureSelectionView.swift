@@ -11,13 +11,7 @@ import RealityKit
 import CoreData
 import QuickLook
 
-//// Assuming furnitureModel is defined like this:
-//struct FurnitureModel: Identifiable {
-//    let id = UUID()
-//    let name: String
-//    let type: String
-//    let url: URL
-//}
+
 
 
 struct FurnitureRowView: View {
@@ -26,6 +20,7 @@ struct FurnitureRowView: View {
     var id: Int
     @Binding var selectedFurniture: furnitureModel?
     @Binding var selectedFurnitureName: String?
+    @Binding var selectedURL:URL?
     @Binding var showingARQuickLook: Bool
 
     var body: some View {
@@ -73,6 +68,7 @@ struct FurnitureRowView: View {
         .onTapGesture {
             self.selectedFurniture = store.models[id] // Handle selection
             self.selectedFurnitureName = store.models[id].name
+            self.selectedURL = store.models[index].url// Handle selection
         }
         .padding()
         
@@ -99,38 +95,52 @@ struct FurnitureSelectionView: View {
     @Binding var degrees: Float
     @Binding var selectedName: String?
     @Binding var index: Int
-    @State private var showingARQuickLook = false
     
+    @Environment(\.presentationMode) var presentationMode
 //    @ObservedObject var store = ModelStore.shared
-    let persistenceController = PersistenceController.shared
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var store = furnitureStore.shared
     @State private var selectedFurniture: furnitureModel?
     @State private var selectedFurnitureName: String?
-//    @FetchRequest(sortDescriptors: []) var furnitures: FetchedResults<FurObject>
+    @State private var selectedFurniture: furnitureModel?
+//    @State private var selectedNUM = self.store.models.count
+    @State private var selectedURL:URL?
+//    @State private var selectedNUM = self.store.models.count
+
     
-//    let endCaptureCallback: () -> Void
-    
+    //tab area:
+    @State private var selectedType: String = "ALL"
+    var furnitureType = ["Bed", "Desk", "Others", "waitingForImplement"]
     
     var body: some View {
         NavigationStack {
             VStack {
                 
-                Text("Furniture Gallery").font(.title)
-                Text("There are \(store.models.count) furnitures(s)")
                 
-                List(0..<store.models.count) { id in
-                    FurnitureRowView(id: id, selectedFurniture: $selectedFurniture, selectedFurnitureName: $selectedFurnitureName, showingARQuickLook: $showingARQuickLook)
-                }
-//                
-//              // Confirm button
-//
+                Text("Furniture Gallery").font(.title)
+                
+//                Text("There are \(store.models.count) furnitures(s)")
+                
+                if selectedType == "ALL" {
+                    List(0..<store.models.count) { index in
+                        FurnitureRowView(index: index, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
+                                    }
+                            } else {
+                                List(0..<store.models.count) { index in
+                                    if store.models[index].type == selectedType{
+                                        FurnitureRowView(index: index, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
+                                    }
+                                                }
+                    }
                 Button("Confirm") {
+                    
+                    
+                    
                     var scene_view = SceneKitView(index: index, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, options: [], selectedName: $selectedName)
                     scene_view.exchanged = true
                     scene_view.exchanged_url = (selectedFurniture?.url)!
                     self.isPresented = false
-                }
-                .frame(maxWidth: .infinity)
+                    presentationMode.wrappedValue.dismiss() }
                 .padding()
                 .background(Color.blue)
                 .foregroundColor(.white)
@@ -143,6 +153,22 @@ struct FurnitureSelectionView: View {
             .navigationDestination(isPresented: $isPresentingCaptured) {
 //                ContentView()
                 FurnitureInputView()
+            }
+            .toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    HStack {
+                        Button("Bed") { selectedType = "Bed" }
+                        Spacer()
+                        Button("Desk") { selectedType = "Desk" }
+                        Spacer()
+                        Button("ALL") { selectedType = "ALL" }
+                        Spacer()
+                        Button("Others") { selectedType = "Others" }
+                        Spacer()
+                        Button("Implement") { selectedType = "Implement" }
+                    }
+                    .padding(.horizontal) // Optional, for padding on the sides
+                }
             }
         }
     }

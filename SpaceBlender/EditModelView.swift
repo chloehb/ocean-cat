@@ -86,29 +86,55 @@ struct EditModelView: View {
                     if let selected = selectedName {
                         VStack {
                             Text(selected)
+                            
                             HStack {
+                                Button {
+                                    print("Hi!!")
+//                                    withAnimation {
+//                                        self.degrees -= 90
+//                                    }
+                                } label: {
+                                        Text("exchange furniture model")
+                                        .padding()
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                }
+                                .foregroundColor(.white)
+                                .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                                .cornerRadius(20)
+                                .shadow(color: .blue, radius: 3, y: 3)
+                                .padding()
+                            }
+                            
+                            HStack {
+                                Spacer()
                                 Text("X-axis:")
                                 Spacer()
                                 Slider(value: $x_pos, in: -5...5
                                 ).padding()
                                     .tint(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.6))
                                     .frame(width:280)
+                                Spacer()
                             }
                             HStack {
+                                Spacer()
                                 Text("Z-axis:")
                                 Spacer()
                                 Slider(value: $z_pos, in: -5...5
                                 ).padding()
                                     .tint(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.6))
                                     .frame(width:280)
+                                Spacer()
                             }
                             HStack {
+                                Spacer()
                                 Text("Rotation:")
                                 Spacer()
-                                Slider(value: $degrees, in: 0...2 * Float.pi
+                                Slider(value: $degrees, in: 0...270
                                 ).padding()
                                     .tint(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.6))
                                     .frame(width:280)
+                                Spacer()
                             }
                             HStack {
                                 Spacer()
@@ -125,7 +151,7 @@ struct EditModelView: View {
                                 .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
                                 .cornerRadius(20)
                                 .shadow(color: .blue, radius: 3, y: 3)
-                                Spacer()
+                                .padding()
                                 Button {
                                     withAnimation {
                                         self.degrees += 90

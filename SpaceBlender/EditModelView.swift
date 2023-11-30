@@ -242,7 +242,7 @@ struct EditModelView: View {
                 MoveFurnitureView()
             }
             .navigationDestination(isPresented: $isPresentingExchange) {
-                FurnitureSelectionView(isPresented: $isPresentingExchange)
+                FurnitureSelectionView(isPresented: $isPresentingExchange, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, selectedName: $selectedName, index: $index)
             }
         }
         

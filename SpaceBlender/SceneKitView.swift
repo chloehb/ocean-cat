@@ -108,7 +108,7 @@ struct SceneKitView: UIViewRepresentable {
     @State var index: Int
 //    @ObservedObject var viewModel: SceneKitViewModel
     
-    @State var exchange_url: URL?
+//    @State var exchange_url: URL?
     @Binding var x_pos: Float
     @Binding var z_pos: Float
     @Binding var degrees: Float
@@ -118,6 +118,30 @@ struct SceneKitView: UIViewRepresentable {
     var options: [Any]
     var view = SCNView()
     @Binding var selectedName: String?
+    
+    var _exchanged = false
+    var _exchanged_url = URL(string: "https://www.example.com")
+    
+    var exchanged_url: URL {
+        get {
+            return _exchanged_url!
+        }
+        set {
+            _exchanged_url = newValue
+        }
+    }
+    
+    var exchanged: Bool {
+        get {
+            return _exchanged
+        }
+        set {
+            _exchanged = newValue
+        }
+    }
+    
+    
+
     
 //    init(store: ModelStore, locRec: AllLocRec, viewModel: SceneKitViewModel, /* other properties */) {
 //            self.store = store
@@ -340,15 +364,26 @@ struct SceneKitView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: SCNView, context: Context) {
-        // Update your 3D scene here
-//        if viewModel.exchanged {
-//            let mdlAsset = MDLAsset(url: exchange_url)
-//            // you can load the textures on an MDAsset so it's not white
-//            mdlAsset.loadTextures()
-//            let asset = mdlAsset.object(at: 0) // extract first object
-//            let assetNode = SCNNode(mdlObject: asset)
-//        }
-//        
+//         Update your 3D scene here
+        if exchanged {
+                let mdlAsset = MDLAsset(url: exchanged_url)
+                // Load the textures for the model
+                mdlAsset.loadTextures()
+
+                // Extract the first object from the asset and create a node
+                let asset = mdlAsset.object(at: 0)
+                let assetNode = SCNNode(mdlObject: asset)
+
+                // Replace the existing node in the scene
+                // This assumes you have a way to identify the node to be replaced
+                if let nodeToReplace = uiView.scene?.rootNode.childNode(withName: "nodeToReplaceName", recursively: true) {
+                    nodeToReplace.removeFromParentNode() // Remove the old node
+                    uiView.scene?.rootNode.addChildNode(assetNode) // Add the new node
+                }
+                
+            }
+
+        
         
         if let select = selectedName {
             let selectIndex = Int(select)!

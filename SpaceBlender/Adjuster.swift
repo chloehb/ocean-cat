@@ -214,6 +214,29 @@ struct Adjuster {
         var tables1: Furniture = Furniture(type: FurnitureType.Table, width: 1)
         var tables2: Furniture = Furniture(type: FurnitureType.Table, width: 1)
         var windowindex: Int = -1
+        var windowWall: String = ""
+        
+        // find door wall for bedfacingdoor
+        var doorWall: Direction = Direction.North
+        let x = beds[0].position.x
+        let z = beds[0].position.z
+        if doors.count > 0 {
+            print(doors[0].position.x)
+            print(doors[0].position.y)
+            if (doors[0].position.x! >= -length/2 - 0.5 && doors[0].position.x! <= -length/2 + 0.5) {
+                doorWall = Direction.West
+            }
+            else if (doors[0].position.x! >= length/2 - 0.5 && doors[0].position.x! <= length/2 + 0.5) {
+                doorWall = Direction.East
+            }
+            else if (doors[0].position.z! >= -width/2 - 0.5 && doors[0].position.z! <= -width/2 + 0.5) {
+                doorWall = Direction.North
+            }
+            else {
+                doorWall = Direction.South
+            }
+        }
+        
         
         if let hasRoommate {
             if hasRoommate { // 2 people in room
@@ -285,142 +308,122 @@ struct Adjuster {
                 } // if let bedsTogether
             } // if has roommate
         } // if let has roomamate
-        // for skeletal just simply place bed
-        var for_skeletal: Bool = true
+        
+    
+        
+        // no roommate - place bed/desk in front of door
         if let hasRoommate {
-            if !hasRoommate && for_skeletal {
-                print("skelatal")
-                if (beds[0].width + tables[0].width) <= length {
-                    print ("Bed on East Wall and table on West Wall")
-                    beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: Direction.South, width: beds[0].width, length: beds[0].length, height: beds[0].height))
-                    tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].width/2, tables[0].height/2, 0), facing: Direction.East, width: tables[0].width, length: tables[0].length, height: tables[0].height))
-                }
-                // place bed on west wall and desk on east wall
-                else if (beds[0].length + tables[0].width <= length) {
-                    beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].length/2, beds[0].height/2, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length, height: beds[0].height))
-                    tables1 = (Furniture(type: FurnitureType.Table, position: (length/2 - tables[0].width/2, tables[0].height/2, 0), facing: Direction.West, width: tables[0].width, length: tables[0].length, height: tables[0].height))
-                }
-            }
-            else if (!for_skeletal && !hasRoommate) { // 1 people in room for MVP
-                print("bad")
+            if !hasRoommate {
+                print("no roommate - one bed and one desk to move")
                 // For more complicated Algo for MVP
                 // table1 is the users desk
+                print(windows.count)
                 if windows.count > 0 {
                     if let objectByWindow {
                         if objectByWindow == "Desk" {
-                            tables1 = (Furniture(type: FurnitureType.Table, position: (windows[0].position.x, 0, windows[0].position.z), facing: windows[0].facing, width: tables[0].width, length: tables[0].length))
-                        }
-                        if objectByWindow == "Bed" {
-                            // if there are multiple windows place bed under first window possible, length >= width guaranteed
                             var count = 0
                             for window in windows {
-                                if width >= beds[0].length {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (window.position.x, 0, window.position.z), width: beds[0].width, length: beds[0].length, height: beds[0].height))
-                                    var temp: Direction? = nil
-                                    if window.facing == Direction.East {
-                                        temp = Direction.West
+                                windowindex = count
+                                // check range approx
+                                if (window.position.x! >= -length/2 - 0.5 && window.position.x! <= -length/2 + 0.5) || (window.position.x! >= length/2 - 0.5 && window.position.x! <= length/2 + 0.5) {
+                                    if (window.position.x! >= -length/2 - 0.5 && window.position.x! <= -length/2 + 0.5) {
+                                        windowWall = "Left"
                                     }
-                                    if window.facing == Direction.West {
-                                        temp = Direction.East
+                                    else {
+                                        windowWall = "Right"
                                     }
-                                    if window.facing == Direction.South {
-                                        temp = Direction.North
+                                    print("window on z axis")
+                                    if width >= tables[0].length {
+                                        tables1 = (Furniture(type: FurnitureType.Table, position: (window.position.x! - tables[0].width/2, tables[0].height/2, 0), facing: window.facing, width: tables[0].width, length: tables[0].length, height: tables[0].height))
+                                        
+                                        // place bed here and check if facing door
+                                        if let bedFacingDoor {
+                                            if bedFacingDoor && doors.count != 0 && beds[0].length + tables[0].width <= length {
+                                                print("bedFacingDoor")
+                                                if windowWall == "Left" {
+                                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: doorWall, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                                                }
+                                                if windowWall == "Right" {
+                                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: doorWall, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                                                }
+                                            }
+                                            if (!bedFacingDoor || doors.count == 0) && beds[0].width + tables[0].width <= length {
+                                                print("!bedFacingDoor || doors.count == 0")
+                                                if windowWall == "Left" {
+                                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: Direction.South, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                                                }
+                                                if windowWall == "Right" {
+                                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: Direction.South, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                                                }
+                                            }
+                                        }
+                                        break
                                     }
-                                    if window.facing == Direction.North {
-                                        temp = Direction.South
-                                    }
-                                    windowindex = count
-                                    tables1 = (Furniture(type: FurnitureType.Table, position: (-1 * window.position.x!, 0, -1 * window.position.z!), facing: temp, width: tables[0].width, length: tables[0].length, height: tables[0].height))
-                                    break
                                 }
-                                count = count + 1
-                            } // for
+                                
+                                if (window.position.z! >= -width/2 - 0.5 && window.position.z! <= -width/2 + 0.5) || (window.position.z! >= width/2 - 0.5 && window.position.z! <= width/2 + 0.5) {
+                                    print("window on x axis")
+                                    if (window.position.z! >= -width/2 - 0.5 && window.position.z! <= -width/2 + 0.5) {
+                                        windowWall = "Top"
+                                    }
+                                    else {
+                                        windowWall = "Bottom"
+                                    }
+                                    if length >= tables[0].length {
+                                        tables1 = (Furniture(type: FurnitureType.Table, position: (0, tables[0].height/2, window.position.z! - tables[0].length/2), facing: window.facing, width: tables[0].width, length: tables[0].length, height: tables[0].height))
+                        
+                                        // place bed here and check if facing door
+                                        if let bedFacingDoor {
+                                            if bedFacingDoor && doors.count != 0 && beds[0].length + tables[0].width <= width {
+                                                print("bedFacingDoor")
+                                                if windowWall == "Top" {
+                                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: doorWall, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                                                }
+                                                if windowWall == "Bottom" {
+                                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: doorWall, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                                                }
+                                            }
+                                            if (!bedFacingDoor || doors.count == 0) && beds[0].width + tables[0].width <= width {
+                                                print("!bedFacingDoor || doors.count == 0")
+                                                if windowWall == "Top" {
+                                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: Direction.South, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                                                }
+                                                if windowWall == "Bottom" {
+                                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: Direction.South, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                                                }
+                                            }
+                                        }
+                                        break
+                                    }
+                                }
+                            count = count + 1
+                            }
                         }
                     }
                 } // windows.count > 0
                 // check orientation of bed
-                if let bedFacingDoor {
-                    if bedFacingDoor && doors.count >= 1 {
-                        if let objectByWindow {
-                            if objectByWindow == "Desk" {
-                                // bed has not been placed anywhere yet
-                                // door is on the left wall
-                                print("DOORS POSITION for bed across from door", doors[0].position.x, doors[0].position.y, doors[0].position.z)
-                                if (doors[0].position.x == -length/2) {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2, 0, 0), facing: Direction.West, width: beds[0].width, length: beds[0].length))
-                                }
-                                // door is on right wall
-                                else if (doors[0].position.x == length/2) {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2, 0, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
-                                }
-                                // door is on bottom wall -> in last two cases bed could be unplaced
-                                else if (doors[0].position.z == -width/2 && width >= beds[0].length) {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (0, 0, width/2), facing: Direction.East, width: beds[0].width, length: beds[0].length))
-                                }
-                                // door is on top wall
-                                else if (doors[0].position.z == width/2 && width >= beds[0].length) {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (0, 0, -width/2), facing: Direction.East, width: beds[0].width, length: beds[0].length))
-                                }
-                            }
-                            else if objectByWindow == "Bed" && windowindex != -1 {
-                                // object by window is bed, rotate bed if possible
-                                // what would happen if bed hadnt been placed?
-                                beds1 = (Furniture(type: FurnitureType.Bed, position: (windows[windowindex].position.x, 0, windows[windowindex].position.z), width: beds[0].width, length: beds[0].length))
-                                let x = beds1.position.x
-                                let z = beds1.position.z
-                                
-                                if (doors[0].position.x == -length/2) {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.West, width: beds[0].width, length: beds[0].length))
-                                }
-                                // door is on right wall
-                                else if (doors[0].position.x == length/2) {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.East, width: beds[0].width, length: beds[0].length))
-                                }
-                                // door is on bottom wall -> in last two cases bed could be unplaced
-                                else if (doors[0].position.z == -width/2) {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.East, width: beds[0].width, length: beds[0].length))
-                                    
-                                }
-                                // door is on top wall
-                                else if (doors[0].position.z == width/2) {
-                                    beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.East, width: beds[0].width, length: beds[0].length))
-                                }
-                            }
+                if objectByWindow == "No" {
+                    if let bedFacingDoor {
+                        if bedFacingDoor {
+                            // bed faces door
+                            beds1 = (Furniture(type: FurnitureType.Bed, position: (0, beds[0].height/2, 0), facing: doorWall, width: beds[0].width, length: beds[0].length, height: beds[0].height))
                         }
+                        // place table on left wall, put bed in middle to fufill bedfacing door request
+                        if (2 * tables[0].width + beds[0].length <= length) {
+                            tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].width/2, tables[0].height/2, 0), facing: Direction.East, width: tables[0].width, length: tables[0].length, height: tables[0].height))
+                        }
+                        
                     }
-                    if !bedFacingDoor {
-                        if objectByWindow == "Desk" { // bed has not been placed anywhere yet
-                            // door is on the left or right wall, place bed on bottom wall
-                            if (doors[0].position.x == -length/2 || doors[0].position.x == length/2) {
-                                beds1 = (Furniture(type: FurnitureType.Bed, position: (0, 0, -width/2), facing: Direction.North, width: beds[0].width, length: beds[0].length))
-                            }
-                            // door is on bottom or top wall, place bed on left wall
-                            else if (doors[0].position.y == -width/2 && doors[0].position.y == width/2) {
-                                beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2, 0, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length))
-                            }
-                        }
-                        else if objectByWindow == "Bed" && windowindex != -1 {
-                            // object by window is bed, rotate bed if possible away from door, // what would happen if bed hadnt been placed?
-                            beds1 = (Furniture(type: FurnitureType.Bed, position: (windows[windowindex].position.x, 0, windows[windowindex].position.z), width: beds[0].width, length: beds[0].length))
-                            let x = beds1.position.x
-                            let z = beds1.position.z
-                            // door is on left wall
-                            if (doors[0].position.x == -length/2) {
-                                beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.East, width: beds[0].width, length: beds[0].length))
-                            }
-                            // door is on right wall
-                            else if (doors[0].position.x == length/2) {
-                                beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.West, width: beds[0].width, length: beds[0].length))
-                            }
-                            // door is on bottom wall
-                            else if (doors[0].position.y == -width/2) {
-                                beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.West, width: beds[0].width, length: beds[0].length))
-                            }
-                            // door is on top wall
-                            else if (doors[0].position.y == width/2) {
-                                beds1 = (Furniture(type: FurnitureType.Bed, position: (x, 0, z), facing: Direction.East, width: beds[0].width, length: beds[0].length))
-                            }
-                        }
+                    // place bed and desk where they fit
+                    else if (beds[0].width + tables[0].width) <= length {
+                        print ("Bed on East Wall and table on West Wall")
+                        beds1 = (Furniture(type: FurnitureType.Bed, position: (length/2 - beds[0].width/2, beds[0].height/2, -width/2 + beds[0].length/2), facing: Direction.South, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                        tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].width/2, tables[0].height/2, 0), facing: Direction.East, width: tables[0].width, length: tables[0].length, height: tables[0].height))
+                    }
+                    // place bed on west wall and desk on east wall
+                    else if (beds[0].length + tables[0].width <= length) {
+                        beds1 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].length/2, beds[0].height/2, 0), facing: Direction.East, width: beds[0].width, length: beds[0].length, height: beds[0].height))
+                        tables1 = (Furniture(type: FurnitureType.Table, position: (length/2 - tables[0].width/2, tables[0].height/2, 0), facing: Direction.West, width: tables[0].width, length: tables[0].length, height: tables[0].height))
                     }
                 }
             }

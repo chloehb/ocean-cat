@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
-
+// test 
 enum isPresentingDestination {
     case RoomGallery
     case RequestSurvey
@@ -21,6 +21,9 @@ struct EditModelView: View {
     @State private var isPresentingRequestSurvey = false
     @State private var isPresentingSelectFurniture = false
     @State private var isPresentingMoveFurniture = false
+    @State private var isPresentingExchange = false
+    @State var exchanged = false
+    @State var exchanged_url: URL?
     @State var index: Int
     //@Binding var showing: Bool
     @State var selectedName: String? = nil
@@ -32,6 +35,7 @@ struct EditModelView: View {
     @State private var degrees: Float = 0.0
     @State private var x_pos: Float = 0.0
     @State private var z_pos: Float = 0.0
+//    @ObservedObject var viewModel: SceneKitViewModel
     
     func exportJson() {
         do {
@@ -77,7 +81,7 @@ struct EditModelView: View {
                 if let adj = store.models[index].adjustment {
                     AdjustmentView(index: index, adjustment: adj, options: [], selectedName: $selectedName)
                 } else {
-                    SceneKitView(index: index, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, options: [], selectedName: $selectedName)
+                    SceneKitView(index: index, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, options: [], selectedName: $selectedName, exchanged: $exchanged, exchanged_url: $exchanged_url)
                         .allowsHitTesting(true)
                         .ignoresSafeArea()
                 }
@@ -89,10 +93,8 @@ struct EditModelView: View {
                             
                             HStack {
                                 Button {
-                                    print("Hi!!")
-//                                    withAnimation {
-//                                        self.degrees -= 90
-//                                    }
+//                                    viewModel.exchanged = true
+                                    isPresentingExchange.toggle()
                                 } label: {
                                         Text("exchange furniture model")
                                         .padding()
@@ -240,6 +242,9 @@ struct EditModelView: View {
             }
             .navigationDestination(isPresented: $isPresentingMoveFurniture) {
                 MoveFurnitureView()
+            }
+            .sheet(isPresented: $isPresentingExchange) {
+                FurnitureSelectionView(exchanged: $exchanged, exchanged_url: $exchanged_url, isPresented: $isPresentingExchange, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, selectedName: $selectedName, index: $index)
             }
         }
         

@@ -13,6 +13,7 @@ struct AfterUploadFileView: View {
     @ObservedObject var store = ModelStore.shared
     @State private var isPresentingRoomGallery = false
     @State private var isPresentingSelectMethod = false
+//    @ObservedObject var viewModel: SceneKitViewModel
 
     var body: some View {
 //        HStack {

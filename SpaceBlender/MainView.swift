@@ -16,6 +16,8 @@ struct MainView: View {
     @State private var isPresentingFurnitureGallery = false
     @State private var isPresentingSelectMethod = false
     @State private var isPresentingCapture = false
+//    @ObservedObject var exchangeModel: SceneKitViewModel
+    
     var body: some View {
         ZStack {
             Color(.white)

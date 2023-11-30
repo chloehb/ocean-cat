@@ -24,6 +24,7 @@
 		4575C9D12AD1FA9700131520 /* ScanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C9D02AD1FA9700131520 /* ScanningView.swift */; };
 		4575C9D42AD1FAEB00131520 /* RoomCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */; };
 		4592B5B22AE2DF99000227B3 /* RoomGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */; };
+		5014FE572B17D75F00CA3E53 /* FurnitureSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014FE562B17D75F00CA3E53 /* FurnitureSelectionView.swift */; };
 		50659F9C2AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50659F922AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-3.mp4 */; };
 		50659F9D2AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-unflippable-low.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50659F932AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-unflippable-low.mp4 */; };
 		50659F9E2AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50659F942AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-1.mp4 */; };
@@ -117,6 +118,7 @@
 		4575C9D02AD1FA9700131520 /* ScanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningView.swift; sourceTree = "<group>"; };
 		4575C9D32AD1FAEB00131520 /* RoomCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCaptureController.swift; sourceTree = "<group>"; };
 		4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomGalleryView.swift; sourceTree = "<group>"; };
+		5014FE562B17D75F00CA3E53 /* FurnitureSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurnitureSelectionView.swift; sourceTree = "<group>"; };
 		50659F922AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ScanPasses-iPhone-FixedHeight-3.mp4"; sourceTree = "<group>"; };
 		50659F932AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-unflippable-low.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ScanPasses-iPhone-FixedHeight-unflippable-low.mp4"; sourceTree = "<group>"; };
 		50659F942AF843E2005898D2 /* ScanPasses-iPhone-FixedHeight-1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ScanPasses-iPhone-FixedHeight-1.mp4"; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				6CE1FDB12B017C1C00BB63C3 /* AdjustmentView.swift */,
 				6CE1FDB22B017C1C00BB63C3 /* Assets.xcassets */,
 				6CE1FDBB2B017C1C00BB63C3 /* EditModelView.swift */,
+				5014FE562B17D75F00CA3E53 /* FurnitureSelectionView.swift */,
 				6CE1FDB92B017C1C00BB63C3 /* FurnitureScanView.swift */,
 				6CE1FDB52B017C1C00BB63C3 /* PostAlgo.swift */,
 				6CE1FDB42B017C1C00BB63C3 /* RequestSurveyView.swift */,
@@ -239,10 +242,10 @@
 				4575C9A02AD1E5E300131520 /* SpaceBlenderApp.swift */,
 				452C29892AEC85BB00434784 /* AllData.xcdatamodeld */,
 				4575C9CE2AD1F50900131520 /* ModelStore.swift */,
+				8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */,
 				452C29842AEC76B600434784 /* SceneKitView.swift */,
 				4575C9A42AD1E5E500131520 /* Assets.xcassets */,
 				4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */,
-				8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */,
 				6C7C390E2B005064004A3A3F /* furnitureInputView.swift */,
 				6C0D5B352B0146AD00CE6B25 /* furnitureUpload.swift */,
 				4575C9A62AD1E5E500131520 /* Preview Content */,
@@ -490,6 +493,7 @@
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
 				5065A0062AF8454A005898D2 /* CapturePrimaryView.swift in Sources */,
 				8C724D452AE6E9EA00E6D0FF /* FurnitureGalleryView.swift in Sources */,
+				5014FE572B17D75F00CA3E53 /* FurnitureSelectionView.swift in Sources */,
 				452C29852AEC76B600434784 /* SceneKitView.swift in Sources */,
 				5065A00C2AF8454A005898D2 /* OnboardingButtonView.swift in Sources */,
 				5065A0002AF8454A005898D2 /* AppDataModel+Orbit.swift in Sources */,

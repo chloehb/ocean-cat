@@ -14,6 +14,24 @@
 
 import SceneKit
 import SwiftUI
+import ARKit
+import SceneKit.ModelIO
+
+func printFiles(path: URL) {
+    do {
+        let contents = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: [])
+        print("content of \(path) has \(contents.count) urls")
+        for url in contents {
+            if url.hasDirectoryPath {
+                printFiles(path: url)
+            } else {
+                print(url)
+            }
+        }
+    } catch {
+        print("Error reading directory: \(error)")
+    }
+}
 
 private var NodeTypeKey: UInt8 = 0 // We need this to make our new property
 
@@ -96,12 +114,17 @@ final class AllLocRec: ObservableObject {
     }
 }
 
-
+//class SceneKitViewModel: ObservableObject {
+//    @Published var exchanged = false
+//}
 
 struct SceneKitView: UIViewRepresentable {
     @ObservedObject var store = ModelStore.shared
     @ObservedObject var locRec = AllLocRec.shared
     @State var index: Int
+//    @ObservedObject var viewModel: SceneKitViewModel
+    
+//    @State var exchange_url: URL?
     @Binding var x_pos: Float
     @Binding var z_pos: Float
     @Binding var degrees: Float
@@ -111,6 +134,36 @@ struct SceneKitView: UIViewRepresentable {
     var options: [Any]
     var view = SCNView()
     @Binding var selectedName: String?
+    
+//    var _exchanged = false
+//    var _exchanged_url = URL(string: "https://www.example.com")
+    @Binding var exchanged: Bool
+    @Binding var exchanged_url: URL?
+    
+//    var exchanged_url: URL {
+//        get {
+//            return _exchanged_url!
+//        }
+//        set {
+//            _exchanged_url = newValue
+//        }
+//    }
+//    
+//    var exchanged: Bool {
+//        get {
+//            return _exchanged
+//        }
+//        set {
+//            _exchanged = newValue
+//        }
+//    }
+    
+//    init(store: ModelStore, locRec: AllLocRec, viewModel: SceneKitViewModel, /* other properties */) {
+//            self.store = store
+//            self.locRec = locRec
+//            self.viewModel = viewModel
+//            // ... initialize other properties ...
+//    }
     
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
@@ -326,7 +379,43 @@ struct SceneKitView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: SCNView, context: Context) {
-        // Update your 3D scene here
+//         Update your 3D scene here
+        if exchanged {
+            if let select = selectedName {
+                let url = exchanged_url!
+                
+//                printFiles(path: url.deletingLastPathComponent())
+                let mdlAsset = MDLAsset(url: url)
+//                print(exchanged_url!)
+                // Load the textures for the model
+                mdlAsset.loadTextures()
+
+                // Extract the first object from the asset and create a node
+                let asset = mdlAsset.object(at: 0)
+                let assetNode = SCNNode(mdlObject: asset)
+
+                // Replace the existing node in the scene
+                // This assumes you have a way to identify the node to be replaced
+                assetNode.name = select
+                
+                if let nodeToReplace = uiView.scene?.rootNode.childNode(withName: select, recursively: true) {
+                    print("find original node")
+                    assetNode.transform = nodeToReplace.transform
+                    assetNode.name = nodeToReplace.name
+                    let scale: Float = 0.01 // Replace with the desired scale factor
+                    let scaleMatrix = matrix_float4x4(diagonal: SIMD4<Float>(scale, scale, scale, 1))
+                    assetNode.transform = SCNMatrix4Mult(assetNode.transform, SCNMatrix4(scaleMatrix))
+                    
+                    uiView.scene?.rootNode.replaceChildNode(nodeToReplace, with: assetNode) // Add the new node
+//                    SCNTransaction.begin()
+//
+//                    SCNTransaction.commit()
+                }
+            }
+            exchanged = false
+        }
+
+        
         if let select = selectedName {
             let selectIndex = Int(select)!
             if let target = uiView.scene?.rootNode.childNode(withName: select, recursively: true) {

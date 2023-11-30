@@ -13,6 +13,7 @@ struct RoomGalleryView: View {
     @ObservedObject var store = ModelStore.shared
     @State var isPresentingDemo: Bool = false
     @State private var isPresentingSelectMethod = false
+//    @ObservedObject var viewModel: SceneKitViewModel
     
     var body: some View {
         NavigationStack {

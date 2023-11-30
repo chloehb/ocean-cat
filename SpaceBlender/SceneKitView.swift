@@ -140,9 +140,6 @@ struct SceneKitView: UIViewRepresentable {
         }
     }
     
-    
-
-    
 //    init(store: ModelStore, locRec: AllLocRec, viewModel: SceneKitViewModel, /* other properties */) {
 //            self.store = store
 //            self.locRec = locRec
@@ -367,6 +364,7 @@ struct SceneKitView: UIViewRepresentable {
 //         Update your 3D scene here
         if exchanged {
                 let mdlAsset = MDLAsset(url: exchanged_url)
+                print(exchanged_url)
                 // Load the textures for the model
                 mdlAsset.loadTextures()
 
@@ -383,7 +381,6 @@ struct SceneKitView: UIViewRepresentable {
                 
             }
 
-        
         
         if let select = selectedName {
             let selectIndex = Int(select)!

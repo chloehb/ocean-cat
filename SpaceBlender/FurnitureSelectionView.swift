@@ -68,7 +68,7 @@ struct FurnitureRowView: View {
         .onTapGesture {
             self.selectedFurniture = store.models[id] // Handle selection
             self.selectedFurnitureName = store.models[id].name
-            self.selectedURL = store.models[index].url// Handle selection
+//            self.selectedURL = store.models[index].url// Handle selection
         }
         .padding()
         
@@ -95,17 +95,16 @@ struct FurnitureSelectionView: View {
     @Binding var degrees: Float
     @Binding var selectedName: String?
     @Binding var index: Int
+    @State private var showingARQuickLook = false
     
-    @Environment(\.presentationMode) var presentationMode
-//    @ObservedObject var store = ModelStore.shared
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var store = furnitureStore.shared
     @State private var selectedFurniture: furnitureModel?
     @State private var selectedFurnitureName: String?
-    @State private var selectedFurniture: furnitureModel?
 //    @State private var selectedNUM = self.store.models.count
     @State private var selectedURL:URL?
-//    @State private var selectedNUM = self.store.models.count
+
+    let persistenceController = PersistenceController.shared
 
     
     //tab area:
@@ -122,13 +121,13 @@ struct FurnitureSelectionView: View {
 //                Text("There are \(store.models.count) furnitures(s)")
                 
                 if selectedType == "ALL" {
-                    List(0..<store.models.count) { index in
-                        FurnitureRowView(index: index, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
+                    List(0..<store.models.count) { id in
+                        FurnitureRowView(id: index,selectedFurniture: $selectedFurniture, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
                                     }
                             } else {
-                                List(0..<store.models.count) { index in
+                                List(0..<store.models.count) { id in
                                     if store.models[index].type == selectedType{
-                                        FurnitureRowView(index: index, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
+                                        FurnitureRowView(id: id, selectedFurniture: $selectedFurniture, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
                                     }
                                                 }
                     }

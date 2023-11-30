@@ -266,6 +266,7 @@ struct Adjuster {
                             beds2 = (Furniture(type: FurnitureType.Bed, position: (-length/2 + beds[0].width + beds[1].width/2, beds[1].height/2, width/2 - beds[1].length/2), facing: Direction.North, width: beds[1].width, length: beds[1].length, height: beds[1].height))
                             // place desks on North wall next to each other
                             if (beds[0].length + tables[0].width <= width && beds[1].length + tables[1].width <= width) {
+                                print("place desks on North wall next to each other")
                                 tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].length/2, tables[0].height/2, -width/2 + tables[0].width/2), facing: Direction.South, width: tables[0].width, length: tables[0].length, height: tables[0].height))
                                 tables2 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].length + tables[1].length/2, tables[1].height/2, -width/2 + tables[1].width/2), facing: Direction.South, width: tables[1].width, length: tables[1].length, height: tables[1].height))
                             }
@@ -289,8 +290,8 @@ struct Adjuster {
                                 tables2 = (Furniture(type: FurnitureType.Table, position: (-length/2 + beds[0].width + tables[1].length/2, tables[1].height/2, width/2 - tables[1].width/2), facing: Direction.North, width: tables[1].width, length: tables[1].length, height: tables[1].height))
                             }
                             else if (beds[0].length + tables[0].width <= width && beds[1].length + tables[1].width <= width) {
-                                    tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].length/2, tables[0].height/2, width/2 - tables[0].width/2), facing: Direction.North, width: tables[0].width, length: tables[0].length, height: tables[0].height))
-                                    tables2 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].length + tables[1].length/2, tables[1].height/2, width/2 - tables[1].width/2), facing: Direction.North, width: tables[1].width, length: tables[1].length, height: tables[1].height))
+                                    tables1 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].length/2, tables[0].height/2, -width/2 + tables[0].width/2), facing: Direction.North, width: tables[0].width, length: tables[0].length, height: tables[0].height))
+                                    tables2 = (Furniture(type: FurnitureType.Table, position: (-length/2 + tables[0].length + tables[1].length/2, tables[1].height/2, -width/2 + tables[1].width/2), facing: Direction.North, width: tables[1].width, length: tables[1].length, height: tables[1].height))
                             }
                         }
                         // 2 beds apart of top and bottom wall facing East Wall

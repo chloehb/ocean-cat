@@ -170,7 +170,7 @@ struct SurveyView: View {
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
                 Spacer()
-                Text("Please ensure requests are reasonable with regards to room size and fixtures").multilineTextAlignment(.center)
+                Text("Please ensure requests are reasonable with regards to room size and fixtures").multilineTextAlignment(.center).font(.footnote)
                 Button {
                     // will go to next page
                     isPresentingPostAlgo.toggle()

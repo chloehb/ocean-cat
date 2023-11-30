@@ -365,7 +365,11 @@ struct SceneKitView: UIViewRepresentable {
     func updateUIView(_ uiView: SCNView, context: Context) {
 //         Update your 3D scene here
         if exchanged {
-            let mdlAsset = MDLAsset(url: exchanged_url!)
+            if let select = selectedName {
+                let selectIndex = Int(select)!
+                let (or_x, or_z, or_w) = locRec.res[selectIndex]
+                
+                let mdlAsset = MDLAsset(url: exchanged_url!)
                 print(exchanged)
                 // Load the textures for the model
                 mdlAsset.loadTextures()
@@ -376,12 +380,20 @@ struct SceneKitView: UIViewRepresentable {
 
                 // Replace the existing node in the scene
                 // This assumes you have a way to identify the node to be replaced
-                let sname = selectedName
+                let sname = selectedName!
+                assetNode.name = sname
+                assetNode.position.x = or_x
+                assetNode.position.z = or_z
+                assetNode.rotation.w = or_w
                 if let nodeToReplace = uiView.scene?.rootNode.childNode(withName: sname, recursively: true) {
                     nodeToReplace.removeFromParentNode() // Remove the old node
                     uiView.scene?.rootNode.addChildNode(assetNode) // Add the new node
+//                    SCNTransaction.begin()
+//
+//                    SCNTransaction.commit()
                 }
-                exchanged = false
+            }
+            exchanged = false
             }
 
         

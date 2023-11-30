@@ -135,69 +135,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A152A7B3-A9C7-4794-B67E-9C138B07F822"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SpaceBlender/SceneKitView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
-            landmarkName = "updateUIView(_:context:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "A152A7B3-A9C7-4794-B67E-9C138B07F822 - b4ad7fc976bf2cf6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SpaceBlender.SceneKitView.updateUIView(_: __C.SCNView, context: SwiftUI.UIViewRepresentableContext&lt;SpaceBlender.SceneKitView&gt;) -&gt; ()"
-                  moduleName = "SpaceBlender"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lisawang/Documents/EECS441/oceancat/ocean-cat/SpaceBlender/SceneKitView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "369"
-                  endingLineNumber = "369"
-                  offsetFromSymbolStart = "716">
-               </Location>
-               <Location
-                  uuid = "A152A7B3-A9C7-4794-B67E-9C138B07F822 - b4ad7fc976bf2c11"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SpaceBlender.SceneKitView.updateUIView(_: __C.SCNView, context: SwiftUI.UIViewRepresentableContext&lt;SpaceBlender.SceneKitView&gt;) -&gt; ()"
-                  moduleName = "SpaceBlender"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lisawang/Documents/EECS441/oceancat/ocean-cat/SpaceBlender/SceneKitView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "368"
-                  endingLineNumber = "368"
-                  offsetFromSymbolStart = "524">
-               </Location>
-               <Location
-                  uuid = "A152A7B3-A9C7-4794-B67E-9C138B07F822 - b4ad7fc976bf2c11"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SpaceBlender.SceneKitView.updateUIView(_: __C.SCNView, context: SwiftUI.UIViewRepresentableContext&lt;SpaceBlender.SceneKitView&gt;) -&gt; ()"
-                  moduleName = "SpaceBlender"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lisawang/Documents/EECS441/oceancat/ocean-cat/SpaceBlender/SceneKitView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "368"
-                  endingLineNumber = "368"
-                  offsetFromSymbolStart = "520">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9230BF28-4D08-43EE-8A03-10C5FF1624A8"
             shouldBeEnabled = "No"
             ignoreCount = "0"

@@ -17,6 +17,22 @@ import SwiftUI
 import ARKit
 import SceneKit.ModelIO
 
+func printFiles(path: URL) {
+    do {
+        let contents = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: [])
+        print("content of \(path) has \(contents.count) urls")
+        for url in contents {
+            if url.hasDirectoryPath {
+                printFiles(path: url)
+            } else {
+                print(url)
+            }
+        }
+    } catch {
+        print("Error reading directory: \(error)")
+    }
+}
+
 private var NodeTypeKey: UInt8 = 0 // We need this to make our new property
 
 extension SCNNode {
@@ -366,11 +382,11 @@ struct SceneKitView: UIViewRepresentable {
 //         Update your 3D scene here
         if exchanged {
             if let select = selectedName {
-                let selectIndex = Int(select)!
-                let (or_x, or_z, or_w) = locRec.res[selectIndex]
+                let url = exchanged_url!
                 
-                let mdlAsset = MDLAsset(url: exchanged_url!)
-                print(exchanged)
+//                printFiles(path: url.deletingLastPathComponent())
+                let mdlAsset = MDLAsset(url: url)
+//                print(exchanged_url!)
                 // Load the textures for the model
                 mdlAsset.loadTextures()
 
@@ -380,21 +396,24 @@ struct SceneKitView: UIViewRepresentable {
 
                 // Replace the existing node in the scene
                 // This assumes you have a way to identify the node to be replaced
-                let sname = selectedName!
-                assetNode.name = sname
-                assetNode.position.x = or_x
-                assetNode.position.z = or_z
-                assetNode.rotation.w = or_w
-                if let nodeToReplace = uiView.scene?.rootNode.childNode(withName: sname, recursively: true) {
-                    nodeToReplace.removeFromParentNode() // Remove the old node
-                    uiView.scene?.rootNode.addChildNode(assetNode) // Add the new node
+                assetNode.name = select
+                
+                if let nodeToReplace = uiView.scene?.rootNode.childNode(withName: select, recursively: true) {
+                    print("find original node")
+                    assetNode.transform = nodeToReplace.transform
+                    assetNode.name = nodeToReplace.name
+                    let scale: Float = 0.01 // Replace with the desired scale factor
+                    let scaleMatrix = matrix_float4x4(diagonal: SIMD4<Float>(scale, scale, scale, 1))
+                    assetNode.transform = SCNMatrix4Mult(assetNode.transform, SCNMatrix4(scaleMatrix))
+                    
+                    uiView.scene?.rootNode.replaceChildNode(nodeToReplace, with: assetNode) // Add the new node
 //                    SCNTransaction.begin()
 //
 //                    SCNTransaction.commit()
                 }
             }
             exchanged = false
-            }
+        }
 
         
         if let select = selectedName {

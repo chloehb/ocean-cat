@@ -56,7 +56,7 @@ struct SurveyView: View {
                     .cornerRadius(20)
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
-                //Spacer()
+                Spacer()
                 Text("If you have a roommate, do you want your beds next to each other?").multilineTextAlignment(.center)
                 HStack {
                     Button {
@@ -84,14 +84,13 @@ struct SurveyView: View {
                     .cornerRadius(20)
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
-                /*
                 Spacer()
-                Text("Do you prefer your bed or desk to be by your window?").multilineTextAlignment(.center)
+                Text("Do you prefer your desk to be by your window?").multilineTextAlignment(.center)
                 HStack {
                     Button {
                         self.objectByWindow = "Desk"
                     } label: {
-                        Text("Desk")
+                        Text("Yes")
                             .padding()
                             .fontWeight(.bold)
                             .frame(width: 90, height: 40)
@@ -101,15 +100,15 @@ struct SurveyView: View {
                     .cornerRadius(20)
                     .shadow(color: .blue, radius: 3, y: 3)
                     Button {
-                        self.objectByWindow = "Bed"
+                        self.objectByWindow = "No"
                     } label: {
-                        Text("Bed")
+                        Text("No")
                             .padding()
                             .fontWeight(.bold)
                             .frame(width: 90, height: 40)
                     }
                     .foregroundColor(.white)
-                    .background(objectByWindow == "Bed" ? Color(red:0.3, green:0.4, blue:0.7, opacity: 0.8) : Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
+                    .background(objectByWindow == "No" ? Color(red:0.3, green:0.4, blue:0.7, opacity: 0.8) : Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))
                     .cornerRadius(20)
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
@@ -142,7 +141,7 @@ struct SurveyView: View {
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
                 Spacer()
-                */
+                
                 Text("Do you want to maximize the open floor space in your room?").multilineTextAlignment(.center)
                 HStack {
                     Button {
@@ -170,7 +169,8 @@ struct SurveyView: View {
                     .cornerRadius(20)
                     .shadow(color: .blue, radius: 3, y: 3)
                 }
-                //Spacer()
+                Spacer()
+                Text("Please ensure requests are reasonable with regards to room size and fixtures").multilineTextAlignment(.center).font(.footnote)
                 Button {
                     // will go to next page
                     isPresentingPostAlgo.toggle()

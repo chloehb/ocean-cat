@@ -15,6 +15,7 @@ struct furnitureModel: Codable {
     var name: String?
     var type: String?
     var url: URL?
+//    var id: UUID?
 }
 
 final class furnitureStore: ObservableObject{

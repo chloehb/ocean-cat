@@ -38,7 +38,6 @@ struct FurnitureGalleryView: View {
                     let name = store.models[index].name!
                     let url = store.models[index].url!
                     
-                    
                     VStack(alignment: .leading, spacing: 20.0) {
                         
                         HStack {

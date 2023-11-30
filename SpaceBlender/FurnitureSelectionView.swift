@@ -11,19 +11,14 @@ import RealityKit
 import CoreData
 import QuickLook
 
-//// Assuming furnitureModel is defined like this:
-//struct FurnitureModel: Identifiable {
-//    let id = UUID()
-//    let name: String
-//    let type: String
-//    let url: URL
-//}
+
 
 struct FurnitureRowView: View {
 //    var furniture: FurnitureModel
     @ObservedObject var store = furnitureStore.shared
     let index: Int
     @Binding var selectedFurnitureName: String?
+    @Binding var selectedURL:URL?
     @Binding var showingARQuickLook: Bool
 
     var body: some View {
@@ -69,7 +64,8 @@ struct FurnitureRowView: View {
         .cornerRadius(15)
         .shadow(radius: 15)
         .onTapGesture {
-            self.selectedFurnitureName = store.models[index].name // Handle selection
+            self.selectedFurnitureName = store.models[index].name
+            self.selectedURL = store.models[index].url// Handle selection
         }
         .padding()
         
@@ -93,90 +89,46 @@ struct FurnitureSelectionView: View {
     @Binding var isPresented: Bool
     @State private var showingARQuickLook = false
     
+    @Environment(\.presentationMode) var presentationMode
 //    @ObservedObject var store = ModelStore.shared
     let persistenceController = PersistenceController.shared
     @ObservedObject var store = furnitureStore.shared
     @State private var selectedFurnitureName: String?
-//    @FetchRequest(sortDescriptors: []) var furnitures: FetchedResults<FurObject>
+    @State private var selectedURL:URL?
+//    @State private var selectedNUM = self.store.models.count
+
     
-//    let endCaptureCallback: () -> Void
+    //tab area:
+    @State private var selectedType: String = "ALL"
+    var furnitureType = ["Bed", "Desk", "Others", "waitingForImplement"]
+    
     
     
     var body: some View {
         NavigationStack {
             VStack {
                 
+                
                 Text("Furniture Gallery").font(.title)
-                Text("There are \(store.models.count) furnitures(s)")
+//                Text("There are \(store.models.count) furnitures(s)")
                 
-                List(0..<store.models.count) { index in
-                    FurnitureRowView(index: index, selectedFurnitureName: $selectedFurnitureName, showingARQuickLook: $showingARQuickLook)
-                                }
+                if selectedType == "ALL" {
+                    List(0..<store.models.count) { index in
+                        FurnitureRowView(index: index, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
+                                    }
+                            } else {
+                                List(0..<store.models.count) { index in
+                                    if store.models[index].type == selectedType{
+                                        FurnitureRowView(index: index, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
+                                    }
+                                                }
+                    }
                 
-//                List(0..<store.models.count) {
-//                    index in
-////                    let image = "ex_room"
-//                    let type = store.models[index].type!
-//                    let name = store.models[index].name!
-//                    let url = store.models[index].url!
-//                    
-//                    
-//                    VStack(alignment: .leading, spacing: 20.0) {
-//                        
-//                        HStack {
-//                            Spacer()
-////                            let path = NSString(string: url.absoluteString).expandingTildeInPath
-////                            let fileDoesExist = FileManager.default.fileExists(atPath: path)
-////                            Text(fileDoesExist.description)
-//                            
-//                            Text(type + " " + name).font(.title).multilineTextAlignment(.center)
-////                            Text(url.absoluteString)
-//                            
-////                            Text(url_string)
-//                            Spacer()
-//                        }
-//                        
-//                        Button(action: {
-//                            self.showingARQuickLook.toggle()
-//                        }) {
-//                            Text("Preview in AR")
-//                                .fontWeight(.semibold)
-//                                .frame(minWidth: 0, maxWidth: .infinity)
-//                                .padding()
-//                                .background(Color.blue)
-//                                .foregroundColor(.white)
-//                                .cornerRadius(40)
-//                                .shadow(radius: 5)
-//                        }
-//                        .padding(.horizontal)
-//                        .sheet(isPresented: $showingARQuickLook) {
-//                            ARQuickLookController(modelFile: url, showingARQuickLook: $showingARQuickLook)
-//                        }
-//                    }
-//                    .padding()
-//                    .background(selectedFurnitureID == store.models[index].id ? Color.gray.opacity(0.3) : Color.white)
-//                    .cornerRadius(15)
-//                    .shadow(radius: 15)
-//                    .onTapGesture {
-//                        self.selectedFurnitureID = store.models[index].id // Handle selection
-//                    }
-//                    .padding()
-//                    
-//                }
-////                Button {
-////                    isPresentingCaptured.toggle()
-////                } label: {
-////                    Text("Add a new furniture object")
-////                        .padding()
-////                        .font(.title3)
-////                        .fontWeight(.bold)
-////                        .frame(width: 300, height: 70)
-////                }
-//                
-//                // Confirm button
-//             
+               
+       
                 Button("Confirm") {
                     // Handle confirmation action
+                    presentationMode.wrappedValue.dismiss()
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -191,6 +143,22 @@ struct FurnitureSelectionView: View {
             .navigationDestination(isPresented: $isPresentingCaptured) {
 //                ContentView()
                 FurnitureInputView()
+            }
+            .toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    HStack {
+                        Button("Bed") { selectedType = "Bed" }
+                        Spacer()
+                        Button("Desk") { selectedType = "Desk" }
+                        Spacer()
+                        Button("ALL") { selectedType = "ALL" }
+                        Spacer()
+                        Button("Others") { selectedType = "Others" }
+                        Spacer()
+                        Button("Implement") { selectedType = "Implement" }
+                    }
+                    .padding(.horizontal) // Optional, for padding on the sides
+                }
             }
         }
     }

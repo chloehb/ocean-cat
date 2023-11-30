@@ -229,11 +229,11 @@
 				6CE1FDB12B017C1C00BB63C3 /* AdjustmentView.swift */,
 				6CE1FDB22B017C1C00BB63C3 /* Assets.xcassets */,
 				6CE1FDBB2B017C1C00BB63C3 /* EditModelView.swift */,
+				5014FE562B17D75F00CA3E53 /* FurnitureSelectionView.swift */,
 				6CE1FDB92B017C1C00BB63C3 /* FurnitureScanView.swift */,
 				6CE1FDB52B017C1C00BB63C3 /* PostAlgo.swift */,
 				6CE1FDB42B017C1C00BB63C3 /* RequestSurveyView.swift */,
 				6CE1FDB32B017C1C00BB63C3 /* SelectFurnitureView.swift */,
-				5014FE562B17D75F00CA3E53 /* FurnitureSelectionView.swift */,
 				5065A0242AF848D1005898D2 /* Info.plist */,
 				50659F8E2AF84005005898D2 /* Capture */,
 				6C6D17482AEEFB9F003F9930 /* Configuration */,
@@ -242,10 +242,10 @@
 				4575C9A02AD1E5E300131520 /* SpaceBlenderApp.swift */,
 				452C29892AEC85BB00434784 /* AllData.xcdatamodeld */,
 				4575C9CE2AD1F50900131520 /* ModelStore.swift */,
+				8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */,
 				452C29842AEC76B600434784 /* SceneKitView.swift */,
 				4575C9A42AD1E5E500131520 /* Assets.xcassets */,
 				4592B5B12AE2DF99000227B3 /* RoomGalleryView.swift */,
-				8C724D442AE6E9EA00E6D0FF /* FurnitureGalleryView.swift */,
 				6C7C390E2B005064004A3A3F /* furnitureInputView.swift */,
 				6C0D5B352B0146AD00CE6B25 /* furnitureUpload.swift */,
 				4575C9A62AD1E5E500131520 /* Preview Content */,
@@ -697,7 +697,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpaceBlender/Preview Content\"";
-				DEVELOPMENT_TEAM = 772QXLW8LP;
+				DEVELOPMENT_TEAM = 7985G4GTCM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpaceBlender/Info.plist;
@@ -728,7 +728,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpaceBlender/Preview Content\"";
-				DEVELOPMENT_TEAM = 772QXLW8LP;
+				DEVELOPMENT_TEAM = 7985G4GTCM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpaceBlender/Info.plist;

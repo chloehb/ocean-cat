@@ -241,7 +241,7 @@ struct EditModelView: View {
             .navigationDestination(isPresented: $isPresentingMoveFurniture) {
                 MoveFurnitureView()
             }
-            .navigationDestination(isPresented: $isPresentingExchange) {
+            .sheet(isPresented: $isPresentingExchange) {
                 FurnitureSelectionView(isPresented: $isPresentingExchange)
             }
         }

@@ -22,15 +22,12 @@ struct FurnitureRowView: View {
     @Binding var selectedFurnitureName: String?
     @Binding var selectedURL:URL?
     @Binding var showingARQuickLook: Bool
-
+    
     var body: some View {
-        let type = store.models[id].type!
-        let name = store.models[id].name!
-        let url = store.models[id].url!
-        
-        
         VStack(alignment: .leading, spacing: 20.0) {
-            
+            let type = store.models[id].type!
+            let name = store.models[id].name!
+            let url = store.models[id].url!
             HStack {
                 Spacer()
 //                            let path = NSString(string: url.absoluteString).expandingTildeInPath
@@ -61,33 +58,25 @@ struct FurnitureRowView: View {
 //                ARQuickLookController(modelFile: url, showingARQuickLook: $showingARQuickLook)
 //            }
         }
-        .padding()
-        .background(selectedFurnitureName == store.models[id].name ? Color.gray.opacity(0.3) : Color.white)
-        .cornerRadius(15)
-        .shadow(radius: 15)
         .onTapGesture {
             self.selectedFurniture = store.models[id] // Handle selection
             self.selectedFurnitureName = store.models[id].name
 //            self.selectedURL = store.models[index].url// Handle selection
         }
         .padding()
+        .cornerRadius(15)
+        .shadow(radius: 15)
+        .background(self.selectedFurnitureName == store.models[id].name ? Color.gray.opacity(0.3) : Color.white)
+        .padding()
         
     }
-//                Button {
-//                    isPresentingCaptured.toggle()
-//                } label: {
-//                    Text("Add a new furniture object")
-//                        .padding()
-//                        .font(.title3)
-//                        .fontWeight(.bold)
-//                        .frame(width: 300, height: 70)
-//                }
     
 }
 
 // Main view that shows the furniture types and list
 struct FurnitureSelectionView: View {
-
+    @Binding var exchanged: Bool
+    @Binding var exchanged_url: URL?
     @State private var isPresentingCaptured = false
     @Binding var isPresented: Bool
     @Binding var x_pos: Float
@@ -108,7 +97,7 @@ struct FurnitureSelectionView: View {
 
     
     //tab area:
-    @State private var selectedType: String = "ALL"
+    @State private var selectedType = "ALL"
     var furnitureType = ["Bed", "Desk", "Others", "waitingForImplement"]
     
     var body: some View {
@@ -122,7 +111,7 @@ struct FurnitureSelectionView: View {
                 
                 if selectedType == "ALL" {
                     List(0..<store.models.count) { id in
-                        FurnitureRowView(id: index,selectedFurniture: $selectedFurniture, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
+                        FurnitureRowView(id: id,selectedFurniture: $selectedFurniture, selectedFurnitureName: $selectedFurnitureName, selectedURL: $selectedURL, showingARQuickLook: $showingARQuickLook)
                                     }
                             } else {
                                 List(0..<store.models.count) { id in
@@ -132,13 +121,11 @@ struct FurnitureSelectionView: View {
                                                 }
                     }
                 Button("Confirm") {
-                    
-                    
-                    
-                    var scene_view = SceneKitView(index: index, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, options: [], selectedName: $selectedName)
-                    scene_view.exchanged = true
-                    scene_view.exchanged_url = (selectedFurniture?.url)!
-                    self.isPresented = false
+//                    var scene_view = SceneKitView(index: index, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, options: [], selectedName: $selectedName)
+                    exchanged = true
+//                    print(scene_view.exchanged)
+                    exchanged_url = (selectedFurniture?.url)!
+//                    self.isPresented = false
                     presentationMode.wrappedValue.dismiss() }
                 .padding()
                 .background(Color.blue)

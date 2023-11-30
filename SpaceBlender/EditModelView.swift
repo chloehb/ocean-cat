@@ -22,6 +22,8 @@ struct EditModelView: View {
     @State private var isPresentingSelectFurniture = false
     @State private var isPresentingMoveFurniture = false
     @State private var isPresentingExchange = false
+    @State var exchanged = false
+    @State var exchanged_url: URL?
     @State var index: Int
     //@Binding var showing: Bool
     @State var selectedName: String? = nil
@@ -79,7 +81,7 @@ struct EditModelView: View {
                 if let adj = store.models[index].adjustment {
                     AdjustmentView(index: index, adjustment: adj, options: [], selectedName: $selectedName)
                 } else {
-                    SceneKitView(index: index, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, options: [], selectedName: $selectedName)
+                    SceneKitView(index: index, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, options: [], selectedName: $selectedName, exchanged: $exchanged, exchanged_url: $exchanged_url)
                         .allowsHitTesting(true)
                         .ignoresSafeArea()
                 }
@@ -242,7 +244,7 @@ struct EditModelView: View {
                 MoveFurnitureView()
             }
             .sheet(isPresented: $isPresentingExchange) {
-                FurnitureSelectionView(isPresented: $isPresentingExchange, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, selectedName: $selectedName, index: $index)
+                FurnitureSelectionView(exchanged: $exchanged, exchanged_url: $exchanged_url, isPresented: $isPresentingExchange, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, selectedName: $selectedName, index: $index)
             }
         }
         

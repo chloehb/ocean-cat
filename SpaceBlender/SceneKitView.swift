@@ -119,26 +119,28 @@ struct SceneKitView: UIViewRepresentable {
     var view = SCNView()
     @Binding var selectedName: String?
     
-    var _exchanged = false
-    var _exchanged_url = URL(string: "https://www.example.com")
+//    var _exchanged = false
+//    var _exchanged_url = URL(string: "https://www.example.com")
+    @Binding var exchanged: Bool
+    @Binding var exchanged_url: URL?
     
-    var exchanged_url: URL {
-        get {
-            return _exchanged_url!
-        }
-        set {
-            _exchanged_url = newValue
-        }
-    }
-    
-    var exchanged: Bool {
-        get {
-            return _exchanged
-        }
-        set {
-            _exchanged = newValue
-        }
-    }
+//    var exchanged_url: URL {
+//        get {
+//            return _exchanged_url!
+//        }
+//        set {
+//            _exchanged_url = newValue
+//        }
+//    }
+//    
+//    var exchanged: Bool {
+//        get {
+//            return _exchanged
+//        }
+//        set {
+//            _exchanged = newValue
+//        }
+//    }
     
 //    init(store: ModelStore, locRec: AllLocRec, viewModel: SceneKitViewModel, /* other properties */) {
 //            self.store = store
@@ -363,8 +365,8 @@ struct SceneKitView: UIViewRepresentable {
     func updateUIView(_ uiView: SCNView, context: Context) {
 //         Update your 3D scene here
         if exchanged {
-                let mdlAsset = MDLAsset(url: exchanged_url)
-                print(exchanged_url)
+            let mdlAsset = MDLAsset(url: exchanged_url!)
+                print(exchanged)
                 // Load the textures for the model
                 mdlAsset.loadTextures()
 
@@ -374,11 +376,12 @@ struct SceneKitView: UIViewRepresentable {
 
                 // Replace the existing node in the scene
                 // This assumes you have a way to identify the node to be replaced
-                if let nodeToReplace = uiView.scene?.rootNode.childNode(withName: "nodeToReplaceName", recursively: true) {
+                let sname = selectedName
+                if let nodeToReplace = uiView.scene?.rootNode.childNode(withName: sname, recursively: true) {
                     nodeToReplace.removeFromParentNode() // Remove the old node
                     uiView.scene?.rootNode.addChildNode(assetNode) // Add the new node
                 }
-                
+                exchanged = false
             }
 
         

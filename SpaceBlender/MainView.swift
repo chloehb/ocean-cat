@@ -7,16 +7,19 @@
 
 import SwiftUI
 
+enum DestinationMainView {
+    case RoomGallery
+    case FurnitureGallery
+    case SelectMethod
+    case Capture
+}
 
 struct MainView: View {
     @ObservedObject
     private var store = ModelStore.shared
-    @State private var isPresentingOnBoarding = false
-    @State private var isPresentingRoomGallery = false
-    @State private var isPresentingFurnitureGallery = false
-    @State private var isPresentingSelectMethod = false
-    @State private var isPresentingCapture = false
-//    @ObservedObject var exchangeModel: SceneKitViewModel
+    @State var destination: DestinationMainView? = nil
+    @State var isPresentingDestination: Bool = false
+    //    @ObservedObject var exchangeModel: SceneKitViewModel
     
     var body: some View {
         ZStack {
@@ -32,7 +35,8 @@ struct MainView: View {
                     Button("Cancel", role: .destructive) {
                     }
                     Button {
-                        isPresentingCapture.toggle()
+                        destination = .Capture
+                        isPresentingDestination.toggle()
                     } label: {
                         Text("Create Furniture Model")
                             .padding()
@@ -41,7 +45,8 @@ struct MainView: View {
                             .frame(width: 250, height: 70)
                     }
                     Button {
-                        isPresentingSelectMethod.toggle()
+                        destination = .SelectMethod
+                        isPresentingDestination.toggle()
                     } label: {
                         Text("Create Room Model")
                             .padding()
@@ -61,7 +66,8 @@ struct MainView: View {
                 .cornerRadius(20)
                 .shadow(color: .blue, radius: 3, y: 3)
                 Button {
-                    isPresentingRoomGallery.toggle()
+                    destination = .RoomGallery
+                    isPresentingDestination.toggle()
                 } label: {
                     Text("Room Gallery")
                         .padding()
@@ -74,7 +80,8 @@ struct MainView: View {
                 .cornerRadius(20)
                 .shadow(color: .blue, radius: 3, y: 3)
                 Button {
-                    isPresentingFurnitureGallery.toggle()
+                    destination = .FurnitureGallery
+                    isPresentingDestination.toggle()
                 } label: {
                     Text("Furniture Gallery")
                         .padding()
@@ -88,23 +95,18 @@ struct MainView: View {
                 .shadow(color: .blue, radius: 3, y: 3)
             }
             .padding()
-//            .navigationDestination(isPresented: $isPresentingOnBoarding) {
-//                OnBoardingView(isPresented: $isPresentingOnBoarding)
-//            }
-            .navigationDestination(isPresented: $isPresentingCapture) {
-//                ContentView()
-                FurnitureInputView()
+            .navigationDestination(isPresented: $isPresentingDestination) {
+                switch destination {
+                case .RoomGallery:
+                    RoomGalleryView()
+                case .FurnitureGallery:
+                    FurnitureGalleryView()
+                case .SelectMethod:
+                    SelectMethodView()
+                case _:
+                    FurnitureInputView()
+                }
             }
-            .navigationDestination(isPresented: $isPresentingRoomGallery) {
-                RoomGalleryView(isPresented: $isPresentingRoomGallery)
-            }
-            .navigationDestination(isPresented: $isPresentingFurnitureGallery) {
-                FurnitureGalleryView(isPresented: $isPresentingFurnitureGallery)
-            }
-            .navigationDestination(isPresented: $isPresentingSelectMethod) {
-                SelectMethodView(isPresented: $isPresentingSelectMethod)
-            }
-            
         }
     }
 }

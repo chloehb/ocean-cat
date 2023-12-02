@@ -55,10 +55,10 @@ struct PostAlgo: View {
                 Spacer()
             }
             .navigationDestination(isPresented: $isPresentingRoomGallery) {
-                RoomGalleryView(isPresented: $isPresentingRoomGallery)
+                RoomGalleryView()
             }
             .navigationDestination(isPresented: $isPresentingFurnitureGallery) {
-                FurnitureGalleryView(isPresented: $isPresentingFurnitureGallery)
+                FurnitureGalleryView()
             }
         }
     }

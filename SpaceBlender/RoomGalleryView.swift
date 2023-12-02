@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct RoomGalleryView: View {
-    @Binding var isPresented: Bool
     @ObservedObject var store = ModelStore.shared
     @State var isPresentingDemo: Bool = false
     @State private var isPresentingSelectMethod = false
@@ -63,7 +62,7 @@ struct RoomGalleryView: View {
                 .padding()
             }
             .navigationDestination(isPresented: $isPresentingSelectMethod) {
-                SelectMethodView(isPresented: $isPresentingSelectMethod)
+                SelectMethodView()
             }
         }
     }

@@ -69,7 +69,7 @@ struct ScanningView: View {
             //                ActivityViewControllerRep(items: [captureController.exportUrl!])
             //            })
             VStack {
-                NavigationLink(destination: RoomGalleryView(isPresented: $isPresentingRoomGallery), label: {Text("Save to Room Gallery")} ).simultaneousGesture(TapGesture().onEnded{
+                NavigationLink(destination: RoomGalleryView(), label: {Text("Save to Room Gallery")} ).simultaneousGesture(TapGesture().onEnded{
                     isPresentingRoomGallery.toggle()
                    captureController.done(message: message)
                    print("After call done: there are \(store.models.count) models")

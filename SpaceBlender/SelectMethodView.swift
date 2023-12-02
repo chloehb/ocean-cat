@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct SelectMethodView: View {
-    @Binding var isPresented: Bool
     @ObservedObject var store = ModelStore.shared
     @State private var isPresentingOnBoarding = false
     @State private var isPresentingMainView = false

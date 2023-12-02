@@ -14,7 +14,6 @@ import QuickLook
 
 struct FurnitureGalleryView: View {
     @State private var isPresentingCaptured = false
-    @Binding var isPresented: Bool
     @State private var showingARQuickLook = false
     
 //    @ObservedObject var store = ModelStore.shared

@@ -64,7 +64,7 @@ struct AfterUploadFileView: View {
                 Spacer()
             }
             .navigationDestination(isPresented: $isPresentingRoomGallery) {
-                RoomGalleryView(isPresented: $isPresentingRoomGallery)
+                RoomGalleryView()
             }
         }
 

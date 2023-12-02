@@ -8,13 +8,6 @@
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
-// test
-enum isPresentingDestination {
-    case RoomGallery
-    case RequestSurvey
-    case SelectFurniture
-    case MoveFurniture
-}
 
 struct EditModelView: View {
     @State private var isPresentingRoomGallery = false
@@ -246,7 +239,7 @@ struct EditModelView: View {
                 Spacer()
             }
             .navigationDestination(isPresented: $isPresentingRoomGallery) {
-                RoomGalleryView(isPresented: $isPresentingRoomGallery)
+                RoomGalleryView()
             }
             .navigationDestination(isPresented: $isPresentingRequestSurvey) {
                 RequestSurveyView(isPresented: $isPresentingRequestSurvey, index: index)
@@ -254,7 +247,9 @@ struct EditModelView: View {
             .navigationDestination(isPresented: $isPresentingMoveFurniture) {
                 MoveFurnitureView()
             }
-            .sheet(isPresented: $isPresentingExchange) {
+            .sheet(isPresented: $isPresentingExchange, onDismiss: {
+                exchanged = false
+            }) {
                 FurnitureSelectionView(exchanged: $exchanged, exchanged_url: $exchanged_url, isPresented: $isPresentingExchange, x_pos: $x_pos, z_pos: $z_pos, degrees: $degrees, selectedName: $selectedName, index: $index)
             }
         }

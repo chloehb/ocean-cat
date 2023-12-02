@@ -402,7 +402,6 @@ struct SceneKitView: UIViewRepresentable {
                     let selectIndex = Int(select)!
                     print("find original node")
                     assetNode.transform = nodeToReplace.transform
-                    assetNode.name = nodeToReplace.name
                     let model_y = assetNode.boundingBox.max.y - assetNode.boundingBox.min.y
                     let real_y = store.models[index].model!.objects[selectIndex].dimensions.y
                     let scale: Float = real_y / model_y
@@ -410,14 +409,16 @@ struct SceneKitView: UIViewRepresentable {
                     assetNode.transform = SCNMatrix4Mult(assetNode.transform, SCNMatrix4(scaleMatrix))
                     let aftersize = SCNVector3(x: assetNode.boundingBox.max.x - assetNode.boundingBox.min.x, y: assetNode.boundingBox.max.y - assetNode.boundingBox.min.y, z: assetNode.boundingBox.max.z - assetNode.boundingBox.min.z)
                     print("Object Size: \(aftersize)")
-                    
-                    uiView.scene?.rootNode.replaceChildNode(nodeToReplace, with: assetNode) // Add the new node
+                    let resNode = assetNode.flattenedClone()
+                    resNode.movabilityHint = .movable
+                    resNode.state = .Selected
+                    print(resNode.name ?? "no name")
+                    uiView.scene?.rootNode.replaceChildNode(nodeToReplace, with: resNode) // Add the new node
 //                    SCNTransaction.begin()
 //
 //                    SCNTransaction.commit()
                 }
             }
-            exchanged = false
         }
 
         
@@ -471,11 +472,14 @@ struct SceneKitView: UIViewRepresentable {
             if hitResults.count > 0 {
                 // only take effects on objects
                 let result = hitResults[0]
+                print(result.node.name ?? "no name")
+                print(result.node.movabilityHint)
                 switch result.node.movabilityHint {
                 case .fixed:
                     return
                 case .movable:
                     let name = result.node.name! // what if failed here?
+                    print("tap: \(name)")
                     let selectedNode = view.scene?.rootNode.childNode(withName: name, recursively: true)
                     switch selectedNode!.state { // very bad
                     case .UnSelected:
@@ -490,7 +494,9 @@ struct SceneKitView: UIViewRepresentable {
                     case .Selected:
                         selectedNodeMove = nil
                         selectedNode?.state = .UnSelected
-                        selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1)
+                        if let _ = selectedNode?.geometry {
+                            selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1)
+                        }
                         selectedName = nil
                         locRec.updateLoc(ind: name, new_x: selectedNode?.position.x, new_z: selectedNode?.position.z, new_w: selectedNode?.rotation.w)
                         x_pos = 0

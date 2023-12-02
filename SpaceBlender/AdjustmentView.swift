@@ -189,41 +189,7 @@ struct AdjustmentView: UIViewRepresentable {
 //
 //        }
         
-        //(0, 0, 0)
-        let newObject = SCNSphere(radius: 0.1)
-        let newNode = SCNNode(geometry: newObject)
-        newObject.firstMaterial?.diffuse.contents = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
-        newObject.firstMaterial?.transparency = 1
-        //        newNode.name = String(roomScan.objects.count) // only objects have name
-        //        newNode.simdTransform = simd_float4x4([[0.5, 0.0, -0.26714072, 0.0], [0.0, 0.99999994, 0.0, 0.0], [0.26714072, 0.0, 0.96365756, 0.0], [1.5175736, -0.2107589, -0.1796678, 0.99999994]])
-        //        print("object \(roomScan.objects.count): \(newNode.simdTransform)")
-        newNode.position = SCNVector3(0, 0, 0)
-        newNode.movabilityHint = .movable
-        newNode.name = "(0, 0, 0)"
-        newNode.state = .UnSelected
-        scene.rootNode.addChildNode(newNode)
-        
-        //(1, 0, 0)
-        let newObject1 = SCNSphere(radius: 0.1)
-        let newNode1 = SCNNode(geometry: newObject1)
-        newObject1.firstMaterial?.diffuse.contents = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
-        newObject1.firstMaterial?.transparency = 1
-        newNode1.movabilityHint = .movable
-        newNode1.position = SCNVector3(1, 0, 0)
-        newNode1.name = "(1, 0, 0)"
-        newNode1.state = .UnSelected
-        scene.rootNode.addChildNode(newNode1)
-        
-        //(0, 0, 1)
-        let newObject2 = SCNSphere(radius: 0.1)
-        let newNode2 = SCNNode(geometry: newObject2)
-        newObject2.firstMaterial?.diffuse.contents = UIColor(red: 0.5, green: 0, blue: 0, alpha: 1)
-        newObject2.firstMaterial?.transparency = 1
-        newNode2.movabilityHint = .movable
-        newNode2.position = SCNVector3(0, 0, 1)
-        newNode2.name = "(0, 0, 1)"
-        newNode2.state = .UnSelected
-        scene.rootNode.addChildNode(newNode2)
+
         let camera = SCNCamera()
         camera.usesOrthographicProjection = true
         camera.orthographicScale = 3

@@ -25,7 +25,7 @@ struct AdjustmentView: UIViewRepresentable {
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
         // Disable the default camera control
-//        view.allowsCameraControl = true
+        view.allowsCameraControl = true
         
         scene.background.contents = Color.black
         scene.physicsWorld.gravity = SCNVector3(0, 0, 0)
@@ -224,22 +224,6 @@ struct AdjustmentView: UIViewRepresentable {
         newNode2.name = "(0, 0, 1)"
         newNode2.state = .UnSelected
         scene.rootNode.addChildNode(newNode2)
-        //        let angleInRadians: Float = .pi / 4  // 45 degrees in radians
-        //        var rotationQuaternion: SCNQuaternion? = nil
-        
-        //        for child in scene.rootNode.childNodes {
-        //            let position = child.position
-        //            let newObject2 = SCNSphere(radius: 0.1)
-        //            let newNode2 = SCNNode(geometry: newObject2)
-        //            newObject2.firstMaterial?.diffuse.contents = UIColor(red: 0, green: 0, blue: 0.5, alpha: 1)
-        //            newObject2.firstMaterial?.transparency = 1
-        //            newNode2.movabilityHint = .movable
-        //            newNode2.position = position
-        //            newNode2.name = "pos"
-        //            newNode2.state = .UnSelected
-        //            scene.rootNode.addChildNode(newNode2)
-        ////            print("node \(child.name ?? "no name"): \(child.position); \(child.rotation); \(child.orientation)")
-        //        }
         let camera = SCNCamera()
         camera.usesOrthographicProjection = true
         camera.orthographicScale = 3
@@ -248,6 +232,7 @@ struct AdjustmentView: UIViewRepresentable {
         let cameraNode = SCNNode()
         cameraNode.camera = camera
         cameraNode.position = SCNVector3(x: 0, y: 10, z: 0)
+        cameraNode.name = "camera"
         let centerConstraint = SCNLookAtConstraint(target: scene.rootNode.childNodes[0])
         cameraNode.constraints = [centerConstraint]
         scene.rootNode.addChildNode(cameraNode)

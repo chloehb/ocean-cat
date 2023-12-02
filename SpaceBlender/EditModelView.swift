@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
-// test 
+// test
 enum isPresentingDestination {
     case RoomGallery
     case RequestSurvey
@@ -35,7 +35,9 @@ struct EditModelView: View {
     @State private var degrees: Float = 0.0
     @State private var x_pos: Float = 0.0
     @State private var z_pos: Float = 0.0
-//    @ObservedObject var viewModel: SceneKitViewModel
+    //    @ObservedObject var viewModel: SceneKitViewModel
+    
+    @State private var showingAlert = false
     
     func exportJson() {
         do {
@@ -93,13 +95,22 @@ struct EditModelView: View {
                             
                             HStack {
                                 Button {
-//                                    viewModel.exchanged = true
-                                    isPresentingExchange.toggle()
+                                    showingAlert = true
                                 } label: {
-                                        Text("exchange furniture model")
+                                    Text("exchange furniture model")
                                         .padding()
                                         .font(.title2)
                                         .fontWeight(.bold)
+                                }
+                                .alert(isPresented: $showingAlert) {
+                                    Alert(
+                                        title: Text("Attention"),
+                                        message: Text("Is this the position you want to replace the white box？"),
+                                        primaryButton: .destructive(Text("NO")),
+                                        secondaryButton: .default(Text("Yes"), action: {
+                                            isPresentingExchange = true
+                                        })
+                                    )
                                 }
                                 .foregroundColor(.white)
                                 .background(Color(red:0.3, green:0.4, blue:0.7, opacity: 0.3))

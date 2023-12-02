@@ -399,12 +399,17 @@ struct SceneKitView: UIViewRepresentable {
                 assetNode.name = select
                 
                 if let nodeToReplace = uiView.scene?.rootNode.childNode(withName: select, recursively: true) {
+                    let selectIndex = Int(select)!
                     print("find original node")
                     assetNode.transform = nodeToReplace.transform
                     assetNode.name = nodeToReplace.name
-                    let scale: Float = 0.01 // Replace with the desired scale factor
+                    let model_y = assetNode.boundingBox.max.y - assetNode.boundingBox.min.y
+                    let real_y = store.models[index].model!.objects[selectIndex].dimensions.y
+                    let scale: Float = real_y / model_y
                     let scaleMatrix = matrix_float4x4(diagonal: SIMD4<Float>(scale, scale, scale, 1))
                     assetNode.transform = SCNMatrix4Mult(assetNode.transform, SCNMatrix4(scaleMatrix))
+                    let aftersize = SCNVector3(x: assetNode.boundingBox.max.x - assetNode.boundingBox.min.x, y: assetNode.boundingBox.max.y - assetNode.boundingBox.min.y, z: assetNode.boundingBox.max.z - assetNode.boundingBox.min.z)
+                    print("Object Size: \(aftersize)")
                     
                     uiView.scene?.rootNode.replaceChildNode(nodeToReplace, with: assetNode) // Add the new node
 //                    SCNTransaction.begin()
